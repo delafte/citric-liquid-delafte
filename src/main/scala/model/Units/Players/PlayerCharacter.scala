@@ -1,6 +1,7 @@
 package cl.uchile.dcc.citric
-package model
+package model.Units.Players
 
+import cl.uchile.dcc.citric.model.Units.traitUnits.Unity
 import scala.util.Random
 
 /** The `PlayerCharacter` class represents a character or avatar in the game, encapsulating
@@ -35,14 +36,28 @@ import scala.util.Random
   * @author [[https://github.com/joelriquelme/ Joel Riquelme P.]]
   * @author [[https://github.com/r8vnhill/ Ignacio Slater M.]]
   * @author [[https://github.com/Seivier/ Vicente González B.]]
-  * @author [[https://github.com/~Your github account~/ ~Your Name~]]
+  * @author [[https://github.com/delafte/ Delaney Tello E.]]
   */
-class PlayerCharacter(val name: String,
-              val maxHp: Int,
-              val attack: Int,
-              val defense: Int,
-              val evasion: Int,
-              val randomNumberGenerator: Random = new Random()) {
+class PlayerCharacter(val name: String, val maxHp: Int, val attack: Int, val defense: Int, val evasion: Int, val randomNumberGenerator: Random = new Random()) extends Unity {
+  override val maxHP: Int = maxHp
+  override val ATK: Int = attack
+  override val DEF: Int = defense
+  override val EVA: Int = evasion
+  /**This variable keeps track on the character's stars during the game*/
+  var CurrentStars: Int = 0
+  /**This variable keeps track on the amount of victories that the character has during the game*/
+  var Victories: Int = 0
+  /**This variable keeps track on the Norm in which the character is in*/
+  var CurrentNorm: Int = 1
+  /**This variable keeps track on the left HP of the character*/
+  var HitPoints: Int = maxHp
+  /**This variable indicates if the player completed the objectives for increasing the Norm
+   * it is initialized to false */
+  var NormCheck: Boolean = false
+  /**This variable indicates the objective that the player chooses for upgrading the Norm.
+   * It starts with "choose", so during the first match it has to be updated to "stars" or "victories"
+   */
+  var objective: String = "choose"
 
   /** Rolls a dice and returns a value between 1 to 6. */
   def rollDice(): Int = {

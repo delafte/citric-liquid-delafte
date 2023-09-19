@@ -1,5 +1,7 @@
 package cl.uchile.dcc.citric
-package model
+package model.UnitsTests
+
+import model.Units.Players.PlayerCharacter
 
 import scala.util.Random
 
@@ -38,12 +40,18 @@ class PlayerCharacterTest extends munit.FunSuite {
     )
   }
 
-  test("A character should have correctly set their attributes") {
+  test("A character should have correctly set their attributes and variables") {
     assertEquals(character.name, name)
     assertEquals(character.maxHp, maxHp)
     assertEquals(character.attack, attack)
     assertEquals(character.defense, defense)
     assertEquals(character.evasion, evasion)
+    assertEquals(character.CurrentStars, 0)
+    assertEquals(character.Victories, 0)
+    assertEquals(character.CurrentNorm, 1)
+    assertEquals(character.HitPoints, maxHp)
+    assertEquals(character.NormCheck, false)
+    assertEquals(character.objective, "choose")
   }
 
   // Two ways to test randomness (you can use any of them):
