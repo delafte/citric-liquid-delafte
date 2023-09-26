@@ -49,7 +49,7 @@ class NeutralPanelTest extends FunSuite {
     neutralPanel.removeCharacter(Emma,neutralPanel.characters)
     characters -= Emma
     assertEquals(neutralPanel.characters,characters)
-    /*Testing the case in which we try to delete a character that isn't in the list*/
+    /*Testing the case in which we try to delete a character that isn't in the array*/
     neutralPanel.removeCharacter(Emma, neutralPanel.characters)
     assertEquals(neutralPanel.characters, characters)
   }

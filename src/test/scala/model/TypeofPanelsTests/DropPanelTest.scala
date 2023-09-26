@@ -51,7 +51,7 @@ class DropPanelTest extends FunSuite {
     dropPanel.removeCharacter(Anna, dropPanel.characters)
     characters -= Anna
     assertEquals(dropPanel.characters, characters)
-    /*Testing the case in which we try to delete a character that isn't in the list*/
+    /*Testing the case in which we try to delete a character that isn't in the array*/
     dropPanel.removeCharacter(Anna, dropPanel.characters)
     assertEquals(dropPanel.characters, characters)
   }

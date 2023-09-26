@@ -49,7 +49,7 @@ class EncounterPanelTest extends FunSuite {
     encounterPanel.removeCharacter(Hannah,encounterPanel.characters)
     characters -= Hannah
     assertEquals(encounterPanel.characters, characters)
-    /*Testing the case in which we try to delete a character that isn't in the list*/
+    /*Testing the case in which we try to delete a character that isn't in the array*/
     encounterPanel.removeCharacter(Hannah, encounterPanel.characters)
     assertEquals(encounterPanel.characters, characters)
   }

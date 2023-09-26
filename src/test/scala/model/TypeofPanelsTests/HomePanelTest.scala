@@ -52,7 +52,7 @@ class HomePanelTest extends FunSuite {
     homePanel.removeCharacter(Emma,homePanel.characters)
     characters -= Emma
     assertEquals(homePanel.characters,characters)
-    /*Testing the case in which we try to delete a character that isn't in the list*/
+    /*Testing the case in which we try to delete a character that isn't in the array*/
     homePanel.removeCharacter(Emma, homePanel.characters)
     assertEquals(homePanel.characters,characters)
   }
