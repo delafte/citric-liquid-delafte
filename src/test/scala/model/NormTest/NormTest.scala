@@ -1,12 +1,11 @@
 package cl.uchile.dcc.citric
 package model.NormTest
-import  cl.uchile.dcc.citric.model.Norm.Norm
-import scala.collection.mutable.{ArrayBuffer, ArrayStack}
+import  model.Norm.Norm
 
 class NormTest extends munit.FunSuite {
   /* The object under test*/
   private val norma: Norm = new Norm()
-  test("A norm has an Array with the information of the quantity required for leveling up the norm, for each stars and victories"){
+  test("A norm has an Array with the information of the amount required for leveling up the norm, for each stars and victories"){
     /*First, we test with the stars objectives*/
     val starsForNorm2: Int = 10
     val starsForNorm3: Int = 30
@@ -34,7 +33,7 @@ class NormTest extends munit.FunSuite {
     /*In this game, they can choose either stars or victories*/
     val stars: String="stars"
     val victories: String = "victories"
-    assertEquals(norma.objectives(0), stars)
+    assertEquals(norma.objectives.head, stars)
     assertEquals(norma.objectives(1), victories)
   }
 }

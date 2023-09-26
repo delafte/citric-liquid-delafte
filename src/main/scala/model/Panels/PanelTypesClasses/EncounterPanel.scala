@@ -5,7 +5,7 @@ import cl.uchile.dcc.citric.model.Panels.AbstractPanel.AbstractPanel
 
 /**
  * The 'EncounterPanel' class represents one type of the Panels that are on the board of the game.
- * This Panel extends from the abstract class AbstractPanel, so that we inherit the methods required.
+ * This Panel extends from the abstract class AbstractPanel.
  * When a player lands on it, a combat with an aleatory WildUnit starts.
  *
  * @constructor Creates an EncounterPanel

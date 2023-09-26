@@ -5,11 +5,11 @@ import model.Panels.`trait`.Panel
 import model.Units.Players.PlayerCharacter
 
 import scala.collection.mutable.ArrayBuffer
-/**The class 'Board' represents, as the name says, the board in which the game takes place.
+/**The class 'Board' represents the board in which the game takes place.
  * The Board consists on a set of different classes of panels with a special order. The players
  * have to move through it during the game.
  *
- * @constructor Creates a Board with characters and a specified configuration of panels
+ * @constructor Creates a Board with certain characters and a specified configuration of panels
  *
  * @example
  * {{{

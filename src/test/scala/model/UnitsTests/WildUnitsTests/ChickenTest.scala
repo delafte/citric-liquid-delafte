@@ -1,8 +1,8 @@
 package cl.uchile.dcc.citric
 package model.UnitsTests.WildUnitsTests
 
-import cl.uchile.dcc.citric.model.Panels.PanelTypesClasses.EncounterPanel
-import cl.uchile.dcc.citric.model.Units.WildUnits.Chicken
+import model.Panels.PanelTypesClasses.EncounterPanel
+import model.Units.WildUnits.Chicken
 import munit.FunSuite
 
 class ChickenTest extends FunSuite {
@@ -23,5 +23,9 @@ class ChickenTest extends FunSuite {
   }
   test("A chicken has maxHP = 3"){
     assertEquals(chicken.maxHP, 3)
+  }
+  test("A chicken starts with 0 stars and a current HP equal to the maximum HP") {
+    assertEquals(chicken.CurrentStars, 0)
+    assertEquals(chicken.CurrentHP, chicken.maxHP)
   }
 }

@@ -16,13 +16,13 @@ MUnit and designed the tests for the characteristics (variables and/or values) a
 With that in mind, I started with the concept of the board and the players. For that, I decided to create a trait for the units and use the one of the panels.
 
 Considering that all the panels have two functionalities in common, I implemented the abstract panel class, so that all the different classes
-of panel could extend from it, and consequently, make the methods inherited.
+of panel could extend from it, and consequently, make the methods inherited(also the arrays).
 
 We have 5 different panels, all with different effects, so each one has its own class in which I defined their special functionality
 (except for the HomePanel and EncounterPanel, due to their complexity they are going to be developed later).
 
 Subsequently, I designed the Board class. Keeping on mind that this was a collection of panels, in this phase the decision of which type
-of organization they were going to have was made. For the moment, it consists on simple connections, each panel has to adjacent panels. 
+of organization they were going to have was made. For the moment, it consists on simple connections, each panel has two adjacent panels. 
 
 Afterward, the implementation of the different types of units was made. I divided it into the WildUnits and the players.
 

@@ -7,7 +7,7 @@ import scala.math._
 /**
  * The 'BonusPanel' class represents a panel on the game's board that gives all the characters that
  * land on it, a bonus of stars. When the players land, they have to roll the dice, and depending on the
- * numerical result, they will obtain certain amount of stars.
+ * numerical result, they will obtain certain amount of stars.This Panel extends from the abstract class AbstractPanel.
  *
  * @constructor Creates a BonusPanel.
  *

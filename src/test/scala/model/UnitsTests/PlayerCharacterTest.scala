@@ -44,7 +44,6 @@ class PlayerCharacterTest extends munit.FunSuite {
     assertEquals(character.CurrentNorm, 1)
     assertEquals(character.CurrentHP, maxHp)
     assertEquals(character.NormCheck, false)
-    assertEquals(character.objective, "choose")
   }
 
   // Two ways to test randomness (you can use any of them):
@@ -66,13 +65,13 @@ class PlayerCharacterTest extends munit.FunSuite {
       assertEquals(character.rollDice(), other.rollDice())
     }
   }
-  test("A character can be healed"){
+  test("A character can be healed with +1 points of HP"){
     /*First, we test the case in which the character is already full Hp*/
     character.heal()
     assertEquals(character.CurrentHP,character.maxHp)
     /*Now the case in which the character isn't full hp*/
     character.CurrentHP=5
     character.heal()
-    assertEquals(character.CurrentHP,character.maxHp)
+    assertEquals(character.CurrentHP,6)
   }
 }

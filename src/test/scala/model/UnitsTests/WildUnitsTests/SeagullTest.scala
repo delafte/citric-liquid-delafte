@@ -1,8 +1,8 @@
 package cl.uchile.dcc.citric
 package model.UnitsTests.WildUnitsTests
 
-import cl.uchile.dcc.citric.model.Panels.PanelTypesClasses.EncounterPanel
-import cl.uchile.dcc.citric.model.Units.WildUnits.Seagull
+import model.Panels.PanelTypesClasses.EncounterPanel
+import model.Units.WildUnits.Seagull
 import munit.FunSuite
 
 class SeagullTest extends FunSuite {
@@ -23,5 +23,9 @@ class SeagullTest extends FunSuite {
   }
   test("A chicken has maxHP = 3"){
     assertEquals(seagull.maxHP, 3)
+  }
+  test("A seagull starts with 0 stars and a current HP equal to the maximum HP"){
+    assertEquals(seagull.CurrentStars,0)
+    assertEquals(seagull.CurrentHP,seagull.maxHP)
   }
 }

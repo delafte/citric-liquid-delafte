@@ -1,9 +1,9 @@
 package cl.uchile.dcc.citric
 package model.TypeofPanelsTests
 
-import cl.uchile.dcc.citric.model.Panels.PanelTypesClasses.{HomePanel, NeutralPanel, BonusPanel,DropPanel,EncounterPanel}
-import cl.uchile.dcc.citric.model.Panels.`trait`.Panel
-import cl.uchile.dcc.citric.model.Units.Players.PlayerCharacter
+import model.Panels.PanelTypesClasses.{HomePanel, NeutralPanel, BonusPanel,DropPanel,EncounterPanel}
+import model.Panels.`trait`.Panel
+import model.Units.Players.PlayerCharacter
 
 import munit.FunSuite
 
@@ -16,16 +16,17 @@ class HomePanelTest extends FunSuite {
   private val Nini: PlayerCharacter = new PlayerCharacter("Nini", 10, 5, 2, 1)
   private val Emma: PlayerCharacter = new PlayerCharacter("Emma", 15,2,5,8)
   private val NextPanels: ArrayBuffer[Panel] = ArrayBuffer(new NeutralPanel(),new HomePanel(Emma),new BonusPanel(), new DropPanel, new EncounterPanel)
-  private var homePanel: HomePanel = _
   private val characters: ArrayBuffer[PlayerCharacter]=ArrayBuffer(Nini,Emma)
   private val Empty: ArrayBuffer[PlayerCharacter]=ArrayBuffer()
+
+  private var homePanel: HomePanel = _
   override def beforeEach(context: BeforeEach): Unit = {
     homePanel = new HomePanel(Nini)
   }
-  test("A Home Panel has an owner, and it has to be created with it"){
+  test("A HomePanel has an owner, and it has to be created with it"){
     assertEquals(homePanel.Owner, Nini)
   }
-  test("A Home Panel is connected directly to other panels"){
+  test("A HomePanel is connected directly to other panels, we try all possible types"){
     homePanel.addPanel(NextPanels(0))
     homePanel.addPanel(NextPanels(1))
     homePanel.addPanel(NextPanels(2))
@@ -50,6 +51,9 @@ class HomePanelTest extends FunSuite {
     homePanel.addCharacter(Emma)
     homePanel.removeCharacter(Emma,homePanel.characters)
     characters -= Emma
+    assertEquals(homePanel.characters,characters)
+    /*Testing the case in which we try to delete a character that isn't in the list*/
+    homePanel.removeCharacter(Emma, homePanel.characters)
     assertEquals(homePanel.characters,characters)
   }
 }

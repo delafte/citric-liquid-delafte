@@ -1,9 +1,9 @@
 package cl.uchile.dcc.citric
 package model.TypeofPanelsTests
 
-import cl.uchile.dcc.citric.model.Panels.PanelTypesClasses.{HomePanel, NeutralPanel, BonusPanel,DropPanel,EncounterPanel}
-import cl.uchile.dcc.citric.model.Panels.`trait`.Panel
-import cl.uchile.dcc.citric.model.Units.Players.PlayerCharacter
+import model.Panels.PanelTypesClasses.{HomePanel, NeutralPanel, BonusPanel,DropPanel,EncounterPanel}
+import model.Panels.`trait`.Panel
+import model.Units.Players.PlayerCharacter
 
 import munit.FunSuite
 
@@ -16,13 +16,14 @@ class NeutralPanelTest extends FunSuite {
   private val Nini: PlayerCharacter = new PlayerCharacter("Nini", 10, 5, 2, 1)
   private val Emma: PlayerCharacter = new PlayerCharacter("Emma", 15,2,5,8)
   private val NextPanels: ArrayBuffer[Panel] = ArrayBuffer(new NeutralPanel(),new HomePanel(Emma),new BonusPanel(), new DropPanel, new EncounterPanel)
-  private var neutralPanel: NeutralPanel = _
   private val characters: ArrayBuffer[PlayerCharacter]=ArrayBuffer(Nini,Emma)
   private val Empty: ArrayBuffer[PlayerCharacter]=ArrayBuffer()
+
+  private var neutralPanel: NeutralPanel = _
   override def beforeEach(context: BeforeEach): Unit = {
     neutralPanel = new NeutralPanel()
   }
-  test("A NeutralPanel is connected directly to other panels"){
+  test("A NeutralPanel is connected directly to other panels, we try all possible types "){
     neutralPanel.addPanel(NextPanels(0))
     neutralPanel.addPanel(NextPanels(1))
     neutralPanel.addPanel(NextPanels(2))
@@ -48,5 +49,8 @@ class NeutralPanelTest extends FunSuite {
     neutralPanel.removeCharacter(Emma,neutralPanel.characters)
     characters -= Emma
     assertEquals(neutralPanel.characters,characters)
+    /*Testing the case in which we try to delete a character that isn't in the list*/
+    neutralPanel.removeCharacter(Emma, neutralPanel.characters)
+    assertEquals(neutralPanel.characters, characters)
   }
 }

@@ -13,7 +13,7 @@ package model.Norm
  * @example
  * {{{
  *   val norma: Norm = new Norm()
- *   val starsForSecondNorm: Int = Norm.Stars_obj(1)
+ *   val starsForSecondNorm: Int = norma.Stars_obj(1)
  *   println(s"the goal for reaching Norm 2 considering stars objective is $starsForSecondNorm")
  * }}}
  *

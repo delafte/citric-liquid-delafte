@@ -28,16 +28,16 @@ import cl.uchile.dcc.citric.model.Units.traitUnits.Unity
  */
 /*The methods are going to be added later*/
 class RoboBall(val panel: EncounterPanel) extends Unity{
-  /** The Unity's capability to deal damage to opponents. It is set as -1 */
+  /** The RoboBall's capability to deal damage to opponents. It is set as -1 */
   val ATK: Int = -1
-  /** The Unity's capability to resist or mitigate damage from opponents. It is set as 1 */
+  /** The RoboBall's capability to resist or mitigate damage from opponents. It is set as 1 */
   val DEF: Int = 1
-  /** The Unity's skill to completely avoid certain attacks. It is set as -1 */
+  /** The RoboBall's skill to completely avoid certain attacks. It is set as -1 */
   val EVA: Int = -1
-  /** The maximum health points a Unity can have. It represents the Unity's endurance. It is set as 3 */
+  /** The maximum health points a RoboBall can have. It represents the RoboBall's endurance. It is set as 3 */
   val maxHP: Int = 3
-  /** The Current Stars that the Unity has during the game, it varies during the development of it. It starts as 0. */
+  /** The Current Stars that the RoboBall has during the game, it varies during the development of it. It starts as 0. */
   var CurrentStars: Int = 0
-  /** The HP left that the Unity currently has, it varies during the game. It starts as 3(equal to maxHp) */
+  /** The left HP that the RoboBall currently has, it varies during the game. It starts as 3(equal to maxHp) */
   var CurrentHP: Int = 3
 }

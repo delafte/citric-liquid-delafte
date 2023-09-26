@@ -2,10 +2,11 @@ package cl.uchile.dcc.citric
 package model.Panels.PanelTypesClasses
 
 import cl.uchile.dcc.citric.model.Panels.AbstractPanel.AbstractPanel
+
 /**The 'DropPanel' class represents one type of the Panels that are on the board of the game.
- * This Panel extends from the abstract class AbstractPanel, so that we inherit the methods required.
- *When a player lands on it, the amount of their stars will be reduce depending on the result
- * of rollDice.
+ * This Panel extends from the abstract class AbstractPanel.
+ * When players land on it, the amount of their stars will be reduce depending on the result
+ * of their rollDice.
  *
  * @constructor Creates a DropPanel.
  *
@@ -20,7 +21,7 @@ import cl.uchile.dcc.citric.model.Panels.AbstractPanel.AbstractPanel
  * */
 class DropPanel() extends AbstractPanel {
   /**
-   * This function removes stars from the players when they land on a Drop Panel. The amount
+   * This function removes stars from the players when they land on a DropPanel. The amount
    * of stars that are taken away depends on the player's current Norm and the result of
    * rollDice.
    *
@@ -40,7 +41,7 @@ class DropPanel() extends AbstractPanel {
           characters(i).CurrentStars -= (roll * characters(i).CurrentNorm)
         }
         else {
-          characters(i).CurrentStars = 1
+          characters(i).CurrentStars = 0
         }
         i += 1
       }

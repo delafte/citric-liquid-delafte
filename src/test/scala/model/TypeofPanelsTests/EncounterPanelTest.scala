@@ -1,9 +1,9 @@
 package cl.uchile.dcc.citric
 package model.TypeofPanelsTests
 
-import cl.uchile.dcc.citric.model.Panels.PanelTypesClasses.{EncounterPanel, NeutralPanel, BonusPanel, DropPanel,HomePanel}
-import cl.uchile.dcc.citric.model.Panels.`trait`.Panel
-import cl.uchile.dcc.citric.model.Units.Players.PlayerCharacter
+import model.Panels.PanelTypesClasses.{EncounterPanel, NeutralPanel, BonusPanel, DropPanel,HomePanel}
+import model.Panels.`trait`.Panel
+import model.Units.Players.PlayerCharacter
 
 import munit.FunSuite
 
@@ -16,13 +16,14 @@ class EncounterPanelTest extends FunSuite {
   private val Ammy: PlayerCharacter = new PlayerCharacter("Ammy", 10, 5, 2, 1)
   private val Hannah: PlayerCharacter = new PlayerCharacter("Hannah", 15, 2, 5, 8)
   private val NextPanels: ArrayBuffer[Panel] = ArrayBuffer(new NeutralPanel(), new BonusPanel(), new EncounterPanel(), new DropPanel(),new HomePanel(Ammy))
-  private var encounterPanel: EncounterPanel = _
   private val characters: ArrayBuffer[PlayerCharacter] = ArrayBuffer(Ammy, Hannah)
   private val Empty: ArrayBuffer[PlayerCharacter] = ArrayBuffer()
+
+  private var encounterPanel: EncounterPanel = _
   override def beforeEach(context: BeforeEach): Unit = {
     encounterPanel = new EncounterPanel()
   }
-  test("An Encounter Panel is connected directly to other panels") {
+  test("An Encounter Panel is connected directly to other panels, we try all possible types") {
     encounterPanel.addPanel(NextPanels(0))
     encounterPanel.addPanel(NextPanels(1))
     encounterPanel.addPanel(NextPanels(2))
@@ -47,6 +48,9 @@ class EncounterPanelTest extends FunSuite {
     encounterPanel.addCharacter(Hannah)
     encounterPanel.removeCharacter(Hannah,encounterPanel.characters)
     characters -= Hannah
+    assertEquals(encounterPanel.characters, characters)
+    /*Testing the case in which we try to delete a character that isn't in the list*/
+    encounterPanel.removeCharacter(Hannah, encounterPanel.characters)
     assertEquals(encounterPanel.characters, characters)
   }
 }

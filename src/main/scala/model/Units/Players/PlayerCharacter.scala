@@ -56,19 +56,15 @@ class PlayerCharacter(val name: String, val maxHp: Int, val attack: Int, val def
   var Victories: Int = 0
   /**This variable keeps track on the Norm in which the character is in*/
   var CurrentNorm: Int = 1
-  /**This variable keeps track on the left HP of the character*/
+  /**This variable keeps track on the left HP of the character. It starts as maxHp*/
   var CurrentHP: Int = maxHp
   /**This variable indicates if the player completed the objectives for increasing the Norm
    * it is initialized to false */
   var NormCheck: Boolean = false
-  /**This variable indicates the objective that the player chooses for upgrading the Norm.
-   * It starts with "choose", so during the first match it has to be updated to "stars" or "victories"
-   */
-  var objective: String = "choose"
-  /**This function heals the character, it makes their HitPoints equal to their maxHp*/
+  /**This function gives the character 1 point of HP. It may be invoked when a character lands on a HomePanel*/
   def heal(): Unit = {
     if(maxHp != CurrentHP){
-      CurrentHP = maxHp
+      CurrentHP += 1
     }
   }
 

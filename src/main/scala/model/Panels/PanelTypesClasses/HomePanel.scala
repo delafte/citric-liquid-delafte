@@ -7,7 +7,7 @@ import model.Units.Players.PlayerCharacter
 
 import scala.collection.mutable.ArrayBuffer
 /** The 'HomePanel' class represents one type of the Panels that are on the board of the game.
- * This Panel extends from the abstract class AbstractPanel, so that we inherit the methods required.
+ * This Panel extends from the abstract class AbstractPanel.
  * Also, the HomePanel has a single owner, which consists of a PlayerCharacter that can decide whether to continue
  * or to stop at the pass, even if the player has to keep moving forward. If a player that is not the owner lands on this panel,
  * then he can also activate it.
@@ -15,7 +15,7 @@ import scala.collection.mutable.ArrayBuffer
  *
  * @constructor Creates a new HomePanel with a specified and unique owner.
  *
- * @param Owner The PlayerCharacter that owns the HomePanel. It has to be unique.
+ * @param Owner The PlayerCharacter that owns the HomePanel.
  *
  * @example
  * {{{
