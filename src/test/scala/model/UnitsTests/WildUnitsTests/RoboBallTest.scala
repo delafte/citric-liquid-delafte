@@ -1,13 +1,17 @@
 package cl.uchile.dcc.citric
 package model.UnitsTests.WildUnitsTests
 
+import cl.uchile.dcc.citric.model.Panels.PanelTypesClasses.EncounterPanel
 import cl.uchile.dcc.citric.model.Units.WildUnits.RoboBall
 import munit.FunSuite
 
 class RoboBallTest extends FunSuite {
   /*The object under test:*/
-  private val roboball: RoboBall = new RoboBall()
-
+  private val panel: EncounterPanel = new EncounterPanel()
+  private val roboball: RoboBall = new RoboBall(panel)
+  test("A roboball is created with a specified Encounter Panel") {
+    assertEquals(roboball.panel, panel)
+  }
   test("A roboball has atk = -1"){
     assertEquals(roboball.ATK, -1)
   }

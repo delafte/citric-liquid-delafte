@@ -7,7 +7,7 @@ package model.Units.traitUnits
  * Each Unity has its own parameters depending on its type, which can be determined
  * or is part of the game design.
  *
- * @author [[https://github.com/delafte Delaney Tello E.]]
+ * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
 trait Unity {
   /**The Unity's capability to deal damage to opponents.*/
@@ -26,6 +26,5 @@ trait Unity {
   var CurrentStars: Int
 
   /**The HP left that the Unity currently has, it varies during the game*/
-  var HitPoints:Int
-
+  var CurrentHP:Int
 }

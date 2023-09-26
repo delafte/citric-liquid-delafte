@@ -6,19 +6,12 @@ import model.Units.Players.PlayerCharacter
 import scala.util.Random
 
 class PlayerCharacterTest extends munit.FunSuite {
-  /*
-  REMEMBER: It is a good practice to use constants for the values that are used in multiple
-  tests, so you can change them in a single place.
-  This will make your tests more readable, easier to maintain, and less error-prone.
-  */
+
   private val name = "testPlayer"
   private val maxHp = 10
   private val attack = 1
   private val defense = 1
   private val evasion = 1
-  private val randomNumberGenerator = new Random(11)
-  /* Add any other constants you need here... */
-
   /*
   This is the object under test.
   We initialize it in the beforeEach method so we can reuse it in all the tests.
@@ -26,10 +19,10 @@ class PlayerCharacterTest extends munit.FunSuite {
   to worry about the state of the object between tests.
   */
   private var character: PlayerCharacter = _  // <- x = _ is the same as x = null
-  /* Add any other variables you need here... */
 
   // This method is executed before each `test(...)` method.
   override def beforeEach(context: BeforeEach): Unit = {
+    val randomNumberGenerator = new Random(11)
     character = new PlayerCharacter(
       name,
       maxHp,
@@ -49,7 +42,7 @@ class PlayerCharacterTest extends munit.FunSuite {
     assertEquals(character.CurrentStars, 0)
     assertEquals(character.Victories, 0)
     assertEquals(character.CurrentNorm, 1)
-    assertEquals(character.HitPoints, maxHp)
+    assertEquals(character.CurrentHP, maxHp)
     assertEquals(character.NormCheck, false)
     assertEquals(character.objective, "choose")
   }
@@ -72,5 +65,14 @@ class PlayerCharacterTest extends munit.FunSuite {
     for (_ <- 1 to 10) {
       assertEquals(character.rollDice(), other.rollDice())
     }
+  }
+  test("A character can be healed"){
+    /*First, we test the case in which the character is already full Hp*/
+    character.heal()
+    assertEquals(character.CurrentHP,character.maxHp)
+    /*Now the case in which the character isn't full hp*/
+    character.CurrentHP=5
+    character.heal()
+    assertEquals(character.CurrentHP,character.maxHp)
   }
 }

@@ -48,4 +48,10 @@ trait Panel {
     * @param player The player character to remove from this panel.
     */
   def removeCharacter(player: PlayerCharacter, characters:ArrayBuffer[PlayerCharacter]): Unit
+
+  /**Adds an adjacent panel to the list of adjacent panels of the current panel.
+   * this has to be invoked when a board is created
+   * @param panel The panel that is going to be adjacent to the panel
+   */
+  def addPanel(panel: Panel): Unit
 }

@@ -31,7 +31,7 @@ class BoardTest extends FunSuite {
     assertEquals(GamePanels(5).nextPanels, ArrayBuffer[Panel](GamePanels(4), GamePanels(0)))
   }
   test("A board has players"){
-    assertEquals(board.Players, characters)
+    assertEquals(board.players, characters)
   }
 }
 

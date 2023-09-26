@@ -1,5 +1,6 @@
 package cl.uchile.dcc.citric
 package model.Units.WildUnits
+import cl.uchile.dcc.citric.model.Panels.PanelTypesClasses.EncounterPanel
 import cl.uchile.dcc.citric.model.Units.traitUnits.Unity
 /** The 'Seagull' class represents one type of the wild units that appear aleatory on the board of the game,
  * exclusively, on the Encounter Panels.
@@ -11,7 +12,10 @@ import cl.uchile.dcc.citric.model.Units.traitUnits.Unity
  * - EVA = -1
  * - maxHP = 3
  *
- * @constructor Creates a new Seagull
+ * @constructor Creates a Seagull wild unit with a specified Encounter panel.
+ *
+ * @param panel An Encounter Panel in which the Seagull is going to appear
+ *
  * @example
  * {{{
  *   val seagull: Seagull = new Seagull()
@@ -20,12 +24,18 @@ import cl.uchile.dcc.citric.model.Units.traitUnits.Unity
  * }}}
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
-
-class Seagull extends Unity{
-  override val ATK: Int = 1
-  override val DEF: Int = -1
-  override val EVA: Int = -1
-  override val maxHP: Int = 3
-  override var CurrentStars: Int = 0
-  override var HitPoints: Int = maxHP
+/*The methods are going to be added later*/
+class Seagull(val panel: EncounterPanel) extends Unity{
+  /** The Unity's capability to deal damage to opponents. It is set as 1 */
+  val ATK: Int = 1
+  /** The Unity's capability to resist or mitigate damage from opponents. It is set as -1 */
+  val DEF: Int = -1
+  /** The Unity's skill to completely avoid certain attacks. It is set as -1 */
+  val EVA: Int = -1
+  /** The maximum health points a Unity can have. It represents the Unity's endurance. It is set as 3 */
+  val maxHP: Int = 3
+  /** The Current Stars that the Unity has during the game, it varies during the development of it. It starts as 0. */
+  var CurrentStars: Int = 0
+  /** The HP left that the Unity currently has, it varies during the game. It starts as 3(equal to maxHp) */
+  var CurrentHP: Int = 3
 }

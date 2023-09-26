@@ -6,9 +6,8 @@ import cl.uchile.dcc.citric.model.Units.Players.PlayerCharacter
 
 import scala.collection.mutable.ArrayBuffer
 /**
- * The 'AbstractPanel' abstract class consists on two methods that all types of Panels must have: addCharacter and
- * removeCharacter. With this implementation we avoid the repetition of code.
- * This two methods are explained in the trait Panel.
+ * The 'AbstractPanel' abstract class consists on three methods that all types of Panels must have: addCharacter,
+ * removeCharacter and addPanel. With this implementation we avoid the repetition of code.
  *
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
@@ -23,5 +22,9 @@ abstract class AbstractPanel extends Panel{
     if(characters.nonEmpty){
       characters-=player
     }
+  }
+
+  override def addPanel(panel: Panel): Unit = {
+    nextPanels += panel
   }
 }

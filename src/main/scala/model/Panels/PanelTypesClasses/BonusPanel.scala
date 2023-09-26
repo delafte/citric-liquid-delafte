@@ -5,9 +5,11 @@ import cl.uchile.dcc.citric.model.Panels.AbstractPanel.AbstractPanel
 
 import scala.math._
 /**
- * The 'Bonus Panel' class represents a panel on the game's board that gives all the characters that
+ * The 'BonusPanel' class represents a panel on the game's board that gives all the characters that
  * land on it, a bonus of stars. When the players land, they have to roll the dice, and depending on the
- * numerical result, they will obtain stars.
+ * numerical result, they will obtain certain amount of stars.
+ *
+ * @constructor Creates a BonusPanel.
  *
  * @example
  * {{{
@@ -21,7 +23,15 @@ import scala.math._
 class BonusPanel () extends AbstractPanel {
   /** This method changes the current stars of the characters that landed on this panel. It sums the minimum
    * result between the multiplication of the rollDice and the character's current norm, and the multiplication
-   * between the rollDice and 3.*/
+   * between the rollDice and 3.
+   *
+   * @example
+   * {{{
+   *   var panel2: BonusPanel = new BonusPanel()
+   *   panel2.addCharacter(CharacterAnna)
+   *   panel2.GiveStars()
+   * }}}
+   * */
   def GiveStars():Unit={
     if(characters.nonEmpty) {
       var i: Int = 0

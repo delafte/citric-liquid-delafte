@@ -1,7 +1,7 @@
 package cl.uchile.dcc.citric
 package model.TypeofPanelsTests
 
-import cl.uchile.dcc.citric.model.Panels.PanelTypesClasses.{DropPanel, NeutralPanel}
+import cl.uchile.dcc.citric.model.Panels.PanelTypesClasses.{DropPanel, NeutralPanel, EncounterPanel, BonusPanel,HomePanel}
 import cl.uchile.dcc.citric.model.Panels.`trait`.Panel
 import cl.uchile.dcc.citric.model.Units.Players.PlayerCharacter
 
@@ -16,7 +16,7 @@ class DropPanelTest extends FunSuite {
 
   private val Minie: PlayerCharacter = new PlayerCharacter("Minie", 10, 5, 2, 1)
   private val Anna: PlayerCharacter = new PlayerCharacter("Anna", 15, 2, 5, 8)
-  private val NextPanels: ArrayBuffer[Panel] = ArrayBuffer(new NeutralPanel(), new NeutralPanel())
+  private val NextPanels: ArrayBuffer[Panel] = ArrayBuffer(new NeutralPanel(), new BonusPanel(), new EncounterPanel(), new DropPanel, new HomePanel(Minie))
   private var DropPanel: DropPanel = _
   private val characters: ArrayBuffer[PlayerCharacter] = ArrayBuffer(Minie, Anna)
   private val Empty: ArrayBuffer[PlayerCharacter] = ArrayBuffer()
@@ -25,7 +25,11 @@ class DropPanelTest extends FunSuite {
   }
 
   test("A Drop Panel is connected directly to other panels") {
-    DropPanel.nextPanels += (NextPanels(0), NextPanels(1))
+    DropPanel.addPanel(NextPanels(0))
+    DropPanel.addPanel(NextPanels(1))
+    DropPanel.addPanel(NextPanels(2))
+    DropPanel.addPanel(NextPanels(3))
+    DropPanel.addPanel(NextPanels(4))
     assertEquals(DropPanel.nextPanels, NextPanels)
   }
   test("We can add characters to a Drop Panel") {

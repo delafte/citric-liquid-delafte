@@ -24,6 +24,13 @@ import scala.util.Random
   * an instance of the `Random` class but can be replaced if different random
   * generation behaviors are desired.
   *
+  * @constructor Creates a PlayerCharacter with specified name, maxHp, attack, defense, evasion and a random number
+  *
+  * @example
+ * {{{
+ *   val emma: PlayerCharacter= new PlayerCharacter("emma", 10, 5, 2, 1)
+ * }}}
+  *
   * @param name The name of the player. This is an identifier and should be unique.
   * @param maxHp The maximum health points a player can have. It represents the player's endurance.
   * @param attack The player's capability to deal damage to opponents.
@@ -39,10 +46,10 @@ import scala.util.Random
   * @author [[https://github.com/delafte/ Delaney Tello E.]]
   */
 class PlayerCharacter(val name: String, val maxHp: Int, val attack: Int, val defense: Int, val evasion: Int, val randomNumberGenerator: Random = new Random()) extends Unity {
-  override val maxHP: Int = maxHp
-  override val ATK: Int = attack
-  override val DEF: Int = defense
-  override val EVA: Int = evasion
+  val maxHP: Int = maxHp
+  val ATK: Int = attack
+  val DEF: Int = defense
+  val EVA: Int = evasion
   /**This variable keeps track on the character's stars during the game*/
   var CurrentStars: Int = 0
   /**This variable keeps track on the amount of victories that the character has during the game*/
@@ -50,7 +57,7 @@ class PlayerCharacter(val name: String, val maxHp: Int, val attack: Int, val def
   /**This variable keeps track on the Norm in which the character is in*/
   var CurrentNorm: Int = 1
   /**This variable keeps track on the left HP of the character*/
-  var HitPoints: Int = maxHp
+  var CurrentHP: Int = maxHp
   /**This variable indicates if the player completed the objectives for increasing the Norm
    * it is initialized to false */
   var NormCheck: Boolean = false
@@ -58,6 +65,12 @@ class PlayerCharacter(val name: String, val maxHp: Int, val attack: Int, val def
    * It starts with "choose", so during the first match it has to be updated to "stars" or "victories"
    */
   var objective: String = "choose"
+  /**This function heals the character, it makes their HitPoints equal to their maxHp*/
+  def heal(): Unit = {
+    if(maxHp != CurrentHP){
+      CurrentHP = maxHp
+    }
+  }
 
   /** Rolls a dice and returns a value between 1 to 6. */
   def rollDice(): Int = {

@@ -1,13 +1,17 @@
 package cl.uchile.dcc.citric
 package model.UnitsTests.WildUnitsTests
 
+import cl.uchile.dcc.citric.model.Panels.PanelTypesClasses.EncounterPanel
 import cl.uchile.dcc.citric.model.Units.WildUnits.Chicken
 import munit.FunSuite
 
 class ChickenTest extends FunSuite {
   /*The object under test:*/
-  private val chicken: Chicken = new Chicken()
-
+  private val panel: EncounterPanel = new EncounterPanel()
+  private val chicken: Chicken = new Chicken(panel)
+  test("A chicken is created with a specified Encounter Panel"){
+    assertEquals(chicken.panel, panel)
+  }
   test("A chicken has atk = -1"){
     assertEquals(chicken.ATK, -1)
   }

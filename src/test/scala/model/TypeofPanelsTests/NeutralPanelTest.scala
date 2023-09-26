@@ -8,48 +8,45 @@ import cl.uchile.dcc.citric.model.Units.Players.PlayerCharacter
 import munit.FunSuite
 
 import scala.collection.mutable.ArrayBuffer
-class HomePanelTest extends FunSuite {
+class NeutralPanelTest extends FunSuite {
   /*
   * Here we define the values and variables that are necessary for testing our
-  * HomePanel class.
+  * NeutralPanel class.
   */
   private val Nini: PlayerCharacter = new PlayerCharacter("Nini", 10, 5, 2, 1)
   private val Emma: PlayerCharacter = new PlayerCharacter("Emma", 15,2,5,8)
   private val NextPanels: ArrayBuffer[Panel] = ArrayBuffer(new NeutralPanel(),new HomePanel(Emma),new BonusPanel(), new DropPanel, new EncounterPanel)
-  private var homePanel: HomePanel = _
+  private var neutralPanel: NeutralPanel = _
   private val characters: ArrayBuffer[PlayerCharacter]=ArrayBuffer(Nini,Emma)
   private val Empty: ArrayBuffer[PlayerCharacter]=ArrayBuffer()
   override def beforeEach(context: BeforeEach): Unit = {
-    homePanel = new HomePanel(Nini)
+    neutralPanel = new NeutralPanel()
   }
-  test("A Home Panel has an owner, and it has to be created with it"){
-    assertEquals(homePanel.Owner, Nini)
+  test("A NeutralPanel is connected directly to other panels"){
+    neutralPanel.addPanel(NextPanels(0))
+    neutralPanel.addPanel(NextPanels(1))
+    neutralPanel.addPanel(NextPanels(2))
+    neutralPanel.addPanel(NextPanels(3))
+    neutralPanel.addPanel(NextPanels(4))
+    assertEquals(neutralPanel.nextPanels, NextPanels)
   }
-  test("A Home Panel is connected directly to other panels"){
-    homePanel.addPanel(NextPanels(0))
-    homePanel.addPanel(NextPanels(1))
-    homePanel.addPanel(NextPanels(2))
-    homePanel.addPanel(NextPanels(3))
-    homePanel.addPanel(NextPanels(4))
-    assertEquals(homePanel.nextPanels, NextPanels)
-  }
-  test("We can add characters to a HomePanel"){
-    homePanel.addCharacter(Nini)
-    homePanel.addCharacter(Emma)
-    assertEquals(homePanel.characters, characters)
+  test("We can add characters to a NeutralPanel"){
+    neutralPanel.addCharacter(Nini)
+    neutralPanel.addCharacter(Emma)
+    assertEquals(neutralPanel.characters, characters)
     /*Also, we check the case in which we try to add a character that is already in the panel*/
-    homePanel.addCharacter(Emma)
-    assertEquals(homePanel.characters, characters)
+    neutralPanel.addCharacter(Emma)
+    assertEquals(neutralPanel.characters, characters)
   }
-  test("We can also delete Characters from a HomePanel"){
+  test("We can also delete Characters from a NeutralPanel"){
     /*Testing the case in which we are trying to remove a character from a panel without characters*/
-    homePanel.removeCharacter(Nini, homePanel.characters)
-    assertEquals(homePanel.characters,Empty)
+    neutralPanel.removeCharacter(Nini, neutralPanel.characters)
+    assertEquals(neutralPanel.characters,Empty)
     /*Testing the normal situation*/
-    homePanel.addCharacter(Nini)
-    homePanel.addCharacter(Emma)
-    homePanel.removeCharacter(Emma,homePanel.characters)
+    neutralPanel.addCharacter(Nini)
+    neutralPanel.addCharacter(Emma)
+    neutralPanel.removeCharacter(Emma,neutralPanel.characters)
     characters -= Emma
-    assertEquals(homePanel.characters,characters)
+    assertEquals(neutralPanel.characters,characters)
   }
 }

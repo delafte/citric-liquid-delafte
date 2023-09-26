@@ -1,7 +1,7 @@
 package cl.uchile.dcc.citric
 package model.TypeofPanelsTests
 
-import cl.uchile.dcc.citric.model.Panels.PanelTypesClasses.{EncounterPanel, NeutralPanel}
+import cl.uchile.dcc.citric.model.Panels.PanelTypesClasses.{EncounterPanel, NeutralPanel, BonusPanel, DropPanel,HomePanel}
 import cl.uchile.dcc.citric.model.Panels.`trait`.Panel
 import cl.uchile.dcc.citric.model.Units.Players.PlayerCharacter
 
@@ -15,7 +15,7 @@ class EncounterPanelTest extends FunSuite {
   */
   private val Ammy: PlayerCharacter = new PlayerCharacter("Ammy", 10, 5, 2, 1)
   private val Hannah: PlayerCharacter = new PlayerCharacter("Hannah", 15, 2, 5, 8)
-  private val NextPanels: ArrayBuffer[Panel] = ArrayBuffer(new NeutralPanel(), new NeutralPanel())
+  private val NextPanels: ArrayBuffer[Panel] = ArrayBuffer(new NeutralPanel(), new BonusPanel(), new EncounterPanel(), new DropPanel(),new HomePanel(Ammy))
   private var encounterPanel: EncounterPanel = _
   private val characters: ArrayBuffer[PlayerCharacter] = ArrayBuffer(Ammy, Hannah)
   private val Empty: ArrayBuffer[PlayerCharacter] = ArrayBuffer()
@@ -23,7 +23,11 @@ class EncounterPanelTest extends FunSuite {
     encounterPanel = new EncounterPanel()
   }
   test("An Encounter Panel is connected directly to other panels") {
-    encounterPanel.nextPanels += (NextPanels(0), NextPanels(1))
+    encounterPanel.addPanel(NextPanels(0))
+    encounterPanel.addPanel(NextPanels(1))
+    encounterPanel.addPanel(NextPanels(2))
+    encounterPanel.addPanel(NextPanels(3))
+    encounterPanel.addPanel(NextPanels(4))
     assertEquals(encounterPanel.nextPanels, NextPanels)
   }
   test("We can add characters to an Encounter Panel") {

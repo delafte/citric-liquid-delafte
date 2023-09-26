@@ -18,7 +18,7 @@ package exceptions
  * @author [[https://github.com/joelriquelme/ Joel Riquelme P.]]
  * @author [[https://github.com/r8vnhill/ Ignacio Slater M.]]
  * @author [[https://github.com/Seivier/ Vicente González B.]]
- * @author [[https://github.com/~Your github account~/ ~Your Name~]]
+ * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
 object Require {
 
