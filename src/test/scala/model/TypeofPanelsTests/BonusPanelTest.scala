@@ -15,16 +15,16 @@ class BonusPanelTest extends FunSuite {
 
   private val Nini: PlayerCharacter = new PlayerCharacter("Nini", 10, 5, 2, 1)
   private val Emma: PlayerCharacter = new PlayerCharacter("Emma", 15,2,5,8)
-  private val NextPanels: ArrayBuffer[Panel] = ArrayBuffer(new EncounterPanel(),new NeutralPanel(), new DropPanel(), new BonusPanel,new HomePanel(Nini))
+  private val NextPanels: List[Panel] = List(new EncounterPanel(),new NeutralPanel(), new DropPanel(), new BonusPanel,new HomePanel(Nini))
   private val characters: ArrayBuffer[PlayerCharacter]=ArrayBuffer(Nini,Emma)
-  private val Empty: ArrayBuffer[PlayerCharacter] = ArrayBuffer()
+  private val Empty: List[PlayerCharacter] = List()
 
   private var bonusPanel: BonusPanel = _
   override def beforeEach(context: BeforeEach): Unit = {
     bonusPanel = new BonusPanel()
   }
   test("A Bonus Panel is connected directly to other panels, we try all possible types"){
-    bonusPanel.addPanel(NextPanels(0))
+    bonusPanel.addPanel(NextPanels.head)
     bonusPanel.addPanel(NextPanels(1))
     bonusPanel.addPanel(NextPanels(2))
     bonusPanel.addPanel(NextPanels(3))
@@ -34,24 +34,24 @@ class BonusPanelTest extends FunSuite {
   test("We can add characters to a BonusPanel"){
     bonusPanel.addCharacter(Nini)
     bonusPanel.addCharacter(Emma)
-    assertEquals(bonusPanel.characters, characters)
+    assertEquals(bonusPanel.characters, characters.toList)
     /*Also, we check the case in which we try to add a character that is already in the panel*/
     bonusPanel.addCharacter(Emma)
-    assertEquals(bonusPanel.characters, characters)
+    assertEquals(bonusPanel.characters, characters.toList)
   }
   test("We can also delete Characters from a BonusPanel"){
     /*Testing the case in which we are trying to remove a character from a panel without characters*/
-    bonusPanel.removeCharacter(Nini, bonusPanel.characters)
+    bonusPanel.removeCharacter(Nini)
     assertEquals(bonusPanel.characters, Empty)
     /*Testing the normal case*/
     bonusPanel.addCharacter(Nini)
     bonusPanel.addCharacter(Emma)
-    bonusPanel.removeCharacter(Emma, bonusPanel.characters)
+    bonusPanel.removeCharacter(Emma)
     characters-=Emma
-    assertEquals(bonusPanel.characters,characters)
+    assertEquals(bonusPanel.characters,characters.toList)
     /*Testing the case in which we try to delete a character that isn't in the array*/
-    bonusPanel.removeCharacter(Emma, bonusPanel.characters)
-    assertEquals(bonusPanel.characters, characters)
+    bonusPanel.removeCharacter(Emma)
+    assertEquals(bonusPanel.characters, characters.toList)
   }
   test("Bonus Panel must reward the players that lands on it with stars"){
     bonusPanel.addCharacter(Nini)

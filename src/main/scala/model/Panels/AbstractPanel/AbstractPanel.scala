@@ -17,7 +17,7 @@ abstract class AbstractPanel extends Panel{
    * In the game, multiple characters might be on the same panel at once, e.g., if multiple players
    * land on the same space.
    */
-  override val characters: ArrayBuffer[PlayerCharacter] = ArrayBuffer()
+  protected val _characters: ArrayBuffer[PlayerCharacter] = ArrayBuffer()
   /** An array of panels that are directly connected to this one.
    *
    * In the context of the game, multiple routes or paths may exist, this could represent the
@@ -25,18 +25,22 @@ abstract class AbstractPanel extends Panel{
    *
    * @return a List of Panel instances that are adjacent or connected to this panel.
    */
-  override var nextPanels: ArrayBuffer[Panel] = ArrayBuffer()
+  protected var _nextPanels: ArrayBuffer[Panel] = ArrayBuffer()
+  /**Returns an immutable list of the characters on the panel*/
+  def characters: List[PlayerCharacter] = _characters.toList
+  /**Returns an immutable list of the characters on the panel*/
+  def nextPanels: List[Panel] = _nextPanels.toList
   override def addCharacter(player: PlayerCharacter): Unit = {
-    if(!characters.contains(player))
-    characters.append(player)
+    if(!_characters.contains(player))
+    _characters.append(player)
   }
-  override def removeCharacter(player: PlayerCharacter,characters: ArrayBuffer[PlayerCharacter]): Unit = {
-    if(characters.nonEmpty){
-      characters-=player
+  override def removeCharacter(player: PlayerCharacter): Unit = {
+    if(_characters.nonEmpty){
+      _characters-=player
     }
   }
 
   override def addPanel(panel: Panel): Unit = {
-    nextPanels += panel
+    _nextPanels += panel
   }
 }

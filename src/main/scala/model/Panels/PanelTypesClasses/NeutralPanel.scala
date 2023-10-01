@@ -22,4 +22,4 @@ import scala.collection.mutable.ArrayBuffer
  *
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  * */
-class NeutralPanel() extends  AbstractPanel{}
+class NeutralPanel() extends  AbstractPanel

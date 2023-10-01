@@ -32,28 +32,28 @@ class HomePanelTest extends FunSuite {
     homePanel.addPanel(NextPanels(2))
     homePanel.addPanel(NextPanels(3))
     homePanel.addPanel(NextPanels(4))
-    assertEquals(homePanel.nextPanels, NextPanels)
+    assertEquals(homePanel.nextPanels, NextPanels.toList)
   }
   test("We can add characters to a HomePanel"){
     homePanel.addCharacter(Nini)
     homePanel.addCharacter(Emma)
-    assertEquals(homePanel.characters, characters)
+    assertEquals(homePanel.characters, characters.toList)
     /*Also, we check the case in which we try to add a character that is already in the panel*/
     homePanel.addCharacter(Emma)
-    assertEquals(homePanel.characters, characters)
+    assertEquals(homePanel.characters, characters.toList)
   }
   test("We can also delete Characters from a HomePanel"){
     /*Testing the case in which we are trying to remove a character from a panel without characters*/
-    homePanel.removeCharacter(Nini, homePanel.characters)
-    assertEquals(homePanel.characters,Empty)
+    homePanel.removeCharacter(Nini)
+    assertEquals(homePanel.characters,Empty.toList)
     /*Testing the normal situation*/
     homePanel.addCharacter(Nini)
     homePanel.addCharacter(Emma)
-    homePanel.removeCharacter(Emma,homePanel.characters)
+    homePanel.removeCharacter(Emma)
     characters -= Emma
-    assertEquals(homePanel.characters,characters)
+    assertEquals(homePanel.characters,characters.toList)
     /*Testing the case in which we try to delete a character that isn't in the array*/
-    homePanel.removeCharacter(Emma, homePanel.characters)
-    assertEquals(homePanel.characters,characters)
+    homePanel.removeCharacter(Emma)
+    assertEquals(homePanel.characters,characters.toList)
   }
 }

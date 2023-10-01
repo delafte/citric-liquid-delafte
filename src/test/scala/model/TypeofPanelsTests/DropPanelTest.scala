@@ -31,41 +31,41 @@ class DropPanelTest extends FunSuite {
     dropPanel.addPanel(NextPanels(2))
     dropPanel.addPanel(NextPanels(3))
     dropPanel.addPanel(NextPanels(4))
-    assertEquals(dropPanel.nextPanels, NextPanels)
+    assertEquals(dropPanel.nextPanels, NextPanels.toList)
   }
   test("We can add characters to a Drop Panel") {
     dropPanel.addCharacter(Minie)
     dropPanel.addCharacter(Anna)
-    assertEquals(dropPanel.characters, characters)
+    assertEquals(dropPanel.characters, characters.toList)
     /*Also, we check the case in which we try to add a character that is already in the panel*/
     dropPanel.addCharacter(Anna)
-    assertEquals(dropPanel.characters, characters)
+    assertEquals(dropPanel.characters, characters.toList)
   }
   test("We can also delete Characters from a Drop Panel") {
     /*Testing the case in which we are trying to remove a character from a panel without characters*/
-    dropPanel.removeCharacter(Minie, dropPanel.characters)
-    assertEquals(dropPanel.characters, Empty)
+    dropPanel.removeCharacter(Minie)
+    assertEquals(dropPanel.characters, Empty.toList)
     /*Testing the normal case*/
     dropPanel.addCharacter(Minie)
     dropPanel.addCharacter(Anna)
-    dropPanel.removeCharacter(Anna, dropPanel.characters)
+    dropPanel.removeCharacter(Anna)
     characters -= Anna
-    assertEquals(dropPanel.characters, characters)
+    assertEquals(dropPanel.characters, characters.toList)
     /*Testing the case in which we try to delete a character that isn't in the array*/
-    dropPanel.removeCharacter(Anna, dropPanel.characters)
-    assertEquals(dropPanel.characters, characters)
+    dropPanel.removeCharacter(Anna)
+    assertEquals(dropPanel.characters, characters.toList)
   }
   test("If players land on a Drop Panel, it must remove stars from them"){
     dropPanel.addCharacter(Minie)
     dropPanel.addCharacter(Anna)
     /*First, we test that the panel removes stars of the character in a normal situation*/
-    Minie.CurrentStars = 10
-    Anna.CurrentStars = 6
+    Minie.CurrentStars_=(10)
+    Anna.CurrentStars_=(6)
     dropPanel.RemoveStars()
     assert(Minie.CurrentStars < 10)
     assert(Anna.CurrentStars < 6)
     /*Then, we test an edge case, in which the player has less stars than the quantity that the panel wants to take*/
-    Minie.CurrentStars = 0
+    Minie.CurrentStars_=(0)
     dropPanel.RemoveStars()
     assert(Minie.CurrentStars == 0)
   }

@@ -34,11 +34,12 @@ class PlayerCharacterTest extends munit.FunSuite {
   }
 
   test("A character should have correctly set their attributes and variables") {
+    /*here we also test de getters*/
     assertEquals(character.name, name)
-    assertEquals(character.maxHp, maxHp)
-    assertEquals(character.attack, attack)
-    assertEquals(character.defense, defense)
-    assertEquals(character.evasion, evasion)
+    assertEquals(character.MaxHP, maxHp)
+    assertEquals(character.ATK, attack)
+    assertEquals(character.DEF, defense)
+    assertEquals(character.EVA, evasion)
     assertEquals(character.CurrentStars, 0)
     assertEquals(character.Victories, 0)
     assertEquals(character.CurrentNorm, 1)
@@ -68,10 +69,24 @@ class PlayerCharacterTest extends munit.FunSuite {
   test("A character can be healed with +1 points of HP"){
     /*First, we test the case in which the character is already full Hp*/
     character.heal()
-    assertEquals(character.CurrentHP,character.maxHp)
+    assertEquals(character.CurrentHP,character.MaxHP)
     /*Now the case in which the character isn't full hp*/
-    character.CurrentHP=5
+    character.CurrentHP_=(5)
     character.heal()
     assertEquals(character.CurrentHP,6)
+  }
+  test("The setters must be well implemented"){
+    /*Current HP setter*/
+    character.CurrentHP = 7
+    assertEquals(character.CurrentHP,7)
+    /*Current norm setter*/
+    character.CurrentNorm = 3
+    assertEquals(character.CurrentNorm,3)
+    /*Current stars setter*/
+    character.CurrentStars = 20
+    assertEquals(character.CurrentStars,20)
+    /*NormCheck state setter*/
+    character.NormCheck = true
+    assertEquals(character.NormCheck,true)
   }
 }

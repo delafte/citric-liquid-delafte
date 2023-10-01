@@ -31,7 +31,7 @@ import scala.util.Random
  *   val emma: PlayerCharacter= new PlayerCharacter("emma", 10, 5, 2, 1)
  * }}}
   *
-  * @param name The name of the player. This is an identifier and should be unique.
+  * @param _name The name of the player. This is an identifier and should be unique.
   * @param maxHp The maximum health points a player can have. It represents the player's endurance.
   * @param attack The player's capability to deal damage to opponents.
   * @param defense The player's capability to resist or mitigate damage from opponents.
@@ -45,26 +45,27 @@ import scala.util.Random
   * @author [[https://github.com/Seivier/ Vicente González B.]]
   * @author [[https://github.com/delafte/ Delaney Tello E.]]
   */
-class PlayerCharacter(val name: String, val maxHp: Int, val attack: Int, val defense: Int, val evasion: Int, val randomNumberGenerator: Random = new Random()) extends Unity {
-  val maxHP: Int = maxHp
-  val ATK: Int = attack
-  val DEF: Int = defense
-  val EVA: Int = evasion
-  /**This variable keeps track on the character's stars during the game*/
-  var CurrentStars: Int = 0
-  /**This variable keeps track on the amount of victories that the character has during the game*/
-  var Victories: Int = 0
-  /**This variable keeps track on the Norm in which the character is in*/
-  var CurrentNorm: Int = 1
-  /**This variable keeps track on the left HP of the character. It starts as maxHp*/
-  var CurrentHP: Int = maxHp
-  /**This variable indicates if the player completed the objectives for increasing the Norm
+class PlayerCharacter(private val _name: String, maxHp: Int, attack: Int, defense: Int, evasion: Int, val randomNumberGenerator: Random = new Random()) extends Unity {
+  protected val _maxHP: Int = maxHp
+  protected val _ATK: Int = attack
+  protected val _DEF: Int = defense
+  protected val _EVA: Int = evasion
+  /** This variable keeps track on the character's stars during the game */
+  protected var _CurrentStars: Int = 0
+  /** This variable keeps track on the amount of victories that the character has during the game */
+  private var _Victories: Int = 0
+  /** This variable keeps track on the Norm in which the character is in */
+  private var _CurrentNorm: Int = 1
+  /** This variable keeps track on the left HP of the character. It starts as maxHp */
+  protected var _CurrentHP: Int = maxHp
+  /** This variable indicates if the player completed the objectives for increasing the Norm
    * it is initialized to false */
-  var NormCheck: Boolean = false
-  /**This function gives the character 1 point of HP. It may be invoked when a character lands on a HomePanel*/
+  private var _NormCheck: Boolean = false
+
+  /** This function gives the character 1 point of HP. It may be invoked when a character lands on a HomePanel */
   def heal(): Unit = {
-    if(maxHp != CurrentHP){
-      CurrentHP += 1
+    if (maxHp != _CurrentHP) {
+      _CurrentHP += 1
     }
   }
 
@@ -72,4 +73,47 @@ class PlayerCharacter(val name: String, val maxHp: Int, val attack: Int, val def
   def rollDice(): Int = {
     randomNumberGenerator.nextInt(6) + 1
   }
+  /**Returns the name of the character*/
+  def name: String = _name
+  /**Returns the max HP of the character*/
+  def MaxHP: Int = _maxHP
+  /**Returns the attack of the character*/
+  def ATK: Int = _ATK
+  /**Returns the defense of the character*/
+  def DEF: Int = _DEF
+  /**Returns the evasion of the character*/
+  def EVA: Int = _EVA
+  /**Returns the current stars of the character*/
+  def CurrentStars: Int = _CurrentStars
+  /**Returns the current norm of the character*/
+  def CurrentNorm: Int = _CurrentNorm
+  /**Returns the Current HP of the Character*/
+  def CurrentHP: Int = _CurrentHP
+  /**Returns the NormCheck state of the character*/
+  def NormCheck: Boolean = _NormCheck
+  /**Returns the amount of victories of the character*/
+  def Victories: Int = _Victories
+  /**Returns the current amount of stars of the character*/
+  def CurrentStars_=(Stars: Int): Unit = {
+    _CurrentStars = Stars
+  }
+  /** Updates the current Norm of the player.
+   *
+   * @param newNorm The new Norm of the character.*/
+  def CurrentNorm_=(newNorm: Int): Unit = {
+    _CurrentNorm = newNorm
+  }
+  /** Updates the current HP of the player.
+   *
+   * @param newHP The new HP value.*/
+  def CurrentHP_=(newHP: Int): Unit = {
+    _CurrentHP = newHP
+  }
+  /** Updates the current NormCheck state of the player.
+   *
+   * @param newState The new state of their NormCheck.*/
+  def NormCheck_=(newState: Boolean): Unit = {
+    _NormCheck = newState
+  }
 }
+

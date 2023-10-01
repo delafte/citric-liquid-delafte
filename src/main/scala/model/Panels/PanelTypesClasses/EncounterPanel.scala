@@ -1,7 +1,9 @@
 package cl.uchile.dcc.citric
 package model.Panels.PanelTypesClasses
 
-import cl.uchile.dcc.citric.model.Panels.AbstractPanel.AbstractPanel
+import model.Panels.AbstractPanel.AbstractPanel
+import model.Panels.`trait`.Panel
+import model.Units.Players.PlayerCharacter
 
 /**
  * The 'EncounterPanel' class represents one type of the Panels that are on the board of the game.

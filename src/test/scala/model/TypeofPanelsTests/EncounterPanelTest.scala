@@ -29,29 +29,29 @@ class EncounterPanelTest extends FunSuite {
     encounterPanel.addPanel(NextPanels(2))
     encounterPanel.addPanel(NextPanels(3))
     encounterPanel.addPanel(NextPanels(4))
-    assertEquals(encounterPanel.nextPanels, NextPanels)
+    assertEquals(encounterPanel.nextPanels, NextPanels.toList)
   }
   test("We can add characters to an Encounter Panel") {
     encounterPanel.addCharacter(Ammy)
     encounterPanel.addCharacter(Hannah)
-    assertEquals(encounterPanel.characters, characters)
+    assertEquals(encounterPanel.characters, characters.toList)
     /*Also, we check the case in which we try to add a character that is already in the panel*/
     encounterPanel.addCharacter(Ammy)
-    assertEquals(encounterPanel.characters, characters)
+    assertEquals(encounterPanel.characters, characters.toList)
   }
   test("We can also delete Characters from an Encounter Panel") {
     /*Testing the case in which we are trying to remove a character from a panel without characters*/
-    encounterPanel.removeCharacter(Ammy, encounterPanel.characters)
-    assertEquals(encounterPanel.characters, Empty)
+    encounterPanel.removeCharacter(Ammy)
+    assertEquals(encounterPanel.characters, Empty.toList)
     /*Testing the normal situation*/
     encounterPanel.addCharacter(Ammy)
     encounterPanel.addCharacter(Hannah)
-    encounterPanel.removeCharacter(Hannah,encounterPanel.characters)
+    encounterPanel.removeCharacter(Hannah)
     characters -= Hannah
-    assertEquals(encounterPanel.characters, characters)
+    assertEquals(encounterPanel.characters, characters.toList)
     /*Testing the case in which we try to delete a character that isn't in the array*/
-    encounterPanel.removeCharacter(Hannah, encounterPanel.characters)
-    assertEquals(encounterPanel.characters, characters)
+    encounterPanel.removeCharacter(Hannah)
+    assertEquals(encounterPanel.characters, characters.toList)
   }
 }
 

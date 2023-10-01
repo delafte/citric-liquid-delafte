@@ -11,20 +11,20 @@ package model.Units.traitUnits
  */
 trait Unity {
   /**The Unity's capability to deal damage to opponents.*/
-  val ATK: Int
+  protected val _ATK: Int
 
   /**The Unity's capability to resist or mitigate damage from opponents.*/
-  val DEF: Int
+  protected val _DEF: Int
 
   /**The Unity's skill to completely avoid certain attacks.*/
-  val EVA: Int
+  protected val _EVA: Int
 
   /**The maximum health points a Unity can have. It represents the Unity's endurance.*/
-  val maxHP: Int
+  protected val _maxHP: Int
 
   /**The Current Stars that the Unity has during the game, it varies during the development of it*/
-  var CurrentStars: Int
+  protected var _CurrentStars: Int
 
   /**The HP left that the Unity currently has, it varies during the game*/
-  var CurrentHP:Int
+  protected var _CurrentHP:Int
 }

@@ -22,14 +22,17 @@ package model.Norm
 /*the methods of this class will be add later*/
 class Norm {
   /** An array of two strings that indicate the objectives that the players can choose in between */
-  val objectives: List[String] = List("stars", "victories")
+  private val _objectives: List[String] = List("stars", "victories")
   /** An array with the amount of stars goals that the players have to reach in certain Norm. It increases from
    * norm 2 to 6*/
-  val Stars_obj: List[Int] = List(10, 30, 70, 120, 200)
+  private val _Stars_obj: List[Int] = List(10, 30, 70, 120, 200)
   /** An array with the amount of victories goals that the players have to reach in certain Norm. It increases
    * from norm 2 to 6*/
-  val Victories_obj: List[Int] = List(1, 3, 6, 10, 14)
+  private val _Victories_obj: List[Int] = List(1, 3, 6, 10, 14)
 
+  def Victories_obj: List[Int] = _Victories_obj
+  def Stars_obj: List[Int] = _Stars_obj
+  def objectives: List[String]= _objectives
   /*def NormCheck(character: PlayerCharacter): Unit = {}*/
 
   /*def NormClear(character: PlayerCharacter): Unit = {}*/

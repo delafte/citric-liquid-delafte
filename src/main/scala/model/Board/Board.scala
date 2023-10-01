@@ -25,7 +25,7 @@ import scala.collection.mutable.ArrayBuffer
 class Board(val Panels: ArrayBuffer[Panel], val players: ArrayBuffer[PlayerCharacter]) {
 
   /**This function creates the connections between panels by updating their NextPanels value, using the addPanel method.*/
-  def CreateConnections():Unit={
+  private def CreateConnections():Unit={
     var i:Int = 0
     while (i<Panels.length){
       if(i != 0 && i<(Panels.length)-1){
@@ -44,5 +44,6 @@ class Board(val Panels: ArrayBuffer[Panel], val players: ArrayBuffer[PlayerChara
       i+=1
     }
   }
+  CreateConnections()
 
 }

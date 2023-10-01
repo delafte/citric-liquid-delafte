@@ -1,7 +1,7 @@
 package cl.uchile.dcc.citric
 package model.Panels.PanelTypesClasses
 
-import cl.uchile.dcc.citric.model.Panels.AbstractPanel.AbstractPanel
+import model.Panels.AbstractPanel.AbstractPanel
 
 import scala.math._
 /**
@@ -33,11 +33,11 @@ class BonusPanel () extends AbstractPanel {
    * }}}
    * */
   def GiveStars():Unit={
-    if(characters.nonEmpty) {
+    if(_characters.nonEmpty) {
       var i: Int = 0
-      while(i<characters.length) {
-        val roll: Int = characters(i).rollDice()
-        characters(i).CurrentStars += min(roll * characters(i).CurrentNorm, roll * 3)
+      while(i<_characters.length) {
+        val roll: Int = _characters(i).rollDice()
+        _characters(i).CurrentStars_=(_characters(i).CurrentStars+min(roll * _characters(i).CurrentNorm, roll * 3))
         i += 1
       }
     }

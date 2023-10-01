@@ -29,28 +29,28 @@ class NeutralPanelTest extends FunSuite {
     neutralPanel.addPanel(NextPanels(2))
     neutralPanel.addPanel(NextPanels(3))
     neutralPanel.addPanel(NextPanels(4))
-    assertEquals(neutralPanel.nextPanels, NextPanels)
+    assertEquals(neutralPanel.nextPanels, NextPanels.toList)
   }
   test("We can add characters to a NeutralPanel"){
     neutralPanel.addCharacter(Nini)
     neutralPanel.addCharacter(Emma)
-    assertEquals(neutralPanel.characters, characters)
+    assertEquals(neutralPanel.characters, characters.toList)
     /*Also, we check the case in which we try to add a character that is already in the panel*/
     neutralPanel.addCharacter(Emma)
-    assertEquals(neutralPanel.characters, characters)
+    assertEquals(neutralPanel.characters, characters.toList)
   }
   test("We can also delete Characters from a NeutralPanel"){
     /*Testing the case in which we are trying to remove a character from a panel without characters*/
-    neutralPanel.removeCharacter(Nini, neutralPanel.characters)
-    assertEquals(neutralPanel.characters,Empty)
+    neutralPanel.removeCharacter(Nini)
+    assertEquals(neutralPanel.characters,Empty.toList)
     /*Testing the normal situation*/
     neutralPanel.addCharacter(Nini)
     neutralPanel.addCharacter(Emma)
-    neutralPanel.removeCharacter(Emma,neutralPanel.characters)
+    neutralPanel.removeCharacter(Emma)
     characters -= Emma
-    assertEquals(neutralPanel.characters,characters)
+    assertEquals(neutralPanel.characters,characters.toList)
     /*Testing the case in which we try to delete a character that isn't in the array*/
-    neutralPanel.removeCharacter(Emma, neutralPanel.characters)
-    assertEquals(neutralPanel.characters, characters)
+    neutralPanel.removeCharacter(Emma)
+    assertEquals(neutralPanel.characters, characters.toList)
   }
 }
