@@ -28,7 +28,7 @@ abstract class AbstractPanel extends Panel{
   protected var _nextPanels: ArrayBuffer[Panel] = ArrayBuffer()
   /**Returns an immutable list of the characters on the panel*/
   def characters: List[PlayerCharacter] = _characters.toList
-  /**Returns an immutable list of the characters on the panel*/
+  /**Returns an immutable list of the adjacent panels of the panel*/
   def nextPanels: List[Panel] = _nextPanels.toList
   override def addCharacter(player: PlayerCharacter): Unit = {
     if(!_characters.contains(player))

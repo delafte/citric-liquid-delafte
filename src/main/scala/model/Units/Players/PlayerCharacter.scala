@@ -93,7 +93,13 @@ class PlayerCharacter(private val _name: String, maxHp: Int, attack: Int, defens
   def NormCheck: Boolean = _NormCheck
   /**Returns the amount of victories of the character*/
   def Victories: Int = _Victories
-  /**Returns the current amount of stars of the character*/
+  /**Updates the current amount of victories of the character
+   * @param newVictories the new amount of victories of the character*/
+  def Victories_=(newVictories:Int):Unit = {
+    _Victories = newVictories
+  }
+  /**updates the current amount of stars of the character
+   * @param Stars the new amount of stars*/
   def CurrentStars_=(Stars: Int): Unit = {
     _CurrentStars = Stars
   }

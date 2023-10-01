@@ -34,7 +34,7 @@ trait Panel {
   protected var _nextPanels: ArrayBuffer[Panel]
   /**A getter for the characters on this panel*/
   def characters: List[PlayerCharacter]
-  /**A getter for the characters on this panel*/
+  /**A getter for the adjacent panels of this panel*/
   def nextPanels: List[Panel]
 
   /** Adds a character to the list of characters currently on this panel.

@@ -88,5 +88,8 @@ class PlayerCharacterTest extends munit.FunSuite {
     /*NormCheck state setter*/
     character.NormCheck = true
     assertEquals(character.NormCheck,true)
+    /*Current victories setter*/
+    character.Victories = 3
+    assertEquals(character.Victories,3)
   }
 }

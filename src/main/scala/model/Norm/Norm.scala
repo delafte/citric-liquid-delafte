@@ -29,9 +29,11 @@ class Norm {
   /** An array with the amount of victories goals that the players have to reach in certain Norm. It increases
    * from norm 2 to 6*/
   private val _Victories_obj: List[Int] = List(1, 3, 6, 10, 14)
-
+  /**Returns an immutable list of the victories objectives*/
   def Victories_obj: List[Int] = _Victories_obj
+  /**Returns an immutable list of the stars objectives*/
   def Stars_obj: List[Int] = _Stars_obj
+  /**Returns an immutable list of the objectives*/
   def objectives: List[String]= _objectives
   /*def NormCheck(character: PlayerCharacter): Unit = {}*/
 
