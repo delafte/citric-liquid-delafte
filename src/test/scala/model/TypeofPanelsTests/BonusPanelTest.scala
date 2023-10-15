@@ -18,6 +18,7 @@ class BonusPanelTest extends FunSuite {
   private val NextPanels: List[Panel] = List(new EncounterPanel(),new NeutralPanel(), new DropPanel(), new BonusPanel,new HomePanel(Nini))
   private val characters: ArrayBuffer[PlayerCharacter]=ArrayBuffer(Nini,Emma)
   private val Empty: List[PlayerCharacter] = List()
+  private val Empty2: List[Panel] = List()
 
   private var bonusPanel: BonusPanel = _
   override def beforeEach(context: BeforeEach): Unit = {
@@ -30,6 +31,22 @@ class BonusPanelTest extends FunSuite {
     bonusPanel.addPanel(NextPanels(3))
     bonusPanel.addPanel(NextPanels(4))
     assertEquals(bonusPanel.nextPanels, NextPanels)
+  }
+  test("We can remove panels connected directly to the panel") {
+    bonusPanel.addPanel(NextPanels.head)
+    bonusPanel.addPanel(NextPanels(1))
+    bonusPanel.addPanel(NextPanels(2))
+    bonusPanel.addPanel(NextPanels(3))
+    bonusPanel.addPanel(NextPanels(4))
+    bonusPanel.removePanel(NextPanels.head)
+    bonusPanel.removePanel(NextPanels(1))
+    bonusPanel.removePanel(NextPanels(2))
+    bonusPanel.removePanel(NextPanels(3))
+    bonusPanel.removePanel(NextPanels(4))
+    assertEquals(bonusPanel.nextPanels, Empty2)
+    /*If we try to remove a panel when the nextPanels is empty, it should stay the same*/
+    bonusPanel.removePanel(new BonusPanel())
+    assertEquals(bonusPanel.nextPanels, Empty2)
   }
   test("We can add characters to a BonusPanel"){
     bonusPanel.addCharacter(Nini)
@@ -58,7 +75,7 @@ class BonusPanelTest extends FunSuite {
     bonusPanel.addCharacter(Emma)
     val StarsBefore = Nini.CurrentStars
     val StarsBefore2 = Emma.CurrentStars
-    bonusPanel.GiveStars()
+    bonusPanel.apply()
     assert(Nini.CurrentStars > StarsBefore)
     assert(Emma.CurrentStars > StarsBefore2)
   }

@@ -34,11 +34,11 @@ class DropPanel() extends AbstractPanel {
    *   panel2.RemoveStars()
    * }}}
    */
-  def RemoveStars(): Unit = {
+  override def apply(): Unit = {
     if (_characters.nonEmpty) {
       var i: Int = 0
       while (i < _characters.length) {
-        val roll: Int = _characters(i).rollDice()
+        val roll: Int = _characters(i).rollDice(_characters(i).randomNumberGenerator)
         if (_characters(i).CurrentStars > (roll * _characters(i).CurrentNorm)) {
           _characters(i).CurrentStars = _characters(i).CurrentStars - (roll*_characters(i).CurrentNorm)
         }

@@ -52,7 +52,7 @@ class PlayerCharacterTest extends munit.FunSuite {
   // 1. Test invariant properties, e.g. the result is always between 1 and 6.
   test("A character should be able to roll a dice") {
     for (_ <- 1 to 10) {
-      assert(character.rollDice >= 1 && character.rollDice <= 6)
+      assert(character.rollDice(character.randomNumberGenerator) >= 1 && character.rollDice(character.randomNumberGenerator) <= 6)
     }
   }
 
@@ -63,7 +63,7 @@ class PlayerCharacterTest extends munit.FunSuite {
     val other =
       new PlayerCharacter(name, maxHp, attack, defense, evasion, new Random(11))
     for (_ <- 1 to 10) {
-      assertEquals(character.rollDice(), other.rollDice())
+      assertEquals(character.rollDice(character.randomNumberGenerator), other.rollDice(other.randomNumberGenerator))
     }
   }
   test("A character can be healed with +1 points of HP"){
@@ -91,5 +91,36 @@ class PlayerCharacterTest extends munit.FunSuite {
     /*Current victories setter*/
     character.Victories = 3
     assertEquals(character.Victories,3)
+  }
+  test("A character that isn't K.O should be able to do an attack"){
+    /*if the character is K.O, it shouldn't attack*/
+    character.CurrentHP = 0
+    character.Attack(character.randomNumberGenerator)
+    assertEquals(character.Attack_Quantity, 0)
+    /*if it isn't K.O:*/
+    /*The Attack Quantity is set as 0, so after invoking the method, it has to be different than zero and positive*/
+    character.CurrentHP = 3
+    character.Attack(character.randomNumberGenerator)
+    assert(character.Attack_Quantity > 0 && character.Attack_Quantity > character.ATK)
+  }
+  test("A character should be able to defend itself") {
+    val HP_before: Int = character.CurrentHP
+    character.Defense(12,character.randomNumberGenerator)
+    /*After invoking the method, the Current HP of the character has to be at least one unit less than the value before*/
+    assert(character.CurrentHP<HP_before)
+    /*if the HP was already equal to zero, it stays the same*/
+    character.CurrentHP =0
+    character.Defense(12, character.randomNumberGenerator)
+    assert(character.CurrentHP == 0)
+  }
+  test("A character should be able to evade an attack") {
+    val HP_before: Int = character.CurrentHP
+    character.Evasion(12, character.randomNumberGenerator)
+    /*After invoking the method, the character receives damage equal to 0 or the same quantity of the attack*/
+    assert(character.CurrentHP == HP_before || character.CurrentHP < HP_before)
+    /*If it's HP is already equal to zero, it stays the same*/
+    character.CurrentHP = 0
+    character.Evasion(12, character.randomNumberGenerator)
+    assert(character.CurrentHP == 0)
   }
 }

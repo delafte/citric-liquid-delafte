@@ -32,11 +32,11 @@ class BonusPanel () extends AbstractPanel {
    *   panel2.GiveStars()
    * }}}
    * */
-  def GiveStars():Unit={
+  override def apply():Unit={
     if(_characters.nonEmpty) {
       var i: Int = 0
       while(i<_characters.length) {
-        val roll: Int = _characters(i).rollDice()
+        val roll: Int = _characters(i).rollDice(_characters(i).randomNumberGenerator)
         _characters(i).CurrentStars_=(_characters(i).CurrentStars+min(roll * _characters(i).CurrentNorm, roll * 3))
         i += 1
       }

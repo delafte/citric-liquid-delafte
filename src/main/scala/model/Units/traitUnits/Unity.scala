@@ -1,6 +1,8 @@
 package cl.uchile.dcc.citric
 package model.Units.traitUnits
 
+import scala.util.Random
+
 /** The 'Unity' Trait represents a unit, which is an entity that will participate
  * in the game. It can be a Character or a Wild Unit.
  *
@@ -27,4 +29,15 @@ trait Unity {
 
   /**The HP left that the Unity currently has, it varies during the game*/
   protected var _CurrentHP:Int
+
+  /**The attack that the unity does over an enemy*/
+  protected var _Attack_Quantity: Int
+  /** A utility to generate random numbers. Defaults to a new `Random` instance*/
+  val _randomNumberGenerator: Random
+  /**This function simulates the attack of the unity to other unity*/
+  def Attack(random: Random): Unit
+  /**This function simulates de defense of a unity when it receives an attack*/
+  def Defense(atk: Int,random: Random): Unit
+  /**This function simulates de evasion of a unity when it receives an attack*/
+  def Evasion(atk: Int, random: Random): Unit
 }

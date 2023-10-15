@@ -19,6 +19,7 @@ class DropPanelTest extends FunSuite {
   private val NextPanels: ArrayBuffer[Panel] = ArrayBuffer(new NeutralPanel(), new BonusPanel(), new EncounterPanel(), new DropPanel, new HomePanel(Minie))
   private val characters: ArrayBuffer[PlayerCharacter] = ArrayBuffer(Minie, Anna)
   private val Empty: ArrayBuffer[PlayerCharacter] = ArrayBuffer()
+  private val Empty2: List[Panel] = List()
 
   private var dropPanel: DropPanel = _
   override def beforeEach(context: BeforeEach): Unit = {
@@ -32,6 +33,22 @@ class DropPanelTest extends FunSuite {
     dropPanel.addPanel(NextPanels(3))
     dropPanel.addPanel(NextPanels(4))
     assertEquals(dropPanel.nextPanels, NextPanels.toList)
+  }
+  test("We can remove panels connected directly to the panel"){
+    dropPanel.addPanel(NextPanels(0))
+    dropPanel.addPanel(NextPanels(1))
+    dropPanel.addPanel(NextPanels(2))
+    dropPanel.addPanel(NextPanels(3))
+    dropPanel.addPanel(NextPanels(4))
+    dropPanel.removePanel(NextPanels(0))
+    dropPanel.removePanel(NextPanels(1))
+    dropPanel.removePanel(NextPanels(2))
+    dropPanel.removePanel(NextPanels(3))
+    dropPanel.removePanel(NextPanels(4))
+    assertEquals(dropPanel.nextPanels, Empty2)
+    /*If we try to remove a panel when the nextPanels is empty, it should stay the same*/
+    dropPanel.removePanel(new BonusPanel())
+    assertEquals(dropPanel.nextPanels,Empty2)
   }
   test("We can add characters to a Drop Panel") {
     dropPanel.addCharacter(Minie)
@@ -61,12 +78,12 @@ class DropPanelTest extends FunSuite {
     /*First, we test that the panel removes stars of the character in a normal situation*/
     Minie.CurrentStars_=(10)
     Anna.CurrentStars_=(6)
-    dropPanel.RemoveStars()
+    dropPanel.apply()
     assert(Minie.CurrentStars < 10)
     assert(Anna.CurrentStars < 6)
     /*Then, we test an edge case, in which the player has less stars than the quantity that the panel wants to take*/
     Minie.CurrentStars_=(0)
-    dropPanel.RemoveStars()
+    dropPanel.apply()
     assert(Minie.CurrentStars == 0)
   }
 

@@ -18,6 +18,7 @@ class HomePanelTest extends FunSuite {
   private val NextPanels: ArrayBuffer[Panel] = ArrayBuffer(new NeutralPanel(),new HomePanel(Emma),new BonusPanel(), new DropPanel, new EncounterPanel)
   private val characters: ArrayBuffer[PlayerCharacter]=ArrayBuffer(Nini,Emma)
   private val Empty: ArrayBuffer[PlayerCharacter]=ArrayBuffer()
+  private val Empty2: List[Panel] = List()
 
   private var homePanel: HomePanel = _
   override def beforeEach(context: BeforeEach): Unit = {
@@ -33,6 +34,22 @@ class HomePanelTest extends FunSuite {
     homePanel.addPanel(NextPanels(3))
     homePanel.addPanel(NextPanels(4))
     assertEquals(homePanel.nextPanels, NextPanels.toList)
+  }
+  test("We can remove panels connected directly to the panel") {
+    homePanel.addPanel(NextPanels.head)
+    homePanel.addPanel(NextPanels(1))
+    homePanel.addPanel(NextPanels(2))
+    homePanel.addPanel(NextPanels(3))
+    homePanel.addPanel(NextPanels(4))
+    homePanel.removePanel(NextPanels.head)
+    homePanel.removePanel(NextPanels(1))
+    homePanel.removePanel(NextPanels(2))
+    homePanel.removePanel(NextPanels(3))
+    homePanel.removePanel(NextPanels(4))
+    assertEquals(homePanel.nextPanels, Empty2)
+    /*If we try to remove a panel when the nextPanels is empty, it should stay the same*/
+    homePanel.removePanel(new BonusPanel())
+    assertEquals(homePanel.nextPanels, Empty2)
   }
   test("We can add characters to a HomePanel"){
     homePanel.addCharacter(Nini)

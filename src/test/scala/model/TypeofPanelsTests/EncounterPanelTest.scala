@@ -18,6 +18,7 @@ class EncounterPanelTest extends FunSuite {
   private val NextPanels: ArrayBuffer[Panel] = ArrayBuffer(new NeutralPanel(), new BonusPanel(), new EncounterPanel(), new DropPanel(),new HomePanel(Ammy))
   private val characters: ArrayBuffer[PlayerCharacter] = ArrayBuffer(Ammy, Hannah)
   private val Empty: ArrayBuffer[PlayerCharacter] = ArrayBuffer()
+  private val Empty2: List[Panel] = List()
 
   private var encounterPanel: EncounterPanel = _
   override def beforeEach(context: BeforeEach): Unit = {
@@ -30,6 +31,22 @@ class EncounterPanelTest extends FunSuite {
     encounterPanel.addPanel(NextPanels(3))
     encounterPanel.addPanel(NextPanels(4))
     assertEquals(encounterPanel.nextPanels, NextPanels.toList)
+  }
+  test("We can remove panels connected directly to the panel") {
+    encounterPanel.addPanel(NextPanels.head)
+    encounterPanel.addPanel(NextPanels(1))
+    encounterPanel.addPanel(NextPanels(2))
+    encounterPanel.addPanel(NextPanels(3))
+    encounterPanel.addPanel(NextPanels(4))
+    encounterPanel.removePanel(NextPanels.head)
+    encounterPanel.removePanel(NextPanels(1))
+    encounterPanel.removePanel(NextPanels(2))
+    encounterPanel.removePanel(NextPanels(3))
+    encounterPanel.removePanel(NextPanels(4))
+    assertEquals(encounterPanel.nextPanels, Empty2)
+    /*If we try to remove a panel when the nextPanels is empty, it should stay the same*/
+    encounterPanel.removePanel(new BonusPanel())
+    assertEquals(encounterPanel.nextPanels, Empty2)
   }
   test("We can add characters to an Encounter Panel") {
     encounterPanel.addCharacter(Ammy)

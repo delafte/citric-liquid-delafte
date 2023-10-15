@@ -1,5 +1,7 @@
 package cl.uchile.dcc.citric
 package model.Norm
+
+import model.Norm.TraitNorma
 /**
  * The class 'Norm' represents the Norm of the game that the players have to rise up so that, the one first to reach
  * a Norm equal to 6, wins the match.
@@ -19,22 +21,23 @@ package model.Norm
  *
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
-/*the methods of this class will be add later*/
-class Norm {
+/*the methods of this class will be added later*/
+class Norm extends TraitNorma{
   /** An array of two strings that indicate the objectives that the players can choose in between */
-  private val _objectives: List[String] = List("stars", "victories")
+  protected val _objectives: List[String] = List("stars", "victories")
   /** An array with the amount of stars goals that the players have to reach in certain Norm. It increases from
    * norm 2 to 6*/
-  private val _Stars_obj: List[Int] = List(10, 30, 70, 120, 200)
+  protected val _Stars_obj: List[Int] = List(10, 30, 70, 120, 200)
   /** An array with the amount of victories goals that the players have to reach in certain Norm. It increases
    * from norm 2 to 6*/
-  private val _Victories_obj: List[Int] = List(1, 3, 6, 10, 14)
+  protected val _Victories_obj: List[Int] = List(1, 3, 6, 10, 14)
   /**Returns an immutable list of the victories objectives*/
   def Victories_obj: List[Int] = _Victories_obj
   /**Returns an immutable list of the stars objectives*/
   def Stars_obj: List[Int] = _Stars_obj
   /**Returns an immutable list of the objectives*/
   def objectives: List[String]= _objectives
+
   /*def NormCheck(character: PlayerCharacter): Unit = {}*/
 
   /*def NormClear(character: PlayerCharacter): Unit = {}*/

@@ -4,6 +4,7 @@ package model.UnitsTests.WildUnitsTests
 import model.Panels.PanelTypesClasses.EncounterPanel
 import model.Units.WildUnits.RoboBall
 import munit.FunSuite
+import scala.util.Random
 
 class RoboBallTest extends FunSuite {
   private val panel: EncounterPanel = new EncounterPanel()
@@ -11,7 +12,7 @@ class RoboBallTest extends FunSuite {
   private var roboball: RoboBall =_
 
   override def beforeEach(context: BeforeEach): Unit = {
-    roboball = new RoboBall(panel)
+    roboball = new RoboBall(panel, new Random(11))
   }
   test("A RoboBall is created with a specified Encounter Panel") {
     assertEquals(roboball.Panel, panel)
@@ -39,5 +40,53 @@ class RoboBallTest extends FunSuite {
   test("We can change the current HP of a RoboBall(for future methods)") {
     roboball.CurrentHP = 1
     assertEquals(roboball.CurrentHP, 1)
+  }
+  // 1. Test invariant properties, e.g. the result is always between 1 and 6.
+  test("A RoboBall should be able to roll a dice") {
+    for (_ <- 1 to 10) {
+      assert(roboball.rollDice(roboball.randomNumberGenerator) >= 1 && roboball.rollDice(roboball.randomNumberGenerator) <= 6)
+    }
+  }
+
+  // 2. Set a seed and test the result is always the same.
+  // A seed sets a fixed succession of random numbers, so you can know that the next numbers
+  // are always the same for the same seed.
+  test("A Roboball should be able to roll a dice with a fixed seed") {
+    val other =
+      new RoboBall(new EncounterPanel(), new Random(11))
+    for (_ <- 1 to 10) {
+      assertEquals(roboball.rollDice(roboball.randomNumberGenerator), other.rollDice(other.randomNumberGenerator))
+    }
+  }
+  test("A RoboBall should be able to do an attack") {
+    /*if the roboBall is K.O, it shouldn't attack*/
+    roboball.CurrentHP = 0
+    roboball.Attack(roboball.randomNumberGenerator)
+    assertEquals(roboball.Attack_Quantity, 0)
+    /*if it isn't K.O:*/
+    /*The Attack Quantity is set as 0, so after invoking the method, it has to be >= zero*/
+    roboball.CurrentHP = 3
+    roboball.Attack(roboball.randomNumberGenerator)
+    assert(roboball.Attack_Quantity >= 0 && roboball.Attack_Quantity > roboball.ATK)
+  }
+  test("A roboball should be able to defend itself") {
+    val HP_before: Int = roboball.CurrentHP
+    roboball.Defense(12, roboball.randomNumberGenerator)
+    /*After invoking the method, the Current HP of the roboball has to be at least one unit less than the value before*/
+    assert(roboball.CurrentHP < HP_before)
+    /*if the HP was already equal to zero, it stays the same*/
+    roboball.CurrentHP = 0
+    roboball.Defense(12, roboball.randomNumberGenerator)
+    assert(roboball.CurrentHP == 0)
+  }
+  test("A roboball should be able to evade an attack") {
+    val HP_before: Int = roboball.CurrentHP
+    roboball.Evasion(12, roboball.randomNumberGenerator)
+    /*After invoking the method, the roboball receives damage equal to 0 or the same quantity of the attack*/
+    assert(roboball.CurrentHP == HP_before || roboball.CurrentHP < HP_before)
+    /*If it's HP is already equal to zero, it stays the same*/
+    roboball.CurrentHP = 0
+    roboball.Evasion(12, roboball.randomNumberGenerator)
+    assert(roboball.CurrentHP == 0)
   }
 }

@@ -18,6 +18,7 @@ class NeutralPanelTest extends FunSuite {
   private val NextPanels: ArrayBuffer[Panel] = ArrayBuffer(new NeutralPanel(),new HomePanel(Emma),new BonusPanel(), new DropPanel, new EncounterPanel)
   private val characters: ArrayBuffer[PlayerCharacter]=ArrayBuffer(Nini,Emma)
   private val Empty: ArrayBuffer[PlayerCharacter]=ArrayBuffer()
+  private val Empty2: List[Panel] = List()
 
   private var neutralPanel: NeutralPanel = _
   override def beforeEach(context: BeforeEach): Unit = {
@@ -30,6 +31,22 @@ class NeutralPanelTest extends FunSuite {
     neutralPanel.addPanel(NextPanels(3))
     neutralPanel.addPanel(NextPanels(4))
     assertEquals(neutralPanel.nextPanels, NextPanels.toList)
+  }
+  test("We can remove panels connected directly to the panel") {
+    neutralPanel.addPanel(NextPanels.head)
+    neutralPanel.addPanel(NextPanels(1))
+    neutralPanel.addPanel(NextPanels(2))
+    neutralPanel.addPanel(NextPanels(3))
+    neutralPanel.addPanel(NextPanels(4))
+    neutralPanel.removePanel(NextPanels.head)
+    neutralPanel.removePanel(NextPanels(1))
+    neutralPanel.removePanel(NextPanels(2))
+    neutralPanel.removePanel(NextPanels(3))
+    neutralPanel.removePanel(NextPanels(4))
+    assertEquals(neutralPanel.nextPanels, Empty2)
+    /*If we try to remove a panel when the nextPanels is empty, it should stay the same*/
+    neutralPanel.removePanel(new BonusPanel())
+    assertEquals(neutralPanel.nextPanels, Empty2)
   }
   test("We can add characters to a NeutralPanel"){
     neutralPanel.addCharacter(Nini)

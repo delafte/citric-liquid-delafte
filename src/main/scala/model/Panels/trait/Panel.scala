@@ -58,4 +58,12 @@ trait Panel {
    * @param panel The panel that is going to be adjacent to the panel
    */
   def addPanel(panel: Panel): Unit
+
+  /** removes an adjacent panel of the list of adjacent panels of the current panel.
+   *
+   * @param panel The panel that is going to be removed of the adjacent panels of the panel
+   */
+  def removePanel(panel:Panel): Unit
+  /**Represents the special effects of the panels*/
+  def apply(): Unit
 }
