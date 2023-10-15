@@ -29,7 +29,7 @@ import scala.util.Random
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
 /*The methods are going to be added later*/
-class Chicken(private val panel: EncounterPanel, val _randomNumberGenerator: Random) extends AbstractUnity {
+class Chicken(private val panel: EncounterPanel, protected val _randomNumberGenerator: Random) extends AbstractUnity {
   /** The Chicken's capability to deal damage to opponents. It is set as -1 */
   protected val _ATK: Int = -1
   /** The Chicken's capability to resist or mitigate damage from opponents. It is set as -1 */

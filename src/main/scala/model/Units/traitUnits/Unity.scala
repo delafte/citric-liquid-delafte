@@ -29,15 +29,14 @@ trait Unity {
 
   /**The HP left that the Unity currently has, it varies during the game*/
   protected var _CurrentHP:Int
-
   /**The attack that the unity does over an enemy*/
   protected var _Attack_Quantity: Int
   /** A utility to generate random numbers. Defaults to a new `Random` instance*/
-  val _randomNumberGenerator: Random
+  protected val _randomNumberGenerator: Random
   /**This function simulates the attack of the unity to other unity*/
-  def Attack(random: Random): Unit
+  def Attack(): Unit
   /**This function simulates de defense of a unity when it receives an attack*/
-  def Defense(atk: Int,random: Random): Unit
+  def Defense(atk: Int): Unit
   /**This function simulates de evasion of a unity when it receives an attack*/
-  def Evasion(atk: Int, random: Random): Unit
+  def Evasion(atk: Int): Unit
 }

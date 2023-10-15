@@ -45,7 +45,7 @@ class SeagullTest extends FunSuite {
   // 1. Test invariant properties, e.g. the result is always between 1 and 6.
   test("A Seagull should be able to roll a dice") {
     for (_ <- 1 to 10) {
-      assert(seagull.rollDice(seagull.randomNumberGenerator) >= 1 && seagull.rollDice(seagull.randomNumberGenerator) <= 6)
+      assert(seagull.rollDice() >= 1 && seagull.rollDice() <= 6)
     }
   }
 
@@ -56,38 +56,38 @@ class SeagullTest extends FunSuite {
     val other =
       new Seagull(new EncounterPanel(), new Random(11))
     for (_ <- 1 to 10) {
-      assertEquals(seagull.rollDice(seagull.randomNumberGenerator), other.rollDice(other.randomNumberGenerator))
+      assertEquals(seagull.rollDice(), other.rollDice())
     }
   }
   test("A Seagull should be able to do an attack") {
     /*if the seagull is K.O, it shouldn't attack*/
     seagull.CurrentHP = 0
-    seagull.Attack(seagull.randomNumberGenerator)
+    seagull.Attack()
     assertEquals(seagull.Attack_Quantity, 0)
     /*if it isn't K.O:*/
     /*The Attack Quantity is set as 0, so after invoking the method, it has to be >= zero*/
     seagull.CurrentHP = 3
-    seagull.Attack(seagull.randomNumberGenerator)
+    seagull.Attack()
     assert(seagull.Attack_Quantity >= 0 && seagull.Attack_Quantity > seagull.ATK)
   }
   test("A seagull should be able to defend itself") {
     val HP_before: Int = seagull.CurrentHP
-    seagull.Defense(12, seagull.randomNumberGenerator)
+    seagull.Defense(12)
     /*After invoking the method, the Current HP of the seagull has to be at least one unit less than the value before*/
     assert(seagull.CurrentHP < HP_before)
     /*if the HP was already equal to zero, it stays the same*/
     seagull.CurrentHP = 0
-    seagull.Defense(12, seagull.randomNumberGenerator)
+    seagull.Defense(12)
     assert(seagull.CurrentHP == 0)
   }
   test("A seagull should be able to evade an attack") {
     val HP_before: Int = seagull.CurrentHP
-    seagull.Evasion(12, seagull.randomNumberGenerator)
+    seagull.Evasion(12)
     /*After invoking the method, the seagull receives damage equal to 0 or the same quantity of the attack*/
     assert(seagull.CurrentHP == HP_before || seagull.CurrentHP < HP_before)
     /*If it's HP is already equal to zero, it stays the same*/
     seagull.CurrentHP = 0
-    seagull.Evasion(12, seagull.randomNumberGenerator)
+    seagull.Evasion(12)
     assert(seagull.CurrentHP == 0)
   }
 }

@@ -44,7 +44,7 @@ class ChickenTest extends FunSuite {
   // 1. Test invariant properties, e.g. the result is always between 1 and 6.
   test("A Chicken should be able to roll a dice") {
     for (_ <- 1 to 10) {
-      assert(chicken.rollDice(chicken.randomNumberGenerator) >= 1 && chicken.rollDice(chicken.randomNumberGenerator) <= 6)
+      assert(chicken.rollDice() >= 1 && chicken.rollDice() <= 6)
     }
   }
 
@@ -55,38 +55,38 @@ class ChickenTest extends FunSuite {
     val other =
       new Chicken(new EncounterPanel(), new Random(11))
     for (_ <- 1 to 10) {
-      assertEquals(chicken.rollDice(chicken.randomNumberGenerator), other.rollDice(other.randomNumberGenerator))
+      assertEquals(chicken.rollDice(), other.rollDice())
     }
   }
   test("A chicken that isn't K.O should be able to do an attack") {
     /*if the chicken is K.O, it shouldn't attack*/
     chicken.CurrentHP = 0
-    chicken.Attack(chicken.randomNumberGenerator)
+    chicken.Attack()
     assertEquals(chicken.Attack_Quantity, 0)
     /*if it isn't K.O:*/
     /*The Attack Quantity is set as 0, so after invoking the method, it has to be >= zero*/
     chicken.CurrentHP = 3
-    chicken.Attack(chicken.randomNumberGenerator)
+    chicken.Attack()
     assert(chicken.Attack_Quantity >= 0 && chicken.Attack_Quantity > chicken.ATK)
   }
   test("A chicken should be able to defend itself") {
     val HP_before: Int = chicken.CurrentHP
-    chicken.Defense(12, chicken.randomNumberGenerator)
+    chicken.Defense(12)
     /*After invoking the method, the Current HP of the chicken has to be at least one unit less than the value before*/
     assert(chicken.CurrentHP < HP_before)
     /*if the HP was already equal to zero, it stays the same*/
     chicken.CurrentHP = 0
-    chicken.Defense(12, chicken.randomNumberGenerator)
+    chicken.Defense(12)
     assert(chicken.CurrentHP == 0)
   }
   test("A character should be able to evade an attack") {
     val HP_before: Int = chicken.CurrentHP
-    chicken.Evasion(12, chicken.randomNumberGenerator)
+    chicken.Evasion(12)
     /*After invoking the method, the chicken receives damage equal to 0 or the same quantity of the attack*/
     assert(chicken.CurrentHP == HP_before || chicken.CurrentHP < HP_before)
     /*If it's HP is already equal to zero, it stays the same*/
     chicken.CurrentHP = 0
-    chicken.Evasion(12, chicken.randomNumberGenerator)
+    chicken.Evasion(12)
     assert(chicken.CurrentHP == 0)
   }
 }

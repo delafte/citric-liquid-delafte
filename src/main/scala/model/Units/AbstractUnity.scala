@@ -5,29 +5,34 @@ import scala.math._
 import scala.util.Random
 abstract class AbstractUnity extends Unity {
 
-  /** Rolls a dice and returns a value between 1 to 6. */
-  def rollDice(randomNumberGenerator: Random): Int = {
-    randomNumberGenerator.nextInt(6) + 1
+  /** Rolls a dice and returns a value between 1 to 6.
+   */
+  def rollDice(): Int = {
+    _randomNumberGenerator.nextInt(6) + 1
   }
-  /**This function simulates de defense of a unity when it receives an attack*/
-  def Defense(atk_enemy:Int, random: Random): Unit = {
-    val rollDef: Int= rollDice(random)
+  /**This function simulates de defense of a unity when it receives an attack
+   * @param atk_enemy the attack that the unity is receiving
+   */
+  def Defense(atk_enemy:Int): Unit = {
+    val rollDef: Int= rollDice()
     val df: Int = max(1, atk_enemy-(rollDef+_DEF))
     if (_CurrentHP - df >= 0) _CurrentHP -= df
     else _CurrentHP = 0
   }
-  /**This function simulates the attack of the unity to other unity*/
-  def Attack(random: Random): Unit = {
+  /**This function simulates the attack of the unity to other unity */
+  def Attack(): Unit = {
     if(_CurrentHP!=0) {/*if the unity isn't out of combat*/
-      val result: Int = rollDice(random)
+      val result: Int = rollDice()
       val atk: Int = _ATK + result
       if (result < 0) _Attack_Quantity = 0 /*There are cases in which an unity can have negative _ATK*/
       _Attack_Quantity = atk
     }
   }
-  /**This function simulates de evasion of a unity when it receives an attack*/
-  def Evasion(atk: Int, random: Random): Unit = {
-    val roll: Int = rollDice(random)
+  /**This function simulates de evasion of a unity when it receives an attack
+   * @param atk the attack that the unity is receiving
+   */
+  def Evasion(atk: Int): Unit = {
+    val roll: Int = rollDice()
     if(roll+_EVA <= atk){
       if (_CurrentHP - atk >= 0) _CurrentHP -= atk
       else _CurrentHP = 0

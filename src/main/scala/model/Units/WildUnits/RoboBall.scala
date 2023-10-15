@@ -29,7 +29,7 @@ import scala.util.Random
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
 /*The methods are going to be added later*/
-class RoboBall(private val panel: EncounterPanel, val _randomNumberGenerator: Random) extends AbstractUnity {
+class RoboBall(private val panel: EncounterPanel, protected val _randomNumberGenerator: Random) extends AbstractUnity {
   /** The RoboBall's capability to deal damage to opponents. It is set as -1 */
   protected val _ATK: Int = -1
   /** The RoboBall's capability to resist or mitigate damage from opponents. It is set as 1 */
