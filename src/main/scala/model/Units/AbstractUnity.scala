@@ -25,7 +25,7 @@ abstract class AbstractUnity extends Unity {
       val result: Int = rollDice()
       val atk: Int = _ATK + result
       if (result < 0) _Attack_Quantity = 0 /*There are cases in which an unity can have negative _ATK*/
-      _Attack_Quantity = atk
+      else _Attack_Quantity = atk
     }
   }
   /**This function simulates de evasion of a unity when it receives an attack
@@ -60,14 +60,14 @@ abstract class AbstractUnity extends Unity {
   /**The HP left that the Unity currently has, it varies during the game*/
   def CurrentHP: Int = _CurrentHP
 
-  /** updates the current amount of stars of the character
+  /** updates the current amount of stars of the unity
    *
    * @param Stars the new amount of stars */
   def CurrentStars_=(Stars: Int): Unit = {
     _CurrentStars = Stars
   }
 
-  /** Updates the current HP of the player.
+  /** Updates the current HP of the unity.
    *
    * @param newHP The new HP value. */
   def CurrentHP_=(newHP: Int): Unit = {

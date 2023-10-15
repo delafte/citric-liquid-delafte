@@ -31,7 +31,7 @@ trait Unity {
   protected var _CurrentHP:Int
   /**The attack that the unity does over an enemy*/
   protected var _Attack_Quantity: Int
-  /** A utility to generate random numbers. Defaults to a new `Random` instance*/
+  /** An utility to generate random numbers. Defaults to a new `Random` instance*/
   protected val _randomNumberGenerator: Random
   /**This function simulates the attack of the unity to other unity*/
   def Attack(): Unit

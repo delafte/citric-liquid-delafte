@@ -45,5 +45,7 @@ class Chicken(private val panel: EncounterPanel, protected val _randomNumberGene
 
   /** The current HP of the chicken, it starts as the max_HP */
   protected var _CurrentHP: Int = _maxHP
+
+/** Returns the Chicken's encounter panel in which it appears */
   def Panel: EncounterPanel = panel
 }

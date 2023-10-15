@@ -58,7 +58,7 @@ class PlayerCharacter(private val _name: String, maxHp: Int, attack: Int, defens
   /** This variable indicates if the player completed the objectives for increasing the Norm
    * it is initialized to false */
   private var _NormCheck: Boolean = false
-  /** The current stars of the unity, it starts as 0 */
+  /** The current stars of the character, it starts as 0 */
   protected var _CurrentStars: Int = 0
   /** The attack that the character is going to apply to their enemy */
   protected var _Attack_Quantity: Int = 0

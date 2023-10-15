@@ -79,7 +79,7 @@ class ChickenTest extends FunSuite {
     chicken.Defense(12)
     assert(chicken.CurrentHP == 0)
   }
-  test("A character should be able to evade an attack") {
+  test("A chicken should be able to evade an attack") {
     val HP_before: Int = chicken.CurrentHP
     chicken.Evasion(12)
     /*After invoking the method, the chicken receives damage equal to 0 or the same quantity of the attack*/
