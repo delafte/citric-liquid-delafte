@@ -33,10 +33,15 @@ trait Unity {
   protected var _Attack_Quantity: Int
   /** An utility to generate random numbers. Defaults to a new `Random` instance*/
   protected val _randomNumberGenerator: Random
-  /**This function simulates the attack of the unity to other unity*/
-  def Attack(): Unit
-  /**This function simulates de defense of a unity when it receives an attack*/
+  /**Returns the current HP of the Unit*/
+  def CurrentHP: Int
+  /**This function simulates the attack of the unity to other unity
+   * @param enemy the enemy of the Unity*/
+  def Attack(enemy:Unity): Unit
+  /**This function simulates de defense of a unity when it receives an attack
+   * @param atk the attack that the unity receives*/
   def Defense(atk: Int): Unit
-  /**This function simulates de evasion of a unity when it receives an attack*/
+  /**This function simulates de evasion of a unity when it receives an attack
+   * @param atk the attack that the unity receives*/
   def Evasion(atk: Int): Unit
 }

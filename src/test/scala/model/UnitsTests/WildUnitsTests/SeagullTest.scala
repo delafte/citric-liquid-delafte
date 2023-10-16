@@ -3,11 +3,15 @@ package model.UnitsTests.WildUnitsTests
 
 import model.Panels.PanelTypesClasses.EncounterPanel
 import model.Units.WildUnits.Seagull
+
+import cl.uchile.dcc.citric.model.Units.Players.PlayerCharacter
 import munit.FunSuite
+
 import scala.util.Random
 
 class SeagullTest extends FunSuite {
   private val panel: EncounterPanel = new EncounterPanel()
+  private val enemy: PlayerCharacter = new PlayerCharacter("Ammy", 10, 5, 2, 1)
   /*The object under test:*/
   private var seagull: Seagull = _
 
@@ -60,15 +64,19 @@ class SeagullTest extends FunSuite {
     }
   }
   test("A Seagull should be able to do an attack") {
-    /*if the seagull is K.O, it shouldn't attack*/
+    /*if the seagull has 0 hp, it shouldn't attack*/
     seagull.CurrentHP = 0
-    seagull.Attack()
+    seagull.Attack(enemy)
     assertEquals(seagull.Attack_Quantity, 0)
-    /*if it isn't K.O:*/
+    /*if it isn't 0 hp:*/
     /*The Attack Quantity is set as 0, so after invoking the method, it has to be >= zero*/
     seagull.CurrentHP = 3
-    seagull.Attack()
+    seagull.Attack(enemy)
     assert(seagull.Attack_Quantity >= 0 && seagull.Attack_Quantity > seagull.ATK)
+    /*if the enemy has HP 0, it shouldn't attack*/
+    enemy.CurrentHP = 0
+    seagull.Attack(enemy)
+    assertEquals(seagull.Attack_Quantity, 0)
   }
   test("A seagull should be able to defend itself") {
     val HP_before: Int = seagull.CurrentHP

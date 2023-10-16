@@ -4,6 +4,8 @@ package model.UnitsTests
 import model.Units.Players.PlayerCharacter
 
 import scala.util.Random
+import model.Units.WildUnits.Chicken
+import model.Panels.PanelTypesClasses.EncounterPanel
 
 class PlayerCharacterTest extends munit.FunSuite {
 
@@ -12,6 +14,7 @@ class PlayerCharacterTest extends munit.FunSuite {
   private val attack = 1
   private val defense = 1
   private val evasion = 1
+  private val enemy: Chicken = new Chicken(new EncounterPanel, new Random(11))
   /*
   This is the object under test.
   We initialize it in the beforeEach method so we can reuse it in all the tests.
@@ -92,16 +95,20 @@ class PlayerCharacterTest extends munit.FunSuite {
     character.Victories = 3
     assertEquals(character.Victories,3)
   }
-  test("A character that isn't K.O should be able to do an attack"){
+  test("A character should be able to do an attack"){
     /*if the character is K.O, it shouldn't attack*/
-    character.CurrentHP = 0
-    character.Attack()
+    character.KO = true
+    character.Attack(enemy)
     assertEquals(character.Attack_Quantity, 0)
     /*if it isn't K.O:*/
     /*The Attack Quantity is set as 0, so after invoking the method, it has to be different than zero and positive*/
-    character.CurrentHP = 3
-    character.Attack()
+    character.KO = false
+    character.Attack(enemy)
     assert(character.Attack_Quantity > 0 && character.Attack_Quantity > character.ATK)
+    /*if the enemy has HP 0, it shouldn't attack*/
+    enemy.CurrentHP = 0
+    character.Attack(enemy)
+    assertEquals(character.Attack_Quantity,0)
   }
   test("A character should be able to defend itself") {
     val HP_before: Int = character.CurrentHP

@@ -65,6 +65,9 @@ class PlayerCharacter(private val _name: String, maxHp: Int, attack: Int, defens
 
   /** The current HP of the character, it starts as the max_HP */
   protected var _CurrentHP: Int = _maxHP
+  /**This variable indicates if a character is in a KO state*/
+  private var _KO = false
+
   /** This function gives the character 1 point of HP. It may be invoked when a character lands on a HomePanel */
 
   def heal(): Unit = {
@@ -72,7 +75,8 @@ class PlayerCharacter(private val _name: String, maxHp: Int, attack: Int, defens
       _CurrentHP += 1
     }
   }
-
+  /**Returns the KO state of the character*/
+  def KO: Boolean = _KO
   /**Returns the name of the character*/
   def name: String = _name
 
@@ -101,6 +105,24 @@ class PlayerCharacter(private val _name: String, maxHp: Int, attack: Int, defens
    * @param newState The new state of their NormCheck.*/
   def NormCheck_=(newState: Boolean): Unit = {
     _NormCheck = newState
+  }
+
+  /** Updates the KO state of the player.
+   *
+   * @param nKO The new state of their KO. */
+  def KO_= (nKO:Boolean):Unit={
+    _KO = nKO
+  }
+
+  /** This function simulates the attack of the character to other Unity */
+  def Attack(enemy: Unity): Unit = {
+    if (!KO && enemy.CurrentHP != 0 ) {
+      val res: Int = rollDice()
+      val atk: Int = ATK + res
+      if (atk < 0) Attack_Quantity = 0
+      else Attack_Quantity = atk
+    }
+    else Attack_Quantity=0
   }
 }
 

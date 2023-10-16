@@ -3,11 +3,15 @@ package model.UnitsTests.WildUnitsTests
 
 import model.Panels.PanelTypesClasses.EncounterPanel
 import model.Units.WildUnits.Chicken
+
+import cl.uchile.dcc.citric.model.Units.Players.PlayerCharacter
 import munit.FunSuite
+
 import scala.util.Random
 
 class ChickenTest extends FunSuite {
   private val panel: EncounterPanel = new EncounterPanel()
+  private val enemy: PlayerCharacter = new PlayerCharacter("Ammy", 10, 5, 2, 1)
   /*The object under test:*/
   private var chicken:Chicken =_
   override def beforeEach(context: BeforeEach): Unit = {
@@ -58,16 +62,20 @@ class ChickenTest extends FunSuite {
       assertEquals(chicken.rollDice(), other.rollDice())
     }
   }
-  test("A chicken that isn't K.O should be able to do an attack") {
-    /*if the chicken is K.O, it shouldn't attack*/
+  test("A chicken should be able to do an attack") {
+    /*if the chicken has 0 Hp, it shouldn't attack*/
     chicken.CurrentHP = 0
-    chicken.Attack()
+    chicken.Attack(enemy)
     assertEquals(chicken.Attack_Quantity, 0)
-    /*if it isn't K.O:*/
+    /*if it isn't 0 hp:*/
     /*The Attack Quantity is set as 0, so after invoking the method, it has to be >= zero*/
     chicken.CurrentHP = 3
-    chicken.Attack()
+    chicken.Attack(enemy)
     assert(chicken.Attack_Quantity >= 0 && chicken.Attack_Quantity > chicken.ATK)
+    /*if the enemy has HP 0, it shouldn't attack*/
+    enemy.CurrentHP = 0
+    chicken.Attack(enemy)
+    assertEquals(chicken.Attack_Quantity, 0)
   }
   test("A chicken should be able to defend itself") {
     val HP_before: Int = chicken.CurrentHP

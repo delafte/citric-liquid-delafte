@@ -3,11 +3,15 @@ package model.UnitsTests.WildUnitsTests
 
 import model.Panels.PanelTypesClasses.EncounterPanel
 import model.Units.WildUnits.RoboBall
+
+import cl.uchile.dcc.citric.model.Units.Players.PlayerCharacter
 import munit.FunSuite
+
 import scala.util.Random
 
 class RoboBallTest extends FunSuite {
   private val panel: EncounterPanel = new EncounterPanel()
+  private val enemy: PlayerCharacter = new PlayerCharacter("Ammy", 10, 5, 2, 1)
   /*The object under test:*/
   private var roboball: RoboBall =_
 
@@ -59,15 +63,19 @@ class RoboBallTest extends FunSuite {
     }
   }
   test("A RoboBall should be able to do an attack") {
-    /*if the roboBall is K.O, it shouldn't attack*/
+    /*if the roboBall has 0 hp, it shouldn't attack*/
     roboball.CurrentHP = 0
-    roboball.Attack()
+    roboball.Attack(enemy)
     assertEquals(roboball.Attack_Quantity, 0)
-    /*if it isn't K.O:*/
+    /*if it isn't 0 hp:*/
     /*The Attack Quantity is set as 0, so after invoking the method, it has to be >= zero*/
     roboball.CurrentHP = 3
-    roboball.Attack()
+    roboball.Attack(enemy)
     assert(roboball.Attack_Quantity >= 0 && roboball.Attack_Quantity > roboball.ATK)
+    /*if the enemy has HP 0, it shouldn't attack*/
+    enemy.CurrentHP = 0
+    roboball.Attack(enemy)
+    assertEquals(roboball.Attack_Quantity, 0)
   }
   test("A roboball should be able to defend itself") {
     val HP_before: Int = roboball.CurrentHP

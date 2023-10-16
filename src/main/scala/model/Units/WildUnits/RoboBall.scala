@@ -2,7 +2,7 @@ package cl.uchile.dcc.citric
 package model.Units.WildUnits
 
 import cl.uchile.dcc.citric.model.Panels.PanelTypesClasses.EncounterPanel
-import cl.uchile.dcc.citric.model.Units.AbstractUnity
+import cl.uchile.dcc.citric.model.Units.WildUnits.AbstractWildUnit
 import scala.util.Random
 
 /** The 'RoboBall' class represents one type of the wild units that appears aleatory on the board of the game
@@ -29,23 +29,13 @@ import scala.util.Random
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
 /*The methods are going to be added later*/
-class RoboBall(private val panel: EncounterPanel, protected val _randomNumberGenerator: Random) extends AbstractUnity {
+class RoboBall(private val panel: EncounterPanel, protected val _randomNumberGenerator: Random) extends AbstractWildUnit {
   /** The RoboBall's capability to deal damage to opponents. It is set as -1 */
   protected val _ATK: Int = -1
   /** The RoboBall's capability to resist or mitigate damage from opponents. It is set as 1 */
   protected val _DEF: Int = 1
   /** The RoboBall's skill to completely avoid certain attacks. It is set as -1 */
   protected val _EVA: Int = -1
-  /** The maximum health points a RoboBall can have. It represents the RoboBall's endurance. It is set as 3 */
-  protected val _maxHP: Int = 3
-  /** The current stars of the RoboBall, it starts as 0 */
-  protected var _CurrentStars: Int = 0
-  /** The attack that the RoboBall is going to apply to their enemy */
-  protected var _Attack_Quantity: Int = 0
-
-  /** The current HP of the RoboBall, it starts as the max_HP */
-  protected var _CurrentHP: Int = _maxHP
-
 
   /** Returns the RoboBall's encounter panel in which it appears */
   def Panel: EncounterPanel = panel
