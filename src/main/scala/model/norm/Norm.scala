@@ -21,6 +21,6 @@ trait Norm {
   def Stars_obj: Int
 
   /**Upgrades the norm of a character
-   * @param character the character that we want to upgrade*/
+   * @param character the character with the norm that we want to upgrade*/
   def upgradeNorm(character: PlayerCharacter):Unit
 }

@@ -4,8 +4,10 @@ package model.unitstests
 import model.units.players.PlayerCharacter
 
 import scala.util.Random
-import model.units.wildunits.{Chicken, RoboBall,Seagull}
+import model.units.wildunits.{Chicken, RoboBall, Seagull}
 import model.panels.paneltypes.EncounterPanel
+
+import cl.uchile.dcc.citric.model.norm.Norm6
 
 class PlayerCharacterTest extends munit.FunSuite {
 
@@ -99,6 +101,22 @@ class PlayerCharacterTest extends munit.FunSuite {
     /*Defend setter*/
     character.Defend = true
     assertEquals(character.Defend,true)
+    /*KO setter*/
+    character.KO = true
+    assertEquals(character.KO,true)
+    /*Attack_Quantity setter*/
+    character.Attack_Quantity = 1
+    assertEquals(character.Attack_Quantity,1)
+    /*Obj_stars setter*/
+    character.Obj_stars = true
+    assertEquals(character.Obj_stars,true)
+    /*Obj_victories setter*/
+    character.Obj_victories = true
+    assertEquals(character.Obj_victories,true)
+    /*CurrentNorm setter*/
+    character.CurrentNorm = new Norm6()
+    assert(character.CurrentNorm.isInstanceOf[Norm6])
+
   }
   test("A character should be able to do an attack"){
     /*if the character is K.O, it shouldn't attack*/

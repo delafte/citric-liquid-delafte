@@ -17,7 +17,7 @@ abstract class AbstractNorm extends Norm {
 
   /** Upgrades the norm of a character if they fulfilled the requirements of the objective that they chose
    *
-   * @param character the character that wants to upgrade norm
+   * @param character the character with the norm we want to upgrade
    * */
   def upgradeNorm(character: PlayerCharacter): Unit = {}
 }

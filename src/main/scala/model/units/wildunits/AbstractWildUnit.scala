@@ -13,18 +13,19 @@ import cl.uchile.dcc.citric.model.panels.paneltypes.EncounterPanel
  */
 abstract class AbstractWildUnit extends AbstractUnity with WildUnit{
   def Attack(enemy: Unity): Unit = {
+    if(CurrentHP>0){
+      GeneralATK()
+    }
     enemy.AttackWildUnit(this)
   }
   override def AttackWildUnit(enemy: WildUnit): Unit = {
-
+    enemy.Attack_Quantity = 0
   }
   def AttackPlayer(enemy: PlayerCharacter): Unit = {
-    if (!enemy.KO && CurrentHP != 0) {
-      GeneralATK(enemy)
+    if(CurrentHP > 0) {
       val i = rollDice()
       if (i <= 3) Defense(enemy.Attack_Quantity)
       else Evasion(enemy.Attack_Quantity)
-
       if (CurrentHP == 0) {
         enemy.CurrentStars += CurrentStars + BonusStars
         CurrentStars = 0
@@ -33,6 +34,7 @@ abstract class AbstractWildUnit extends AbstractUnity with WildUnit{
     }
     else enemy.Attack_Quantity = 0
   }
+  /**Bonus stars that the WildUnit gives when it loses*/
   protected val _BonusStars: Int
   /**Gives the Amount of Bonus Stars of the wild unit*/
   def BonusStars: Int = _BonusStars
@@ -43,5 +45,6 @@ abstract class AbstractWildUnit extends AbstractUnity with WildUnit{
 
   /** The current HP of the WildUnit, it starts as the max_HP */
   protected var _CurrentHP: Int = _maxHP
+  /**The EncounterPanel in which the WildUnit will appear*/
   def EncounterPanel: EncounterPanel = _EncounterPanel
 }

@@ -85,12 +85,12 @@ class ChickenTest extends FunSuite {
     assertEquals(chicken.Attack_Quantity, 0)
   }
   test("A chicken wins stars when it defeats a character, the character loses them"){
-    enemy.CurrentHP = 1
-    enemy.CurrentStars=3
-    enemy.Defend
-    chicken.Attack(enemy)
-    assertEquals(chicken.CurrentStars,1)
-    assertEquals(enemy.CurrentStars,2)
+    enemy.Defend = true
+    enemy.CurrentStars = 3
+    chicken.Attack_Quantity = 50
+    enemy.AttackWildUnit(chicken)
+    assertEquals(chicken.CurrentStars, 1)
+    assertEquals(enemy.CurrentStars, 2)
   }
   test("A chicken should be able to defend itself") {
     val HP_before: Int = chicken.CurrentHP

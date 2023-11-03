@@ -27,6 +27,9 @@ abstract class AbstractPlayerCharacter extends AbstractUnity with Player {
   protected var _Attack_Quantity: Int = 0
   /** This variable indicates if a character is in a KO state */
   protected var _KO = false
+
+  /** Returns the name of the character */
+  def name: String = _name
   /**This function returns the state of the variable Obj_stars*/
   def Obj_stars: Boolean = _Obj_stars
   /**This function returns the state of the variable Obj_stars*/

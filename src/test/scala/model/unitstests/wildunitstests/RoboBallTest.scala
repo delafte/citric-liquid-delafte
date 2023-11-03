@@ -11,15 +11,17 @@ import scala.util.Random
 
 class RoboBallTest extends FunSuite {
   private val panel: EncounterPanel = new EncounterPanel()
-  private val enemy: PlayerCharacter = new PlayerCharacter("Ammy", 10, 5, 2, 1)
   private val enemy2: Seagull = new Seagull(new EncounterPanel, new Random(11))
   private val enemy3: Chicken = new Chicken(new EncounterPanel, new Random(11))
   private val enemy4: RoboBall = new RoboBall(new EncounterPanel, new Random(11))
+  private var enemy: PlayerCharacter =_
   /*The object under test:*/
   private var roboball: RoboBall =_
 
   override def beforeEach(context: BeforeEach): Unit = {
     roboball = new RoboBall(panel, new Random(11))
+    enemy =new PlayerCharacter("Ammy", 10, 5, 2, 1)
+
   }
   test("A RoboBall is created with a specified Encounter Panel") {
     assertEquals(roboball.EncounterPanel, panel)
@@ -90,6 +92,14 @@ class RoboBallTest extends FunSuite {
     assertEquals(roboball.Attack_Quantity, 0)
     roboball.Attack(enemy4)
     assertEquals(roboball.Attack_Quantity, 0)
+  }
+  test("A RoboBall wins stars when it defeats a character, the character loses them") {
+    enemy.Evade = true
+    enemy.CurrentStars = 3
+    roboball.Attack_Quantity = 50
+    enemy.AttackWildUnit(roboball)
+    assertEquals(roboball.CurrentStars, 1)
+    assertEquals(enemy.CurrentStars, 2)
   }
   test("A roboball should be able to defend itself") {
     val HP_before: Int = roboball.CurrentHP

@@ -43,7 +43,10 @@ class Norm2 extends AbstractNorm {
    * }}}} */
   override def upgradeNorm(character:PlayerCharacter): Unit={
     if ((character.CurrentStars >= 30 && character.Obj_stars) || (character.Victories >= 3 && character.Obj_victories)) {
-      character.CurrentNorm = new Norm3()
+      character.CurrentNorm = new Norm3() /*we use the setter to update the norm of the character*/
+      /*and we use the setters of the Objectives to restart them*/
+      character.Obj_stars = false
+      character.Obj_victories = false
     }
   }
 

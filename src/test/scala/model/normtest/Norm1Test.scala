@@ -25,7 +25,10 @@ class Norm1Test extends munit.FunSuite {
     player.CurrentNorm.upgradeNorm(player)
     assert(player.CurrentNorm.isInstanceOf[Norm1])
     /*it also works with the other objective*/
-    player.Obj_victories = false
+    /*first, let's verify that the objectives restarted*/
+    assertEquals(player.Obj_victories,false)
+    assertEquals(player.Obj_stars,false)
+
     player.Obj_stars = true /*the player chooses the stars objective*/
     player.CurrentStars = 10 /*player has the requirement ok*/
     player.CurrentNorm.upgradeNorm(player)

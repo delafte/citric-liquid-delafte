@@ -82,5 +82,7 @@ trait Unity {
   /**This function simulates de evasion of a unity when it receives an attack
    * @param atk the attack that the unity receives*/
   def Evasion(atk: Int): Unit
+  /**This method calculates the attack that an unity is going to do */
+  def GeneralATK(): Unit
 
 }

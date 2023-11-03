@@ -61,19 +61,20 @@ class PlayerCharacter(protected val _name: String, maxHp: Int, attack: Int, defe
     }
   }
 
-  /** Returns the name of the character */
-  def name: String = _name
-
   def Attack(enemy: Unity): Unit = {
+    if(!KO){
+      GeneralATK()
+    }
     enemy.AttackPlayer(this)
   }
   def AttackPlayer(enemy: PlayerCharacter): Unit = {
-    if (!KO && !enemy.KO) {
-      GeneralATK(enemy)
+    if (!KO) {
       DecideDefendOrEvade() /*we call for the input of the user*/
       if (Defend) Defense(enemy.Attack_Quantity)
       else Evasion(enemy.Attack_Quantity)
       if (CurrentHP == 0) {
+        Defend = false
+        Evade = false
         val res: Int = floor(CurrentStars / 2).toInt
         enemy.CurrentStars += res
         CurrentStars -= res
@@ -85,12 +86,13 @@ class PlayerCharacter(protected val _name: String, maxHp: Int, attack: Int, defe
   }
 
   def AttackWildUnit(enemy: WildUnit): Unit = {
-    if (!KO && enemy.CurrentHP != 0) {
-      GeneralATK(enemy)
+    if (!KO ) {
       DecideDefendOrEvade() /*we call for the input of the user*/
       if (Defend) Defense(enemy.Attack_Quantity)
       else Evasion(enemy.Attack_Quantity)
       if (CurrentHP == 0) {
+        Evade = false
+        Defend = false
         val res: Int = floor(CurrentStars / 2).toInt
         enemy.CurrentStars += res
         CurrentStars -= res

@@ -31,7 +31,7 @@ class DropPanel() extends AbstractPanel {
    * {{{
    *   var panel2: DropPanel = new DropPanel()
    *   panel2.addCharacter(CharacterHannah)
-   *   panel2.apply()
+   *   panel2.apply(CharacterHannah)
    * }}}
    */
   override def apply(player: PlayerCharacter): Unit = {

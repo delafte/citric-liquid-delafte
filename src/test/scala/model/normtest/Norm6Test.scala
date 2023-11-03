@@ -12,11 +12,11 @@ class Norm6Test extends munit.FunSuite {
     assertEquals(norma.Stars_obj,200)
     assertEquals(norma.Victories_obj,14)
   }
-  test("If we upgrade a Norm6 it stays the same"){
+  test("If we try to upgrade a Norm6 it stays the same"){
     /*A character starts with Norm1*/
     player.CurrentNorm = new Norm6()
     assert(player.CurrentNorm.isInstanceOf[Norm6])
-    player.Victories = 15
+    player.Victories = 20
     player.CurrentNorm.upgradeNorm(player)
     assert(player.CurrentNorm.isInstanceOf[Norm6])
   }

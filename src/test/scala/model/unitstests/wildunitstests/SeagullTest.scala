@@ -2,7 +2,7 @@ package cl.uchile.dcc.citric
 package model.unitstests.wildunitstests
 
 import model.panels.paneltypes.EncounterPanel
-import model.units.wildunits.Seagull
+import model.units.wildunits.{Chicken, RoboBall, Seagull}
 
 import cl.uchile.dcc.citric.model.units.players.PlayerCharacter
 import munit.FunSuite
@@ -11,12 +11,17 @@ import scala.util.Random
 
 class SeagullTest extends FunSuite {
   private val panel: EncounterPanel = new EncounterPanel()
-  private val enemy: PlayerCharacter = new PlayerCharacter("Ammy", 10, 5, 2, 1)
+  private val enemy2: Seagull = new Seagull(new EncounterPanel, new Random(11))
+  private val enemy3: Chicken = new Chicken(new EncounterPanel, new Random(11))
+  private val enemy4: RoboBall = new RoboBall(new EncounterPanel, new Random(11))
+  private var enemy: PlayerCharacter =_
   /*The object under test:*/
   private var seagull: Seagull = _
 
   override def beforeEach(context: BeforeEach): Unit = {
     seagull = new Seagull(panel, new Random(11))
+    enemy = new PlayerCharacter("Ammy", 10, 5, 2, 1)
+
   }
 
   test("A seagull is created with a specified Encounter Panel") {
@@ -66,7 +71,7 @@ class SeagullTest extends FunSuite {
       assertEquals(seagull.rollDice(), other.rollDice())
     }
   }
-  test("A Seagull should be able to do an attack") {
+  test("A Seagull should be able to do an attack to a character only") {
     /*if the seagull has 0 hp, it shouldn't attack*/
     seagull.CurrentHP = 0
     seagull.Attack(enemy)
@@ -74,13 +79,28 @@ class SeagullTest extends FunSuite {
     /*if it isn't 0 hp:*/
     /*The Attack Quantity is set as 0, so after invoking the method, it has to be >= zero*/
     seagull.CurrentHP = 3
-    enemy.Evade = true
+    enemy.Defend = true
     seagull.Attack(enemy)
     assert(seagull.Attack_Quantity >= 0 && seagull.Attack_Quantity > seagull.ATK)
     /*if the enemy has HP 0, it shouldn't attack*/
-    enemy.KO=true
+    enemy.KO = true
     seagull.Attack(enemy)
     assertEquals(seagull.Attack_Quantity, 0)
+    /*If it tries to do an attack to a Roboball or chicken, it doesn't*/
+    seagull.Attack(enemy2)
+    assertEquals(seagull.Attack_Quantity, 0)
+    seagull.Attack(enemy3)
+    assertEquals(seagull.Attack_Quantity, 0)
+    seagull.Attack(enemy4)
+    assertEquals(seagull.Attack_Quantity, 0)
+  }
+  test("A seagull wins stars when it defeats a character, the character loses them") {
+    enemy.Defend = true
+    enemy.CurrentStars = 3
+    seagull.Attack_Quantity = 50
+    enemy.AttackWildUnit(seagull)
+    assertEquals(seagull.CurrentStars, 1)
+    assertEquals(enemy.CurrentStars, 2)
   }
   test("A seagull should be able to defend itself") {
     val HP_before: Int = seagull.CurrentHP

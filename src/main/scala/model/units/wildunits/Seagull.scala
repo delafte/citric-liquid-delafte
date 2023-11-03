@@ -39,6 +39,6 @@ class Seagull(protected val panel: EncounterPanel, override protected val _rando
   override protected val _EVA: Int = -1
   /** Bonus stars that the seagull gives when it loses */
   override protected val _BonusStars = 2
+  /**The EncounterPanel in which the WildUnit will appear*/
   protected val _EncounterPanel: EncounterPanel= panel
-
 }
