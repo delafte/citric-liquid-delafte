@@ -41,12 +41,7 @@ class Norm5 extends AbstractNorm {
    *   character.CurrentNorm.upgradeNorm(character) /*upgrades the Norm5 to Norm6*/
    * }}}} */
   override def upgradeNorm(character: PlayerCharacter): Unit = {
-    if ((character.CurrentStars >= 200 && character.Obj_stars) ||( character.Victories >= 14 && character.Obj_victories)) {
-      character.CurrentNorm = new Norm6() /*we use the setter to update the norm of the character*/
-      /*and we use the setters of the Objectives to restart them*/
-      character.Obj_stars = false
-      character.Obj_victories = false
-    }
+    val norm: Norm6 = new Norm6()
+    GeneralUpgrade(norm, character)
   }
-
 }

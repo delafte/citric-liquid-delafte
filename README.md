@@ -34,6 +34,21 @@ the dice and be healed, so that they can be used when the situation requires.
 
 Finally, the norm was implemented as an attribute in the PlayerCharacter Class and as a Class. When we address its functionalities, they will be added in the class.
 
-This project is licensed under the [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).
 
----
+## T2 - 6/11/23
+
+The first thing I did was to review the privacy settings of the methods and attributes already defined in the T1 version of this project.
+Regarding the attributes, I generally defined them with 'protected' access modifiers, allowing me to access them within the classes or abstract classes in the hierarchy. For some attributes, I opted to set them as 'private' if it was possible with my design. Next, I implemented the getters and setters. Getters were set up for every attribute that wasn't public, while setters were only defined for the ones I deemed necessary to modify from other parts of the program.
+As for the methods, almost all of them have 'public' access, except for those that serve as helpers for the main methods. These I designated with 'protected' access.
+
+Afterwards, I implemented the crucial methods for the combat in this game: 'Attack', 'Defense', and 'Evasion'. I developed them in accordance with the specified rules and conditions. In the case of the 'Attack' method, its behavior depends on the type of unit it received, necessitating the use of Double Dispatch. Additionally, I created a 'GeneralATK' method to streamline code and avoid redundancy. 
+Since calculating the attacker's attack is consistent across all units, I utilized this function in the 'Attack' method. Given that we haven't covered user inputs yet, I temporarily defined a method intended to prompt the user for their decision on defending or evading an attack, and each character has booleans to indicate the decision, then this can be changed. Currently, this method doesn't have any functionality, but that's why I placed it in both the 'AttackPlayerCharacter' and 
+'AttackWildUnit' methods. Subsequently, after receiving an attack, if a unit's HP drops to zero, the transfer of stars is executed, and any victories are attributed to the victorious character (if that's the case).
+
+For implementing the 'NormCheck' effect in the 'HomePanel', I defined a method specific to each type of 'Norm' to program its advancement to the next level, except for 'Norm6' which is the final level, thus its 
+method remains empty. To avoid redundant code, I also introduced a 'GeneralUpgrade' method. This method takes the character with the 'Norm' we wish to upgrade, as well as the subsequent 'Norm'. The upgrade only proceeds 
+if the character fulfills the requirements of the chosen objective, in line with the conditions we established. Since we haven't covered user inputs yet, I defined two booleans for each objective indicating the player's 
+choice (these can be modified later). With this setup in place, in the 'NormCheck' method, upon receiving the character affected by the panel, we call the 'upgradeNorm' method on the character's 'CurrentNorm' and it does what it is required to do.
+
+
+This project is licensed under the [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).
