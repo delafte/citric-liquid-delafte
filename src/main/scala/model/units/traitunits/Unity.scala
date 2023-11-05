@@ -83,6 +83,6 @@ trait Unity {
    * @param atk the attack that the unity receives*/
   def Evasion(atk: Int): Unit
   /**This method calculates the attack that an unity is going to do */
-  def GeneralATK(): Unit
+  protected def GeneralATK(): Unit
 
 }

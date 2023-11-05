@@ -80,8 +80,8 @@ abstract class AbstractUnity extends Unity {
       else CurrentHP = 0
     }
   }
-  /**This method calculates the attack that an unity is going to do */
-  def GeneralATK(): Unit = {
+  /**This method calculates the attack that an unity is going to do. It is used in the Attack simulation.*/
+  protected def GeneralATK(): Unit = {
     val result: Int = rollDice()
     val atk: Int = ATK + result
     if (atk < 0) Attack_Quantity = 0 /*There are cases in which an unity can have negative _ATK*/

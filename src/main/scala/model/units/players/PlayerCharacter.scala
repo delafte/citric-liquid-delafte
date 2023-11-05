@@ -60,7 +60,15 @@ class PlayerCharacter(protected val _name: String, maxHp: Int, attack: Int, defe
       _CurrentHP += 1
     }
   }
-
+  /**This method updates the stats of a PlayerCharacter that was Defecated.
+   *
+   * @param res The quantity of stars that the player loses*/
+  private def Defeated(res: Int): Unit = {
+    Defend = false
+    Evade = false
+    CurrentStars -= res
+    KO = true
+  }
   def Attack(enemy: Unity): Unit = {
     if(!KO){
       GeneralATK()
@@ -73,13 +81,10 @@ class PlayerCharacter(protected val _name: String, maxHp: Int, attack: Int, defe
       if (Defend) Defense(enemy.Attack_Quantity)
       else Evasion(enemy.Attack_Quantity)
       if (CurrentHP == 0) {
-        Defend = false
-        Evade = false
         val res: Int = floor(CurrentStars / 2).toInt
+        Defeated(res)
         enemy.CurrentStars += res
-        CurrentStars -= res
         enemy.Victories += 2
-        KO = true
       }
     }
     else enemy.Attack_Quantity = 0
@@ -91,12 +96,9 @@ class PlayerCharacter(protected val _name: String, maxHp: Int, attack: Int, defe
       if (Defend) Defense(enemy.Attack_Quantity)
       else Evasion(enemy.Attack_Quantity)
       if (CurrentHP == 0) {
-        Evade = false
-        Defend = false
         val res: Int = floor(CurrentStars / 2).toInt
+        Defeated(res)
         enemy.CurrentStars += res
-        CurrentStars -= res
-        KO = true
       }
     }
     else enemy.Attack_Quantity = 0

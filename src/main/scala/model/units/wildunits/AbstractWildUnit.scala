@@ -4,7 +4,10 @@ import model.units.AbstractUnity
 import model.units.players.PlayerCharacter
 import model.units.traitunits.{Unity, WildUnit}
 
+import cl.uchile.dcc.citric.exceptions.InvalidAttackException
 import cl.uchile.dcc.citric.model.panels.paneltypes.EncounterPanel
+
+import scala.util.Random
 /**
  * The 'AbstractWildUnit' abstract class consists on the methods that all types of WildUnits must have.
  * With this implementation we avoid the repetition of code.
@@ -20,10 +23,11 @@ abstract class AbstractWildUnit extends AbstractUnity with WildUnit{
   }
   override def AttackWildUnit(enemy: WildUnit): Unit = {
     enemy.Attack_Quantity = 0
+    throw new InvalidAttackException()
   }
   def AttackPlayer(enemy: PlayerCharacter): Unit = {
     if(CurrentHP > 0) {
-      val i = rollDice()
+      val i = rollDice()/*to obtain a random number*/
       if (i <= 3) Defense(enemy.Attack_Quantity)
       else Evasion(enemy.Attack_Quantity)
       if (CurrentHP == 0) {
@@ -34,8 +38,6 @@ abstract class AbstractWildUnit extends AbstractUnity with WildUnit{
     }
     else enemy.Attack_Quantity = 0
   }
-  /**Bonus stars that the WildUnit gives when it loses*/
-  protected val _BonusStars: Int
   /**Gives the Amount of Bonus Stars of the wild unit*/
   def BonusStars: Int = _BonusStars
   /** The maximum health points a WildUnit can have. It represents the WildUnit's endurance. It is set as 3 */
@@ -43,7 +45,7 @@ abstract class AbstractWildUnit extends AbstractUnity with WildUnit{
   /** The attack that the WildUnit is going to apply to their enemy */
   protected var _Attack_Quantity: Int = 0
 
-  /** The current HP of the WildUnit, it starts as the max_HP */
+  /** The current HP of the WildUnit, it starts as the maxHP */
   protected var _CurrentHP: Int = _maxHP
   /**The EncounterPanel in which the WildUnit will appear*/
   def EncounterPanel: EncounterPanel = _EncounterPanel

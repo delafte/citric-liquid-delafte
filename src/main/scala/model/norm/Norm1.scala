@@ -1,9 +1,7 @@
 package cl.uchile.dcc.citric
 package model.norm
 
-import model.norm.Norm
-
-import cl.uchile.dcc.citric.model.units.players.PlayerCharacter
+import model.units.players.PlayerCharacter
 /**
  * The class 'Norm1' represents the Norm1 of the game that the players start with.
  * The players have a Norm associated to them that can be upgraded when they fulfill
@@ -24,14 +22,7 @@ import cl.uchile.dcc.citric.model.units.players.PlayerCharacter
  *
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
-class Norm1 extends AbstractNorm {
-  /** The amount of stars goals that the players have to reach to upgrade to this norm */
-  protected val _Stars_obj: Int = 0
-  /** The amount of victories goals that the players have to reach to upgrade to this norm */
-  protected val _Victories_obj: Int = 0
-  /** The number of the Norm */
-  protected val _NumberNorm: Int = 1
-
+class Norm1() extends AbstractNorm(0,0,1) {
   /** Upgrades the norm of a character if they fulfilled the requirements of the objective that they chose
    *
    * @param character the character that wants to upgrade norm

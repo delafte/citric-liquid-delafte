@@ -85,13 +85,7 @@ class RoboBallTest extends FunSuite {
     enemy.KO = true
     roboball.Attack(enemy)
     assertEquals(roboball.Attack_Quantity, 0)
-    /*If it tries to do an attack to a Seagull or chicken, it doesn't*/
-    roboball.Attack(enemy2)
-    assertEquals(roboball.Attack_Quantity, 0)
-    roboball.Attack(enemy3)
-    assertEquals(roboball.Attack_Quantity, 0)
-    roboball.Attack(enemy4)
-    assertEquals(roboball.Attack_Quantity, 0)
+
   }
   test("A RoboBall wins stars when it defeats a character, the character loses them") {
     enemy.Evade = true

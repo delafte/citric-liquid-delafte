@@ -24,10 +24,17 @@ import scala.collection.mutable.ArrayBuffer
  *
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
-/*the method of this class will be implemented later*/
 class HomePanel(val Owner:PlayerCharacter) extends AbstractPanel{
   /**This method simulates the NormaCheck effect of this panel. When a character makes de NormaCheck
-   * it levels up their Norm if they fulfilled the requirements*/
+   * it levels up their Norm if they fulfilled the requirements.
+   *
+   * @param player the character that landed on the panel and it's going to receive the effect
+   * @example
+   * {{{
+   *   var panel2: HomePanel = new HomePanel()
+   *   panel2.addCharacter(CharacterHannah)/*The character is in Norm1 and fulfilled the objectives*/
+   *   panel2.NormaCheck(CharacterHannah)/*upgrades to Norm2*/
+   * }}}*/
   def NormaCheck(player:PlayerCharacter): Unit = {
     if (characters.contains(player)){
         player.CurrentNorm.upgradeNorm(player)

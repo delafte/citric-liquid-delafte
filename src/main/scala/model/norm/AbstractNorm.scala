@@ -6,7 +6,7 @@ import model.units.players.PlayerCharacter
  * of norms have in common. With this implementation we avoid the repetition of code.
  *
  * @author [[https://github.com/delafte/ Delaney Tello E.]]*/
-abstract class AbstractNorm extends Norm {
+abstract class AbstractNorm(private val _Stars_obj:Int, private val _Victories_obj:Int,private val _NumberNorm:Int) extends Norm {
   /** Returns the victories objective */
   def Victories_obj: Int = _Victories_obj
 
@@ -15,7 +15,7 @@ abstract class AbstractNorm extends Norm {
   /** Returns the number of the norm */
   def NumberNorm: Int = _NumberNorm
   /**Method that checks if the character meets the objective of the next Norm
-   * and restarts the the attributes that indicate the objective decision of the character(in case of norm ascension)
+   * and restarts the attributes that indicate the objective decision of the character(in case of norm ascension)
    * This function is used in the UpgradeNorm method
    * @param norm the next Norm of the current norm of the character
    * @param character the character with the Norm we want to upgrade*/

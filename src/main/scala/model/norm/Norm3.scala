@@ -25,13 +25,7 @@ import model.units.players.PlayerCharacter
  *
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
-class Norm3 extends AbstractNorm {
-  /**The amount of stars goals that the players have to reach to upgrade to this norm*/
-  protected val _Stars_obj: Int = 30
-  /** The amount of victories goals that the players have to reach to upgrade to this norm*/
-  protected val _Victories_obj: Int = 3
-  /** The number of the Norm */
-  protected val _NumberNorm: Int = 3
+class Norm3() extends AbstractNorm(30,3,3) {
 
   /** Upgrades the norm of a character if they fulfilled the requirements of the objective that they chose
    *

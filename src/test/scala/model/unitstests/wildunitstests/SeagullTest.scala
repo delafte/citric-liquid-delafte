@@ -86,13 +86,7 @@ class SeagullTest extends FunSuite {
     enemy.KO = true
     seagull.Attack(enemy)
     assertEquals(seagull.Attack_Quantity, 0)
-    /*If it tries to do an attack to a Roboball or chicken, it doesn't*/
-    seagull.Attack(enemy2)
-    assertEquals(seagull.Attack_Quantity, 0)
-    seagull.Attack(enemy3)
-    assertEquals(seagull.Attack_Quantity, 0)
-    seagull.Attack(enemy4)
-    assertEquals(seagull.Attack_Quantity, 0)
+
   }
   test("A seagull wins stars when it defeats a character, the character loses them") {
     enemy.Defend = true
