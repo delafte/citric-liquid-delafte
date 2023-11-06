@@ -35,24 +35,14 @@ trait Unity {
   protected var _Attack_Quantity: Int
   /** An utility to generate random numbers. Defaults to a new `Random` instance*/
   protected val _randomNumberGenerator: Random
-  /** Returns the attack of the Unit */
-  def ATK: Int
-  /** Returns the Defense of the Unit */
-  def DEF:Int
-  /** Returns the Evasion of the Unit */
-  def EVA:Int
-  /** Returns the maxHP of the Unit */
-  def maxHP:Int
+
   /** Returns the Current Stars of the Unit */
   def CurrentStars: Int
   /** Returns the Attack Quantity that the unity is going to use*/
   def Attack_Quantity:Int
-
-  /** Returns the current HP of the Unit */
-  def CurrentHP: Int
   /**It sets the value of the Unity's parameter CurrentStars
    * @param stars the actualization of the CurrentStars attribute*/
-  def CurrentStars_=(stars: Int): Unit
+  protected def CurrentStars_=(stars: Int): Unit
 
   /** It sets the value of the Unity's parameter Attack_Quantity
    *
@@ -62,16 +52,16 @@ trait Unity {
   /** This method allows a Unity to roll a dice and returns a value between 1 to 6. */
   def rollDice(): Int
 
-  /**This function simulates the attack of the unity to other unity
+  /**This method simulates the attack of the unity to other unity
    * @param enemy the Unity that is going to be attacked*/
   def Attack(enemy: Unity): Unit
 
-  /**This function simulates the process of the attack and the Unity receiving an Attack of the enemy that is a WildUnit
+  /**This method simulates the process of the attack and the Unity receiving an Attack of the enemy that is a WildUnit
    *
    * @param enemy the WildUnit that attacks*/
   def AttackWildUnit(enemy: WildUnit):Unit
 
-  /** This function simulates the process of the attack and the Unity receiving an Attack of the enemy that is a PlayerCharacter
+  /** This method simulates the process of the attack and the Unity receiving an Attack of the enemy that is a PlayerCharacter
    *
    * @param enemy the PlayerCharacter that attacks */
   def AttackPlayer(enemy:PlayerCharacter):Unit
@@ -84,5 +74,15 @@ trait Unity {
   def Evasion(atk: Int): Unit
   /**This method calculates the attack that an unity is going to do */
   protected def GeneralATK(): Unit
+
+  /** adds stars to the CurrentStars of the unity
+   *
+   * @param stars the stars that are going to be added */
+  def addStars(stars: Int): Unit
+
+  /** removes stars to the CurrentStars of the unity
+   *
+   * @param stars the stars that are going to be removed */
+  def removeStars(stars: Int): Unit
 
 }

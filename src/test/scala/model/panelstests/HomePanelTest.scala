@@ -77,9 +77,17 @@ class HomePanelTest extends FunSuite {
   test("The HomePanel has the NormaCheck effect and it affects the characters that land on the panel"){
     homePanel.addCharacter(Nini)
     Nini.Obj_stars = true
-    Nini.CurrentStars = 11
+    Nini.addStars(11)
     assert(Nini.CurrentNorm.isInstanceOf[Norm1])
     homePanel.NormaCheck(Nini)
     assert(Nini.CurrentNorm.isInstanceOf[Norm2])
+
+    /*if the character doesn't have the requirements to upgrade*/
+    Nini.Obj_stars = true
+    Nini.CurrentNorm = new Norm1
+    Nini.removeStars(9)
+    assert(Nini.CurrentNorm.isInstanceOf[Norm1])
+    homePanel.NormaCheck(Nini)
+    assert(Nini.CurrentNorm.isInstanceOf[Norm1])/*stays the same*/
   }
 }

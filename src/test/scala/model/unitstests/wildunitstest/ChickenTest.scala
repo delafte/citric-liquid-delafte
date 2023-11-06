@@ -1,5 +1,5 @@
 package cl.uchile.dcc.citric
-package model.unitstests.wildunitstests
+package model.unitstests.wildunitstest
 
 import model.panels.paneltypes.EncounterPanel
 import model.units.wildunits.Chicken
@@ -44,11 +44,11 @@ class ChickenTest extends FunSuite {
     assertEquals(chicken.CurrentHP, chicken.maxHP)
   }
   test("We can change the current amount of stars of a chicken(for future methods)"){
-    chicken.CurrentStars = 3
+    chicken.addStars(3)
     assertEquals(chicken.CurrentStars, 3)
   }
   test("We can change the current HP of a chicken(for future methods)"){
-    chicken.CurrentHP=1
+    chicken.removeHP(2)
     assertEquals(chicken.CurrentHP, 1)
   }
   // 1. Test invariant properties, e.g. the result is always between 1 and 6.
@@ -68,14 +68,40 @@ class ChickenTest extends FunSuite {
       assertEquals(chicken.rollDice(), other.rollDice())
     }
   }
+  test("The amount of HP can't be negative and using negative numbers doesn't work") {
+    chicken.removeHP(12)
+    assertEquals(chicken.CurrentHP, 0)
+    chicken.addHP(-3)
+    assertEquals(chicken.CurrentHP, 0)
+    chicken.removeHP(-1)
+    assertEquals(chicken.CurrentHP, 0)
+    chicken.addHP(2)
+    chicken.addHP(-2)
+    assertEquals(chicken.CurrentHP, 2)
+    chicken.addHP(0)
+    assertEquals(chicken.CurrentHP, 2)
+  }
+  test("The amount of Stars can't be negative and using negative numbers doesn't work") {
+    chicken.removeStars(3) /*starts with zero*/
+    assertEquals(chicken.CurrentStars, 0)
+    chicken.addStars(-3)
+    assertEquals(chicken.CurrentStars, 0)
+    chicken.removeStars(-1)
+    assertEquals(chicken.CurrentStars, 0)
+    chicken.addStars(2)
+    chicken.addStars(-2)
+    assertEquals(chicken.CurrentStars, 2)
+    chicken.addStars(0)
+    assertEquals(chicken.CurrentStars,2)
+  }
   test("A chicken should be able to do an attack") {
     /*if the chicken has 0 Hp, it shouldn't attack*/
-    chicken.CurrentHP = 0
+    chicken.removeHP(3)
     chicken.Attack(enemy)
     assertEquals(chicken.Attack_Quantity, 0)
     /*if it isn't 0 hp:*/
     /*The Attack Quantity is set as 0, so after invoking the method, it has to be >= zero*/
-    chicken.CurrentHP = 3
+    chicken.addHP(3)
     enemy.Defend=true
     chicken.Attack(enemy)
     assert(chicken.Attack_Quantity >= 0 && chicken.Attack_Quantity > chicken.ATK)
@@ -86,7 +112,7 @@ class ChickenTest extends FunSuite {
   }
   test("A chicken wins stars when it defeats a character, the character loses them"){
     enemy.Defend = true
-    enemy.CurrentStars = 3
+    enemy.addStars(3)
     chicken.Attack_Quantity = 50
     enemy.AttackWildUnit(chicken)
     assertEquals(chicken.CurrentStars, 1)
@@ -96,9 +122,10 @@ class ChickenTest extends FunSuite {
     val HP_before: Int = chicken.CurrentHP
     chicken.Defense(12)
     /*After invoking the method, the Current HP of the chicken has to be at least one unit less than the value before*/
-    assert(chicken.CurrentHP < HP_before)
+    assert(chicken.CurrentHP < HP_before && chicken.CurrentHP>=0)
     /*if the HP was already equal to zero, it stays the same*/
-    chicken.CurrentHP = 0
+    val hp: Int = chicken.CurrentHP
+    chicken.removeHP(hp)
     chicken.Defense(12)
     assert(chicken.CurrentHP == 0)
   }
@@ -107,8 +134,10 @@ class ChickenTest extends FunSuite {
     chicken.Evasion(12)
     /*After invoking the method, the chicken receives damage equal to 0 or the same quantity of the attack*/
     assert(chicken.CurrentHP == HP_before || chicken.CurrentHP < HP_before)
+    assert(chicken.CurrentHP>=0)
     /*If it's HP is already equal to zero, it stays the same*/
-    chicken.CurrentHP = 0
+    val hp: Int = chicken.CurrentHP
+    chicken.removeHP(hp)
     chicken.Evasion(12)
     assert(chicken.CurrentHP == 0)
   }

@@ -11,13 +11,10 @@ import model.units.players.PlayerCharacter
  *
  * @constructor Creates a Norm1.
  *
- * @example
- * {{{
+ * @example {{{
  *   val norma: Norm1 = new Norm1()/*to create a Norm1*/
- *
- *   PlayerCharacter.CurrentStars = 0
- *   norma.upgradeNorm(PlayerCharacter) /*upgrades the norm of the character if
- *   the character fulfilled the requirements, in this case, it maintains in Norm1*/
+ *   val stars: Int = norma.Stars_obj
+ *   println(s"the stars for this norm are: $stars")
  *   }}}
  *
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
@@ -28,7 +25,7 @@ class Norm1() extends AbstractNorm(0,0,1) {
    * @param character the character that wants to upgrade norm
    * @example {{{
    *   character.Obj_stars = true /*the character chose the stars objective for achieving Norm2*/
-   *   character.CurrentStars = 10 /*the character has 10 stars*/
+   *   character.CurrentStars = 10 /*the character has 10 stars and chose the stars objective before*/
    *   character.CurrentNorm.upgradeNorm(character) /*upgrades the Norm1 to Norm2*/
    * }}} */
   override def upgradeNorm(character: PlayerCharacter): Unit = {

@@ -44,7 +44,7 @@ abstract class AbstractPanel extends Panel{
     _nextPanels += panel
   }
   override def removePanel(panel:Panel): Unit = {
-    if(_nextPanels.nonEmpty){
+    if(_nextPanels.nonEmpty && _nextPanels.contains(panel)){
       _nextPanels -= panel
     }
   }

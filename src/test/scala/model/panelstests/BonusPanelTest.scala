@@ -77,7 +77,7 @@ class BonusPanelTest extends FunSuite {
     bonusPanel.apply(Nini)
     bonusPanel.apply(Emma)
     assert(Nini.CurrentStars > StarsBefore)
-    assert(Emma.CurrentStars == StarsBefore2)
+    assert(Emma.CurrentStars == StarsBefore2)/*Emma isn't in the panel*/
   }
 }
 

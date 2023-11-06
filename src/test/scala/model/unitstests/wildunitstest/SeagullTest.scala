@@ -1,5 +1,5 @@
 package cl.uchile.dcc.citric
-package model.unitstests.wildunitstests
+package model.unitstests.wildunitstest
 
 import model.panels.paneltypes.EncounterPanel
 import model.units.wildunits.{Chicken, RoboBall, Seagull}
@@ -47,11 +47,11 @@ class SeagullTest extends FunSuite {
     assertEquals(seagull.CurrentHP, seagull.maxHP)
   }
   test("We can change the current amount of stars of a Seagull(for future methods)") {
-    seagull.CurrentStars = 3
+    seagull.addStars( 3)
     assertEquals(seagull.CurrentStars, 3)
   }
   test("We can change the current HP of a Seagull(for future methods)") {
-    seagull.CurrentHP = 1
+    seagull.removeHP( 2)
     assertEquals(seagull.CurrentHP, 1)
   }
   // 1. Test invariant properties, e.g. the result is always between 1 and 6.
@@ -71,14 +71,36 @@ class SeagullTest extends FunSuite {
       assertEquals(seagull.rollDice(), other.rollDice())
     }
   }
-  test("A Seagull should be able to do an attack to a character only") {
+  test("The amount of HP can't be negative and using negative numbers doesn't work") {
+    seagull.removeHP(12)
+    assertEquals(seagull.CurrentHP, 0)
+    seagull.addHP(-3)
+    assertEquals(seagull.CurrentHP, 0)
+    seagull.removeHP(-1)
+    assertEquals(seagull.CurrentHP, 0)
+    seagull.addHP(2)
+    seagull.addHP(-2)
+    assertEquals(seagull.CurrentHP, 2)
+  }
+  test("The amount of Stars can't be negative and using negative numbers doesn't work") {
+    seagull.removeStars(3) /*starts with zero*/
+    assertEquals(seagull.CurrentStars, 0)
+    seagull.addStars(-3)
+    assertEquals(seagull.CurrentStars, 0)
+    seagull.removeStars(-1)
+    assertEquals(seagull.CurrentStars, 0)
+    seagull.addStars(2)
+    seagull.addStars(-2)
+    assertEquals(seagull.CurrentStars, 2)
+  }
+  test("A Seagull should be able to do an attack to a character") {
     /*if the seagull has 0 hp, it shouldn't attack*/
-    seagull.CurrentHP = 0
+    seagull.removeHP(3)
     seagull.Attack(enemy)
     assertEquals(seagull.Attack_Quantity, 0)
     /*if it isn't 0 hp:*/
     /*The Attack Quantity is set as 0, so after invoking the method, it has to be >= zero*/
-    seagull.CurrentHP = 3
+    seagull.addHP(3)
     enemy.Defend = true
     seagull.Attack(enemy)
     assert(seagull.Attack_Quantity >= 0 && seagull.Attack_Quantity > seagull.ATK)
@@ -90,7 +112,7 @@ class SeagullTest extends FunSuite {
   }
   test("A seagull wins stars when it defeats a character, the character loses them") {
     enemy.Defend = true
-    enemy.CurrentStars = 3
+    enemy.addStars(3)
     seagull.Attack_Quantity = 50
     enemy.AttackWildUnit(seagull)
     assertEquals(seagull.CurrentStars, 1)
@@ -100,9 +122,10 @@ class SeagullTest extends FunSuite {
     val HP_before: Int = seagull.CurrentHP
     seagull.Defense(12)
     /*After invoking the method, the Current HP of the seagull has to be at least one unit less than the value before*/
-    assert(seagull.CurrentHP < HP_before)
+    assert(seagull.CurrentHP < HP_before && seagull.CurrentHP>=0)
     /*if the HP was already equal to zero, it stays the same*/
-    seagull.CurrentHP = 0
+    val hp: Int = seagull.CurrentHP
+    seagull.removeHP(hp)
     seagull.Defense(12)
     assert(seagull.CurrentHP == 0)
   }
@@ -111,8 +134,10 @@ class SeagullTest extends FunSuite {
     seagull.Evasion(12)
     /*After invoking the method, the seagull receives damage equal to 0 or the same quantity of the attack*/
     assert(seagull.CurrentHP == HP_before || seagull.CurrentHP < HP_before)
+    assert(seagull.CurrentHP>=0)
     /*If it's HP is already equal to zero, it stays the same*/
-    seagull.CurrentHP = 0
+    val hp: Int = seagull.CurrentHP
+    seagull.removeHP(hp)
     seagull.Evasion(12)
     assert(seagull.CurrentHP == 0)
   }

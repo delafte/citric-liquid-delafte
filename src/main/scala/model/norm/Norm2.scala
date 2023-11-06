@@ -5,11 +5,11 @@ import model.units.players.PlayerCharacter
 /**
  * The class 'Norm2' represents the Norm2 of the game that the players have to achieve.
  * The players have a Norm associated to them that can be upgraded when they fulfill
- * some requirements. Those objectives are reached with a certain quantity of stars or of victories,
+ * some requirements. Those objectives are reached with a certain quantity of stars or victories,
  * that in the case of Norm2 those are:
  * - 10 stars
  * - 1 victory
- * After completing the requirements for leveling up,the player has to go to a HomePanel, so that they can activate the "Norm Check"
+ * After completing the requirements for leveling up, the player has to go to a HomePanel, so that they can activate the "Norm Check"
  * and increase their level.
  *
  * @constructor Creates a Norm2.
@@ -17,10 +17,8 @@ import model.units.players.PlayerCharacter
  * @example
  * {{{
  *   val norma: Norm2 = new Norm2()/*to create a Norm2*/
- *
- *   PlayerCharacter.CurrentStars = 11
- *   norma.upgradeNorm(PlayerCharacter) /*upgrades the norm of the character if
- *   the character fulfilled the requirements, in this case, it levels up to Norm2*/
+ *   val stars: Int = norma.Stars_obj
+ *   println(s"the stars for this norm are: $stars")
  *   }}}
  *
  * @author [[https://github.com/delafte/ Delaney Tello E.]]

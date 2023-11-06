@@ -1,6 +1,13 @@
 package cl.uchile.dcc.citric
 package exceptions
 
+import model.panels.paneltypes.EncounterPanel
+import model.units.wildunits.Seagull
+
+import cl.uchile.dcc.citric.model.units.players.PlayerCharacter
+
+import scala.util.Random
+
 class StatTest extends munit.FunSuite {
   private val statName = "testStat"
   private val testRange = 1 to 10
@@ -11,6 +18,8 @@ class StatTest extends munit.FunSuite {
   private val statBelowThreshold = Require.Stat(valueBelowThreshold, statName)
   private val valueAboveThreshold = 6
   private val statAboveThreshold = Require.Stat(valueAboveThreshold, statName)
+  private val WU1: Seagull = new Seagull(new EncounterPanel, new Random(11))
+  private val PC: PlayerCharacter = new PlayerCharacter("Ammy", 10, 5, 2, 1)
 
   test(
     "An `in` requirement should assign the correct value if it's inside the range"

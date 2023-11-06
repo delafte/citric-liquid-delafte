@@ -16,7 +16,6 @@ class PlayerCharacterTest extends munit.FunSuite {
   private val attack = 10
   private val defense = 1
   private val evasion = 1
-  private val enemy: Chicken = new Chicken(new EncounterPanel, new Random(11))
   private val enemy2: RoboBall = new RoboBall(new EncounterPanel, new Random(11))
   private val enemy3: Seagull = new Seagull(new EncounterPanel, new Random(11))
   /*
@@ -25,6 +24,7 @@ class PlayerCharacterTest extends munit.FunSuite {
   This is a good practice because it will reset the object before each test, so you don't have
   to worry about the state of the object between tests.
   */
+  private var enemy: Chicken =_
   private var character: PlayerCharacter = _  // <- x = _ is the same as x = null
   private var enemy4: PlayerCharacter = _
   // This method is executed before each `test(...)` method.
@@ -39,6 +39,7 @@ class PlayerCharacterTest extends munit.FunSuite {
       randomNumberGenerator
     )
     enemy4 = new PlayerCharacter("emma", 10, 2, 0, 0, new Random(11))
+    enemy = new Chicken(new EncounterPanel, new Random(11))
 
   }
 
@@ -76,25 +77,51 @@ class PlayerCharacterTest extends munit.FunSuite {
       assertEquals(character.rollDice(), other.rollDice())
     }
   }
+  test("The amount of Victories can't be negative and using negative numbers doesn't work"){
+    character.removeVictories(3)/*starts with zero*/
+    assertEquals(character.Victories,0)
+    character.addVictories(-3)
+    assertEquals(character.Victories,0)
+    character.removeVictories(-1)
+    assertEquals(character.Victories,0)
+    character.addVictories(2)
+    character.addVictories(-2)
+    assertEquals(character.Victories,2)
+    character.addVictories(0)
+    assertEquals(character.Victories, 2)
+  }
+  test("The amount of HP can't be negative and using negative numbers doesn't work") {
+    character.removeHP(12)
+    assertEquals(character.CurrentHP, 0)
+    character.addHP(-3)
+    assertEquals(character.CurrentHP, 0)
+    character.removeHP(-1)
+    assertEquals(character.CurrentHP, 0)
+    character.addHP(2)
+    character.addHP(-2)
+    assertEquals(character.CurrentHP, 2)
+  }
+  test("The amount of Stars can't be negative and using negative numbers doesn't work") {
+    character.removeStars(3) /*starts with zero*/
+    assertEquals(character.CurrentStars, 0)
+    character.addStars(-3)
+    assertEquals(character.CurrentStars, 0)
+    character.removeStars(-1)
+    assertEquals(character.CurrentStars, 0)
+    character.addStars(2)
+    character.addStars(-2)
+    assertEquals(character.CurrentStars, 2)
+  }
   test("A character can be healed with +1 points of HP"){
     /*First, we test the case in which the character is already full Hp*/
     character.heal()
     assertEquals(character.CurrentHP,character.maxHP)
     /*Now the case in which the character isn't full hp*/
-    character.CurrentHP_=(5)
+    character.removeHP(5)
     character.heal()
     assertEquals(character.CurrentHP,6)
   }
   test("The setters must be well implemented"){
-    /*Current HP setter*/
-    character.CurrentHP = 7
-    assertEquals(character.CurrentHP,7)
-    /*Current stars setter*/
-    character.CurrentStars = 20
-    assertEquals(character.CurrentStars,20)
-    /*Current victories setter*/
-    character.Victories = 3
-    assertEquals(character.Victories,3)
     /*Evade setter*/
     character.Evade = true
     assertEquals(character.Evade,true)
@@ -129,7 +156,7 @@ class PlayerCharacterTest extends munit.FunSuite {
     character.Attack(enemy)
     assert(character.Attack_Quantity > 0 && character.Attack_Quantity > character.ATK)
     /*if the enemy has HP 0, it shouldn't attack*/
-    enemy.CurrentHP = 0
+    enemy.removeHP(3)
     character.Attack(enemy)
     assertEquals(character.Attack_Quantity,0)
     /*now we try with different types of enemies*/
@@ -150,16 +177,15 @@ class PlayerCharacterTest extends munit.FunSuite {
   }
   test("A character receives stars when it defeats the enemy and the enemy loses them"){
     /*first we try with a wildUnit*/
-    enemy.CurrentHP = 1
-    enemy.CurrentStars = 10
-    character.CurrentStars = 0
+    enemy.removeHP(2)
+    enemy.addStars(10)
     character.Attack(enemy)
-    assertEquals(character.CurrentStars, 13)
     assertEquals(enemy.CurrentStars,0)
+    assertEquals(character.CurrentStars, 13)
     /*now, with other character*/
     enemy4.KO = false
-    enemy4.CurrentHP = 1
-    enemy4.CurrentStars = 10
+    enemy4.removeHP(9)
+    enemy4.addStars( 10)
     /*let's pretend that the enemy chose to defend itself after the attack, this then will be controlled with the input*/
     enemy4.Defend = true
     character.Attack(enemy4)
@@ -168,17 +194,17 @@ class PlayerCharacterTest extends munit.FunSuite {
   }
   test("A character is in State KO after being defeated"){
     enemy4.Evade = true
-    enemy4.CurrentHP=1
-    character.Attack(enemy4)
+    character.Attack_Quantity = 90
+    enemy4.AttackPlayer(character)
     assert(enemy4.KO)
   }
   test("A character increases the amount of victories after defeating an enemy"){
-    enemy.CurrentHP = 1
+    enemy.removeHP(2)
     character.Attack(enemy)
     assertEquals(character.Victories, 1)
 
     enemy4.Defend=true
-    enemy4.CurrentHP=1
+    enemy4.removeHP(9)
     character.Attack(enemy4)
     assertEquals(character.Victories,3)
   }
@@ -186,9 +212,9 @@ class PlayerCharacterTest extends munit.FunSuite {
     val HP_before: Int = character.CurrentHP
     character.Defense(12)
     /*After invoking the method, the Current HP of the character has to be at least one unit less than the value before*/
-    assert(character.CurrentHP<HP_before)
+    assert(character.CurrentHP<HP_before && character.CurrentHP>=0)
     /*if the HP was already equal to zero, it stays the same*/
-    character.CurrentHP =0
+    character.removeHP(10)
     character.Defense(12)
     assert(character.CurrentHP == 0)
   }
@@ -197,8 +223,9 @@ class PlayerCharacterTest extends munit.FunSuite {
     character.Evasion(12)
     /*After invoking the method, the character receives damage equal to 0 or the same quantity of the attack*/
     assert(character.CurrentHP == HP_before || character.CurrentHP < HP_before)
+    assert(character.CurrentHP >= 0)
     /*If it's HP is already equal to zero, it stays the same*/
-    character.CurrentHP = 0
+    character.removeHP( 10)
     character.Evasion(12)
     assert(character.CurrentHP == 0)
   }

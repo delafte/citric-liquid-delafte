@@ -3,7 +3,6 @@ package model.panels.paneltypes
 
 import model.panels.abstractpanel.AbstractPanel
 import model.units.players.PlayerCharacter
-import model.panels.`trait`.Panel
 
 /**The 'DropPanel' class represents one type of the Panels that are on the board of the game.
  * This Panel extends from the abstract class AbstractPanel.
@@ -37,12 +36,7 @@ class DropPanel() extends AbstractPanel {
   override def apply(player: PlayerCharacter): Unit = {
     if (characters.contains(player)) {
         val roll: Int = player.rollDice()
-        if (player.CurrentStars > (roll * player.CurrentNorm.NumberNorm)) {
-          player.CurrentStars = player.CurrentStars - (roll*player.CurrentNorm.NumberNorm)
-        }
-        else {
-          player.CurrentStars = 0
-        }
+          player.removeStars(roll*player.CurrentNorm.NumberNorm)
     }
   }
 }

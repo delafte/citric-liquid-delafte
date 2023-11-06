@@ -47,12 +47,7 @@ import scala.math._
   * @author [[https://github.com/Seivier/ Vicente González B.]]
   * @author [[https://github.com/delafte/ Delaney Tello E.]]
   */
-class PlayerCharacter(protected val _name: String, maxHp: Int, attack: Int, defense: Int, evasion: Int, val _randomNumberGenerator: Random = new Random()) extends AbstractPlayerCharacter {
-  protected val _maxHP: Int = maxHp
-  protected val _ATK: Int = attack
-  protected val _DEF: Int = defense
-  protected val _EVA: Int = evasion
-  protected var _CurrentHP: Int = maxHp
+class PlayerCharacter(_name: String, maxHp: Int, attack: Int, defense: Int, evasion: Int, _randomNumberGenerator: Random = new Random()) extends AbstractPlayerCharacter(_name,maxHp, attack, defense, evasion, _randomNumberGenerator) {
 
   /** This function gives the character 1 point of HP. It may be invoked when a character lands on a HomePanel */
   def heal(): Unit = {
@@ -83,8 +78,8 @@ class PlayerCharacter(protected val _name: String, maxHp: Int, attack: Int, defe
       if (CurrentHP == 0) {
         val res: Int = floor(CurrentStars / 2).toInt
         Defeated(res)
-        enemy.CurrentStars += res
-        enemy.Victories += 2
+        enemy.addStars(res)
+        enemy.addVictories(2)
       }
     }
     else enemy.Attack_Quantity = 0
@@ -98,7 +93,7 @@ class PlayerCharacter(protected val _name: String, maxHp: Int, attack: Int, defe
       if (CurrentHP == 0) {
         val res: Int = floor(CurrentStars / 2).toInt
         Defeated(res)
-        enemy.CurrentStars += res
+        enemy.addStars(res)
       }
     }
     else enemy.Attack_Quantity = 0

@@ -1,5 +1,5 @@
 package cl.uchile.dcc.citric
-package model.unitstests.wildunitstests
+package model.unitstests.wildunitstest
 
 import model.panels.paneltypes.EncounterPanel
 import model.units.wildunits.{RoboBall, Seagull, Chicken}
@@ -11,9 +11,6 @@ import scala.util.Random
 
 class RoboBallTest extends FunSuite {
   private val panel: EncounterPanel = new EncounterPanel()
-  private val enemy2: Seagull = new Seagull(new EncounterPanel, new Random(11))
-  private val enemy3: Chicken = new Chicken(new EncounterPanel, new Random(11))
-  private val enemy4: RoboBall = new RoboBall(new EncounterPanel, new Random(11))
   private var enemy: PlayerCharacter =_
   /*The object under test:*/
   private var roboball: RoboBall =_
@@ -46,11 +43,11 @@ class RoboBallTest extends FunSuite {
     assertEquals(roboball.CurrentHP, roboball.maxHP)
   }
   test("We can change the current amount of stars of a RoboBall(for future methods)") {
-    roboball.CurrentStars = 3
+    roboball.addStars( 3)
     assertEquals(roboball.CurrentStars, 3)
   }
   test("We can change the current HP of a RoboBall(for future methods)") {
-    roboball.CurrentHP = 1
+    roboball.removeHP(2)
     assertEquals(roboball.CurrentHP, 1)
   }
   // 1. Test invariant properties, e.g. the result is always between 1 and 6.
@@ -70,14 +67,36 @@ class RoboBallTest extends FunSuite {
       assertEquals(roboball.rollDice(), other.rollDice())
     }
   }
+  test("The amount of HP can't be negative and using negative numbers doesn't work") {
+    roboball.removeHP(12)
+    assertEquals(roboball.CurrentHP, 0)
+    roboball.addHP(-3)
+    assertEquals(roboball.CurrentHP, 0)
+    roboball.removeHP(-1)
+    assertEquals(roboball.CurrentHP, 0)
+    roboball.addHP(2)
+    roboball.addHP(-2)
+    assertEquals(roboball.CurrentHP, 2)
+  }
+  test("The amount of Stars can't be negative and using negative numbers doesn't work") {
+    roboball.removeStars(3) /*starts with zero*/
+    assertEquals(roboball.CurrentStars, 0)
+    roboball.addStars(-3)
+    assertEquals(roboball.CurrentStars, 0)
+    roboball.removeStars(-1)
+    assertEquals(roboball.CurrentStars, 0)
+    roboball.addStars(2)
+    roboball.addStars(-2)
+    assertEquals(roboball.CurrentStars, 2)
+  }
   test("A RoboBall should be able to do an attack to a character only") {
     /*if the roboBall has 0 hp, it shouldn't attack*/
-    roboball.CurrentHP = 0
+    roboball.removeHP(3)
     roboball.Attack(enemy)
     assertEquals(roboball.Attack_Quantity, 0)
     /*if it isn't 0 hp:*/
     /*The Attack Quantity is set as 0, so after invoking the method, it has to be >= zero*/
-    roboball.CurrentHP = 3
+    roboball.addHP(3)
     enemy.Defend=true
     roboball.Attack(enemy)
     assert(roboball.Attack_Quantity >= 0 && roboball.Attack_Quantity > roboball.ATK)
@@ -89,7 +108,7 @@ class RoboBallTest extends FunSuite {
   }
   test("A RoboBall wins stars when it defeats a character, the character loses them") {
     enemy.Evade = true
-    enemy.CurrentStars = 3
+    enemy.addStars(3)
     roboball.Attack_Quantity = 50
     enemy.AttackWildUnit(roboball)
     assertEquals(roboball.CurrentStars, 1)
@@ -99,9 +118,10 @@ class RoboBallTest extends FunSuite {
     val HP_before: Int = roboball.CurrentHP
     roboball.Defense(12)
     /*After invoking the method, the Current HP of the roboball has to be at least one unit less than the value before*/
-    assert(roboball.CurrentHP < HP_before)
+    assert(roboball.CurrentHP < HP_before && roboball.CurrentHP>=0)
     /*if the HP was already equal to zero, it stays the same*/
-    roboball.CurrentHP = 0
+    val hp: Int = roboball.CurrentHP
+    roboball.removeHP(hp)
     roboball.Defense(12)
     assert(roboball.CurrentHP == 0)
   }
@@ -110,8 +130,10 @@ class RoboBallTest extends FunSuite {
     roboball.Evasion(12)
     /*After invoking the method, the roboball receives damage equal to 0 or the same quantity of the attack*/
     assert(roboball.CurrentHP == HP_before || roboball.CurrentHP < HP_before)
+    assert(roboball.CurrentHP>=0)
     /*If it's HP is already equal to zero, it stays the same*/
-    roboball.CurrentHP = 0
+    val hp: Int = roboball.CurrentHP
+    roboball.removeHP(hp)
     roboball.Evasion(12)
     assert(roboball.CurrentHP == 0)
   }

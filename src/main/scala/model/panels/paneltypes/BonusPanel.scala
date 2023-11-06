@@ -37,8 +37,7 @@ class BonusPanel () extends AbstractPanel {
   override def apply(player:PlayerCharacter):Unit={
     if(characters.contains(player)) {
         val roll: Int = player.rollDice()
-        player.CurrentStars_=(player.CurrentStars+min(roll * player.CurrentNorm.NumberNorm, roll * 3))
-
+        player.addStars(min(roll * player.CurrentNorm.NumberNorm, roll * 3))
     }
   }
 }

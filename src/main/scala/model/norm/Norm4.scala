@@ -8,7 +8,7 @@ import model.units.players.PlayerCharacter
  * some requirements. Those objectives are reached with a certain quantity of stars or of victories,
  * that in the case of Norm4 those are:
  * - 70 stars
- * - 6 victory
+ * - 6 victories
  * After completing the requirements for leveling up,the player has to go to a HomePanel, so that they can activate the "Norm Check"
  * and increase their level.
  *
@@ -17,10 +17,8 @@ import model.units.players.PlayerCharacter
  * @example
  * {{{
  *   val norma: Norm4 = new Norm4() /*To create a Norm4*/
- *
- *   PlayerCharacter.Victories = 6
- *   norma.upgradeNorm(PlayerCharacter) /*upgrades the norm of the character if
- *   the character fulfilled the requirements, in this case, it reaches Norm4*/
+ *   val stars: Int = norma.Stars_obj
+ *   println(s"the stars for this norm are: $stars")
  *   }}}
  *
  * @author [[https://github.com/delafte/ Delaney Tello E.]]

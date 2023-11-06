@@ -75,13 +75,13 @@ class DropPanelTest extends FunSuite {
   test("If players land on a Drop Panel, it must remove stars from them"){
     dropPanel.addCharacter(Minie)
     /*First, we test that the panel removes stars of the character in a normal situation*/
-    Minie.CurrentStars=10
-    Anna.CurrentStars=6
+    Minie.addStars(10)
+    Anna.addStars(6)
     dropPanel.apply(Minie)
     assert(Minie.CurrentStars < 10)
     assert(Anna.CurrentStars == 6)
     /*Then, we test an edge case, in which the player has less stars than the quantity that the panel wants to take*/
-    Minie.CurrentStars=0
+    Minie.removeStars(10)
     dropPanel.apply(Minie)
     assert(Minie.CurrentStars == 0)
   }

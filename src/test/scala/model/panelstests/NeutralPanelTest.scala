@@ -97,7 +97,6 @@ class NeutralPanelTest extends FunSuite {
     assertEquals(Emma.Attack_Quantity, 0)
     assertEquals(Emma.KO, false)
     assertEquals(Emma.Victories, 0)
-    assert(Emma.randomNumberGenerator.isInstanceOf[Random])
     assertEquals(neutralPanel.nextPanels, NextPanels.toList)
   }
 }

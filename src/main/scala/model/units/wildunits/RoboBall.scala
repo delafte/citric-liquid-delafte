@@ -19,28 +19,15 @@ import scala.util.Random
  *
  * @constructor Creates a RoboBall wild unit with a specified encounter panel.
  *
- * @param panel An Encounter Panel in which the RoboBall is going to appear.
+ * @param _EncounterPanel An Encounter Panel in which the RoboBall is going to appear.
  * @param _randomNumberGenerator A utility to generate random numbers. Defaults to a new `Random` instance
  *
  * @example
  * {{{
- *   val robob: RoboBall = new RoboBall(EncounterPanel1)
+ *   val robob: RoboBall = new RoboBall(EncounterPanel1, random)
  *   val robob_attack: Int = rob.ATK
  *   println(s"the attack of a RoboBall is $robob_attack")
  * }}}
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
-/*The methods are going to be added later*/
-class RoboBall(protected val panel: EncounterPanel, override protected val _randomNumberGenerator: Random) extends AbstractWildUnit {
-  /** The RoboBall's capability to deal damage to opponents. It is set as -1 */
-  override protected val _ATK: Int = -1
-  /** The RoboBall's capability to resist or mitigate damage from opponents. It is set as 1 */
-  override protected val _DEF: Int = 1
-  /** The RoboBall's skill to completely avoid certain attacks. It is set as -1 */
-  override protected val _EVA: Int = -1
-  /** Bonus stars that the RoboBall gives when it loses */
-  override protected val _BonusStars = 2
-  /**The EncounterPanel in which the WildUnit will appear*/
-  protected val _EncounterPanel: EncounterPanel= panel
-
-}
+class RoboBall(protected val _EncounterPanel: EncounterPanel, override protected val _randomNumberGenerator: Random) extends AbstractWildUnit(3,-1,1,-1,2)

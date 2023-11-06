@@ -22,4 +22,11 @@ class AttackTest extends munit.FunSuite {
       WU1.Attack(WU1)
     }
   }
+  test("with try and catch"){
+    try{
+      WU1.Attack(WU2)
+    }catch{
+      case e: InvalidAttackException => println("Two WildUnits can't fight between each other.")
+    }
+  }
 }

@@ -17,10 +17,8 @@ import model.units.players.PlayerCharacter
  * @example
  * {{{
  *   val norma: Norm3 = new Norm3()/*to create a Norm3*/
- *
- *   PlayerCharacter.CurrentStars = 30
- *   norma.upgradeNorm(PlayerCharacter) /*upgrades the norm of the character if
- *   the character fulfilled the requirements, in this case, it levels up to Norm3*/
+ *   val stars: Int = norma.Stars_obj
+ *   println(s"the stars for this norm are: $stars")
  *   }}}
  *
  * @author [[https://github.com/delafte/ Delaney Tello E.]]

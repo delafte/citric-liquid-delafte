@@ -18,27 +18,16 @@ import scala.util.Random
  *
  * @constructor Creates a Seagull wild unit with a specified Encounter panel.
  *
- * @param panel An Encounter Panel in which the Seagull is going to appear
+ * @param _EncounterPanel An Encounter Panel in which the Seagull is going to appear
  * @param _randomNumberGenerator A utility to generate random numbers. Defaults to a new `Random` instance
  *
  * @example
  * {{{
- *   val seagull: Seagull = new Seagull()
+ *   val seagull: Seagull = new Seagull(encounterPanel1, random)
  *   val maximumHp: Int = seagull.maxHP
  *   println(s"the maximum HP of a seagull is $maximumHp")
  * }}}
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
-/*The methods are going to be added later*/
-class Seagull(protected val panel: EncounterPanel, override protected val _randomNumberGenerator: Random) extends AbstractWildUnit {
-  /** The Seagull's capability to deal damage to opponents. It is set as 1 */
-  override protected val _ATK: Int = 1
-  /** The Seagull's capability to resist or mitigate damage from opponents. It is set as -1 */
-  override protected val _DEF: Int = -1
-  /** The Seagull's skill to completely avoid certain attacks. It is set as -1 */
-  override protected val _EVA: Int = -1
-  /** Bonus stars that the seagull gives when it loses */
-  override protected val _BonusStars = 2
-  /**The EncounterPanel in which the WildUnit will appear*/
-  protected val _EncounterPanel: EncounterPanel= panel
-}
+class Seagull(protected val _EncounterPanel: EncounterPanel, override protected val _randomNumberGenerator: Random) extends AbstractWildUnit(3,1,-1,-1,2)
+
