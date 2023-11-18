@@ -57,5 +57,7 @@ In the test for this function, I verified that everything remains unchanged, pro
 Finally, I added an exception to make sure that a combat between two 'WildUnits' does not occur. The reason for this is that the rules and conditions for this 
 type of combat were not specified, and therefore, it does not exist in this game.
 
+## States diagram
+![Diagrama de estados](docs/diagrama-estados.png)
 
 This project is licensed under the [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).
