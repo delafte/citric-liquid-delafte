@@ -2,6 +2,8 @@ package cl.uchile.dcc.citric
 package model.statstest
 import munit.FunSuite
 import model.controlador.GameController
+
+import cl.uchile.dcc.citric.exceptions.InvalidActionException
 class GameControllerTest extends FunSuite {
   private var game: GameController = null
 
@@ -227,6 +229,15 @@ class GameControllerTest extends FunSuite {
     assert(!game.inOnPanel())
     assert(!game.inWait())
     assert(!game.inCombat())
+  }
+  test("Invalid Transitions"){
+    interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from PreGame to Moving") {
+      game.RollDice_ChoosePath()
+    }
+    interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Chapter to Combat") {
+      game.GameStarts()
+      game.DecideFightCharacter()
+    }
   }
 
 }
