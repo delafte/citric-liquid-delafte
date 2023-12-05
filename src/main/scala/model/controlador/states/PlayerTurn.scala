@@ -2,7 +2,12 @@ package cl.uchile.dcc.citric
 package model.controlador.states
 
 import model.controlador.{GameController, GameState}
-
+/**The PlayerTurn class represents the state Player of the game. In this state the player has to roll the Dice to
+ * begin later their movement.
+ *
+ * @param context the Game Controller
+ * @author [[https://github.com/delafte/ Delaney Tello E.]]
+ */
 class PlayerTurn(context:GameController) extends GameState(context){
   override def inPlayerTurn(): Boolean = true
 

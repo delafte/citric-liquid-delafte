@@ -40,9 +40,6 @@ class GameState protected(var context : GameController) extends State{
   /** this method is for the transition from the PlayerTurn State to the Moving state */
   def rollD(): Unit = this.error("Moving")
 
-  /** this method is for the transition from the PlayerTurn state to the RecoveryState */
-  def PlayerKO(): Unit = this.error("Recovery")
-
   /** This method is for the transition form the Recovery state to the Chapter State */
   def insufficientRoll(): Unit = this.error("Chapter")
 
@@ -56,7 +53,7 @@ class GameState protected(var context : GameController) extends State{
   def OutOfMoves(): Unit = this.error("Combat")
 
   /** this method is for the transition from the Combat state to the OnPanel state */
-  def DecideNotFightCharacter(): Unit = this.error("Combat")
+  def DecideNotFightCharacter(): Unit = this.error("OnPanel")
 
   /** this method is for the transition from the Combat state to the OnPanel state */
   def EndCombat(): Unit = this.error("OnPanel")

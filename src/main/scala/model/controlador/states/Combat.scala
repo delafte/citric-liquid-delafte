@@ -2,8 +2,9 @@ package cl.uchile.dcc.citric
 package model.controlador.states
 
 import model.controlador.{GameController, GameState}
-/**The Combat class represents the state combat of the game. In this state the player has to choose if fight or not and who if it
+/**The Combat class represents the state combat of the game. In this state the player has to choose to fight or not and who if it
  * is against a another player.
+ *
  * @param context the Game Controller
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
 */

@@ -6,14 +6,17 @@ import model.units.traitunits.{Unity, WildUnit}
 import model.panels.`trait`.Panel
 import model.units.players.CharacterWinEvent
 import exceptions.InvalidInputException
-import model.controlador.states.{Chapter, PreGame}
 import model.board.Board
 import scala.math._
-import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 import scala.math.floor
 import scala.util.Random
-import scala.util.control.Breaks.break
+
+/**The GameController class represents de Game Controller of the game. Here all the logic of the game is implemented so that it can
+ * be functional.
+ *
+ * @author [[https://github.com/delafte/ Delaney Tello E.]]
+ */
 class GameController extends Observer[CharacterWinEvent] {
   /**the current state of the game*/
   private var state: State = new PreGame(this)
@@ -38,12 +41,22 @@ class GameController extends Observer[CharacterWinEvent] {
   private var _encounterPanel: Boolean = false
   /**Indicates the number of combat rounds, so that we can limit it to two*/
   private var _numCombat: Int = 0
+  /**A method to add value to the numChapter*/
+  def addNumChapter(n:Int):Unit = {
+    _numChapter+=max(0,n)
+  }
+
+  /** A method to subtract value to the numChapter */
+  def removeNumChapter(n: Int): Unit = {
+    if(numChapter-n>=0) _numChapter -= n
+  }
   /**A method to add value to the rollResult*/
   def addRollResult(n:Int):Unit = {
     if(n<7 && n>0){
       _rollResult += n
     }
   }
+  /**This method is to subtract a value to the RollResult*/
   def removeRollResult(n:Int):Unit ={
       _rollResult = max(0,_rollResult-n)
 
@@ -109,10 +122,12 @@ class GameController extends Observer[CharacterWinEvent] {
     println("nextTurn")
     currentPlayerNum = (currentPlayerNum + 1) % _playerCharacters.length
     _currentPlayer = Some(playerCharacters(currentPlayerNum))
+    _currentPanels(currentPlayerNum).removeCharacter(currentPlayer)
+
   }
   /**This method starts the game establishing the base conditions
    * @param playersCharacters the parameters to create a PlayerCharacter
-   * @param panels the panels that are going to be use in the game*/
+   */
 
   def startGame(playersCharacters: Seq[(String,Int,Int, Int,Int)]): Unit = {
     for((name, maxHP,attack,defense,evasion)<- playersCharacters){
@@ -123,6 +138,7 @@ class GameController extends Observer[CharacterWinEvent] {
     var i=0
     while(i<playerCharacters.length){
       _currentPanels+=_playerCharacters(i).homePanel
+       _playerCharacters(i).homePanel.addCharacter(_playerCharacters(i))
       i+=1
     }
     println("Game starts!")
@@ -196,7 +212,8 @@ class GameController extends Observer[CharacterWinEvent] {
     println(s"$name, choose a path: ")
     var i=1
     while(i<= _currentPanels(currentPlayerNum).nextPanels.length){
-      println(s"Option $i: enter $i")
+      var j = i-1
+      println(s"Option $i: enter $j")
       i+=1
     }
     if(_currentPanels(currentPlayerNum).nextPanels.length > choose){
@@ -219,14 +236,17 @@ class GameController extends Observer[CharacterWinEvent] {
   }
   def doAttack(choose:Int):Unit={
     if(!encounterPanel && choose ==0){
+      val name=currentPlayer.name
+      println(s"$name is going to Attack")
+      println("The enemy has to choose their response:")
       DecideDefendOrEvade(choose, _currentEnemy.get)
     }
-    if(choose == 0) {
+    if(choose == 0 && encounterPanel) {
       println("you are going to attack a wild unit!")
        _currentPlayer.foreach(character => _currentEnemy.foreach(target => character.Attack(target)))
     }
     else {
-      println("The wildUnit is going to attack back!")
+      println("The Enemy is going to attack back!")
       DecideDefendOrEvade(choose, _currentPlayer.get)
       _currentEnemy.foreach(target => _currentPlayer.foreach(character=>target.Attack(character)))
       println("End of Combat")
@@ -243,7 +263,6 @@ class GameController extends Observer[CharacterWinEvent] {
     if(!encounterPanel){
       println(s"$name, now you are going to receive the panel's effect")
       _currentPanels(currentPlayerNum).apply(_currentPlayer.getOrElse(throw new AssertionError("There's no currentPlayer")), this)
-      _currentPanels(currentPlayerNum).removeCharacter(currentPlayer)
       if(!encounterPanel)state.applyEffect()
     }
   }
@@ -264,6 +283,7 @@ class GameController extends Observer[CharacterWinEvent] {
     }
     else throw new InvalidInputException(s"$choose is not an option")
   }
+  /**This method checks if there are more players in a panel. This is used when a character lands on a panel*/
   def checkMorePlayersInPanel(): Boolean = {
     var j = 0
     while (j < _currentPanels.length) {
@@ -280,7 +300,7 @@ class GameController extends Observer[CharacterWinEvent] {
       var i = 0
       while (i < playerCharacters.length) {
         if (i != currentPlayerNum) {
-          val pers: PlayerCharacter = playerCharacters(i)
+          val pers: String = playerCharacters(i).name
           println(s"$i: $pers")
         }
         i += 1
@@ -323,13 +343,10 @@ class GameController extends Observer[CharacterWinEvent] {
   def StartTurnPlayer(): Unit = state.StartTurnPlayer()
   /** This method is for the transition from the Chapter state to de Recovery state */
 
-  def isKO():Unit=state.isKO()
+  def isKO():Unit = state.isKO()
 
   /** this method is for the transition from the PlayerTurn State to the Moving state */
   def rollD(): Unit = state.rollD()
-
-  /** this method is for the transition from the PlayerTurn state to the RecoveryState */
-  def PlayerKO(): Unit = state.PlayerKO()
 
   /** This method is for the transition form the Recovery state to the Chapter State */
   def insufficientRoll(): Unit = state.insufficientRoll()

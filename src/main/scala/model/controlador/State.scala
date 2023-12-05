@@ -44,8 +44,6 @@ trait State {
   def StartTurnPlayer():Unit
   /**this method is for the transition from the PlayerTurn State to the Moving state*/
   def rollD():Unit
-  /**this method is for the transition from the PlayerTurn state to the RecoveryState*/
-  def PlayerKO():Unit
   /**This method is for the transition form the Recovery state to the Chapter State*/
   def insufficientRoll():Unit
   /**This method is for the transition from the Recovery state to the PlayerTurn state*/

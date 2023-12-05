@@ -2,7 +2,7 @@ package cl.uchile.dcc.citric
 package model.controlador.states
 
 import model.controlador.{GameController, GameState}
-/**The Chapter class represents the state chapter of the game. In this state the turns are asigned and it represents
+/**The Chapter class represents the state chapter of the game. In this state the turns are assigned and it represents
  * a round of the game. Every character ends it's turn in this state.
  * @param context the Game Controller
  *
@@ -28,10 +28,6 @@ class Chapter(context:GameController) extends GameState(context){
       context.StartTurnPlayer()
     }
 
-  }
-
-  override def PlayerKO(): Unit = {
-    this.setState(new Recovery(context))
   }
 
   override def StartTurnPlayer(): Unit = {

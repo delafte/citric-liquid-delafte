@@ -2,7 +2,12 @@ package cl.uchile.dcc.citric
 package model.controlador.states
 
 import model.controlador.{GameController, GameState}
-
+/**The Wait class represents the state Wait of the game. In this state the Unities choose their reaction against an attack.
+ * Also, the Attack process is triggered here.
+ *
+ * @param context the Game Controller
+ * @author [[https://github.com/delafte/ Delaney Tello E.]]
+ */
 class Wait(context:GameController) extends GameState(context){
   override def inWait(): Boolean = true
 

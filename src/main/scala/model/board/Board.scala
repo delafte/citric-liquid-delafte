@@ -16,18 +16,16 @@ import scala.util.Random
  *
  * @example
  * {{{
- *   var board: Board = new Board(ArrayOfPanels, ArrayOfCharacters)
- *   board.CreateConnections()
+ *   var board: Board = new Board(ArrayOfCharacters)
  * }}}
  *
- * @param Panels An array with all the panels of the board, it must be in order.
  * @param players An array of the characters that are going to be playing the game.
  *
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  * */
 class Board( val players: ArrayBuffer[PlayerCharacter]) {
    val panels: ArrayBuffer[Panel] = ArrayBuffer(new NeutralPanel, new EncounterPanel, new NeutralPanel, new EncounterPanel, new DropPanel,
-                                               new NeutralPanel, new BonusPanel, new NeutralPanel, new DropPanel, new EncounterPanel,
+                                               new NeutralPanel, new BonusPanel, new NeutralPanel, new DropPanel, new DropPanel,
                                                 new NeutralPanel, new NeutralPanel, new BonusPanel, new EncounterPanel, new DropPanel,
                                                 new NeutralPanel, new BonusPanel, new BonusPanel, new DropPanel, new EncounterPanel,
                                                 new NeutralPanel, new NeutralPanel, new NeutralPanel, new EncounterPanel, new DropPanel)
