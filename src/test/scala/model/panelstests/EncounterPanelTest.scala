@@ -1,10 +1,12 @@
 package cl.uchile.dcc.citric
 package model.panelstests
 
-import model.panels.paneltypes.{EncounterPanel, NeutralPanel, BonusPanel, DropPanel,HomePanel}
+import model.panels.paneltypes.{BonusPanel, DropPanel, EncounterPanel, HomePanel, NeutralPanel}
 import model.panels.`trait`.Panel
 import model.units.players.PlayerCharacter
 
+import cl.uchile.dcc.citric.model.controlador.GameController
+import cl.uchile.dcc.citric.model.units.traitunits.WildUnit
 import munit.FunSuite
 
 import scala.collection.mutable.ArrayBuffer
@@ -19,10 +21,26 @@ class EncounterPanelTest extends FunSuite {
   private val characters: ArrayBuffer[PlayerCharacter] = ArrayBuffer(Ammy, Hannah)
   private val Empty: ArrayBuffer[PlayerCharacter] = ArrayBuffer()
   private val Empty2: List[Panel] = List()
+  private val context: GameController= new GameController()
+
 
   private var encounterPanel: EncounterPanel = _
   override def beforeEach(context: BeforeEach): Unit = {
     encounterPanel = new EncounterPanel()
+  }
+  test("A random wild unit is selected in the panel"){
+    val selected = encounterPanel.randomWildUnit()
+    assert(selected.isInstanceOf[WildUnit])
+  }
+  test("When a character lands on a panel, a combat is initialized with the wild unit"){
+    context.GameStarts()
+    context.StartTurnPlayer()
+    context.rollD()
+    context.OutOfMoves()
+    context.DecideNotFightCharacter()
+    encounterPanel.addCharacter(Ammy)
+    encounterPanel.apply(Ammy,context)
+    assert(context.inCombat())
   }
   test("An Encounter Panel is connected directly to other panels, we try all possible types") {
     encounterPanel.addPanel(NextPanels(0))

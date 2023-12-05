@@ -43,7 +43,7 @@ trait State {
   /**This method is for the transition from the Chapter state to de Player Turn state*/
   def StartTurnPlayer():Unit
   /**this method is for the transition from the PlayerTurn State to the Moving state*/
-  def RollDice_ChoosePath():Unit
+  def rollD():Unit
   /**this method is for the transition from the PlayerTurn state to the RecoveryState*/
   def PlayerKO():Unit
   /**This method is for the transition form the Recovery state to the Chapter State*/
@@ -55,20 +55,23 @@ trait State {
   /**this method is for the transition from the Moving state to the OnPanel state*/
   def OutOfMoves():Unit
   /**this method is for the transition from the OnPanel state to the Combat state*/
-  def DecideFightCharacter():Unit
-  /**this method is for the transition from thr OnPanel state to the Combat state*/
-  def OnEncounterPanel():Unit
+  def DecideNotFightCharacter():Unit
   /**this method is for the transition from the Combat state to the OnPanel state*/
   def EndCombat():Unit
   /**this method is for the transition from the Combat state to the wait state*/
   def Attacks():Unit
   /**this method is for the transition from the Wait state to the Combat state*/
-  def Evades():Unit
-  /**this method is for the transition from the Wait state to the Combat state*/
-  def defends():Unit
+  def response():Unit
+
   /**this method is for the transition from the OnPanel state to the Chapter state*/
   def applyEffect():Unit
-  /**this method id for the transition from the OnPanel state to the Chapter state*/
-  def FinishEncounterPanel():Unit
+  /**this method is for the transition from the Moving state to the Moving state*/
+  def choosePath():Unit
+  /**this method simulates the action that a state does*/
+  def doAction(choose:Int):Unit
+  /**This method is for the transition from the Chapter state to the Recovery State*/
+  def isKO():Unit
+  /**This method is for the transition from the OnPanel state to the Combat state*/
+  def fightWildUnit():Unit
 
 }

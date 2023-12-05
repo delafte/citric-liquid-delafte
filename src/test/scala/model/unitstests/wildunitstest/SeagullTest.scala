@@ -101,7 +101,7 @@ class SeagullTest extends FunSuite {
     /*if it isn't 0 hp:*/
     /*The Attack Quantity is set as 0, so after invoking the method, it has to be >= zero*/
     seagull.addHP(3)
-    enemy.Defend = true
+    enemy.defendOrEvade = false
     seagull.Attack(enemy)
     assert(seagull.Attack_Quantity >= 0 && seagull.Attack_Quantity > seagull.ATK)
     /*if the enemy has HP 0, it shouldn't attack*/
@@ -111,7 +111,7 @@ class SeagullTest extends FunSuite {
 
   }
   test("A seagull wins stars when it defeats a character, the character loses them") {
-    enemy.Defend = true
+    enemy.defendOrEvade = false
     enemy.addStars(3)
     seagull.Attack_Quantity = 50
     enemy.AttackWildUnit(seagull)

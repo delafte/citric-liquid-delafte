@@ -5,6 +5,8 @@ import model.panels.abstractpanel.AbstractPanel
 import model.panels.`trait`.Panel
 import model.units.players.PlayerCharacter
 
+import cl.uchile.dcc.citric.model.controlador.GameController
+
 import scala.collection.mutable.ArrayBuffer
 /** The 'HomePanel' class represents one type of the Panels that are on the board of the game.
  * This Panel extends from the abstract class AbstractPanel.
@@ -25,6 +27,7 @@ import scala.collection.mutable.ArrayBuffer
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
 class HomePanel(val Owner:PlayerCharacter) extends AbstractPanel{
+  val name = "Home Panel"
   /**This method simulates the NormaCheck effect of this panel. When a character makes de NormaCheck
    * it levels up their Norm if they fulfilled the requirements.
    *
@@ -38,6 +41,13 @@ class HomePanel(val Owner:PlayerCharacter) extends AbstractPanel{
   def NormaCheck(player:PlayerCharacter): Unit = {
     if (characters.contains(player)){
         player.CurrentNorm.upgradeNorm(player)
+    }
+  }
+  /**This simulates the effect of the homePanel*/
+  override def apply(player: PlayerCharacter, context: GameController): Unit = {
+    if(characters.contains(player)){
+      player.heal()
+      NormaCheck(player)
     }
   }
 }

@@ -1,7 +1,9 @@
 package cl.uchile.dcc.citric
 package model.panels.`trait`
 
+import cl.uchile.dcc.citric.model.controlador.GameController
 import cl.uchile.dcc.citric.model.units.players.PlayerCharacter
+
 import scala.collection.mutable.ArrayBuffer
 
 /** The 'Panel' Trait represents a single cell on a board, known as a Panel.
@@ -65,6 +67,9 @@ trait Panel {
    */
   def removePanel(panel:Panel): Unit
   /**Represents the special effects of the panels
-   * @param player the character that receives the effect*/
-  def apply(player: PlayerCharacter): Unit
+   * @param player the character that receives the effect
+   * @param context the controller of the game*/
+  def apply(player: PlayerCharacter, context: GameController): Unit
+  /**The name of the panel*/
+  val name: String
 }

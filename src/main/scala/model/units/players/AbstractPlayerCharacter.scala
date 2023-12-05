@@ -4,8 +4,12 @@ import model.units.AbstractUnity
 
 import cl.uchile.dcc.citric.model.norm.{Norm, Norm1}
 import model.units.traitunits.Player
+import model.controlador.{Observer, Subject}
+
+import cl.uchile.dcc.citric.model.panels.paneltypes.HomePanel
 
 import scala.util.Random
+import scala.math._
 /**
  * The 'AbstractPlayerCharacter' abstract class consists on the methods that all types of PlayerCharacters must have.
  * With this implementation we have a better design and an extensible program.
@@ -13,16 +17,32 @@ import scala.util.Random
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
 
-abstract class AbstractPlayerCharacter(protected val _name: String,protected val _maxHP:Int, protected val _ATK: Int, protected val _DEF: Int, protected val _EVA: Int, protected val _randomNumberGenerator: Random) extends AbstractUnity with Player {
-  protected var _CurrentHP: Int = _maxHP
-  /**Indicates if the character chose the stars objective to upgrade their norm*/
+abstract class AbstractPlayerCharacter(protected val _name: String,protected var _maxHP:Int, protected val _ATK: Int, protected val _DEF: Int, protected val _EVA: Int, protected val _randomNumberGenerator: Random) extends AbstractUnity with Player with Subject{
+  maxHP = _maxHP
+  /** Observers of the Subject */
+  private var observers: List[Observer[CharacterWinEvent]] = List.empty[Observer[CharacterWinEvent]]
+
+  /** Adds an Observer to the List of Observers */
+  override def addObserverWinEvent(observer: Observer[CharacterWinEvent]): Unit = {
+    observers = observer :: observers
+  }
+
+  /** Notifies the Norm of the player */
+  def notifyObserversWinEvent(value: CharacterWinEvent): Unit = {
+    for (observer <- observers) {
+      observer.update(this, value)
+    }
+  }
+
+  protected var _CurrentHP: Int = maxHP
+  /** Indicates if the character chose the stars objective to upgrade their norm */
   protected var _Obj_stars: Boolean = false
-  /**Indicates if the character chose the victories objective to upgrade their norm*/
+  /** Indicates if the character chose the victories objective to upgrade their norm */
   protected var _Obj_victories: Boolean = false
-  /**Indicates if the character chose to evade when they receive an attack*/
-  protected var _Evade: Boolean = false
-  /**Indicates if the character chose to defend when they receive an attack*/
-  protected var _Defend: Boolean = false
+  ///** Indicates if the character chose to evade when they receive an attack */
+  //protected var _Evade: Boolean = false
+  ///** Indicates if the character chose to defend when they receive an attack */
+  //protected var _Defend: Boolean = false
   /** This variable keeps track on the amount of victories that the character has during the game */
   protected var _Victories: Int = 0
   /** This variable keeps track on the Norm in which the character is in */
@@ -32,15 +52,20 @@ abstract class AbstractPlayerCharacter(protected val _name: String,protected val
   /** This variable indicates if a character is in a KO state */
   protected var _KO = false
 
+
   /** Returns the name of the character */
   def name: String = _name
-  /**This method returns the state of the variable Obj_stars*/
+
+  /** This method returns the state of the variable Obj_stars */
   def Obj_stars: Boolean = _Obj_stars
-  /**This method returns the state of the variable Obj_victories*/
-  def Obj_victories:Boolean = _Obj_victories
-  /**This function sets a new state to the Obj_stars attribute
-   * @param newState the new Boolean of the attribute*/
-  def Obj_stars_=(newState: Boolean): Unit ={
+
+  /** This method returns the state of the variable Obj_victories */
+  def Obj_victories: Boolean = _Obj_victories
+
+  /** This function sets a new state to the Obj_stars attribute
+   *
+   * @param newState the new Boolean of the attribute */
+  def Obj_stars_=(newState: Boolean): Unit = {
     _Obj_stars = newState
   }
 
@@ -50,16 +75,17 @@ abstract class AbstractPlayerCharacter(protected val _name: String,protected val
   def Obj_victories_=(newState: Boolean): Unit = {
     _Obj_victories = newState
   }
-
-  /**Return the state of the variable Defend*/
+   /*
+  /** Return the state of the variable Defend */
   def Defend: Boolean = _Defend
-  /**Return the state of the variable Evade*/
+
+  /** Return the state of the variable Evade */
   def Evade: Boolean = _Evade
 
   /** This function sets a new state to the Defend attribute
    *
    * @param newState the new Boolean of the attribute */
-  def Defend_=(newState: Boolean): Unit ={
+  def Defend_=(newState: Boolean): Unit = {
     _Defend = newState
   }
 
@@ -69,10 +95,11 @@ abstract class AbstractPlayerCharacter(protected val _name: String,protected val
 
   def Evade_=(newState: Boolean): Unit = {
     _Evade = newState
-  }
+  }*/
 
   /** Returns the KO state of the character */
   def KO: Boolean = _KO
+
   /** Returns the current norm of the character */
   def CurrentNorm: Norm = _CurrentNorm
 
@@ -101,6 +128,9 @@ abstract class AbstractPlayerCharacter(protected val _name: String,protected val
    * @param newNorm The new Norm of the character. */
   def CurrentNorm_=(newNorm: Norm): Unit = {
     _CurrentNorm = newNorm
+    if(_CurrentNorm.NumberNorm == 6){
+      notifyObserversWinEvent(new CharacterWinEvent(name))
+    }
   }
 
   /** Updates the KO state of the player.
@@ -109,9 +139,9 @@ abstract class AbstractPlayerCharacter(protected val _name: String,protected val
   def KO_=(nKO: Boolean): Unit = {
     _KO = nKO
   }
-  /** This method asks for the input of the user, so that the decision of defend or evade an attack
-   * can be implemented. This function is called during the Attack process. It changes the values of the attributes
-   * Defend or Evade.*/
-  /*This method will be developed later*/
-  def DecideDefendOrEvade(): Unit = {}
+  /*
+  def DecideDefendOrEvade(decision: Int): Unit = {
+    if(decision == 0) Defend = true
+    else if(decision == 1) Evade = true
+  }*/
 }

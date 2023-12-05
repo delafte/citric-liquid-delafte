@@ -16,7 +16,7 @@ class RoboBallTest extends FunSuite {
   private var roboball: RoboBall =_
 
   override def beforeEach(context: BeforeEach): Unit = {
-    roboball = new RoboBall(panel, new Random(11))
+    roboball = new RoboBall(panel,new Random(11))
     enemy =new PlayerCharacter("Ammy", 10, 5, 2, 1)
 
   }
@@ -97,7 +97,7 @@ class RoboBallTest extends FunSuite {
     /*if it isn't 0 hp:*/
     /*The Attack Quantity is set as 0, so after invoking the method, it has to be >= zero*/
     roboball.addHP(3)
-    enemy.Defend=true
+    enemy.defendOrEvade=false
     roboball.Attack(enemy)
     assert(roboball.Attack_Quantity >= 0 && roboball.Attack_Quantity > roboball.ATK)
     /*if the enemy has HP 0, it shouldn't attack*/
@@ -107,7 +107,7 @@ class RoboBallTest extends FunSuite {
 
   }
   test("A RoboBall wins stars when it defeats a character, the character loses them") {
-    enemy.Evade = true
+    enemy.defendOrEvade = true
     enemy.addStars(3)
     roboball.Attack_Quantity = 50
     enemy.AttackWildUnit(roboball)

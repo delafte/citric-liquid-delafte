@@ -3,6 +3,7 @@ package model.panels.paneltypes
 
 import model.panels.abstractpanel.AbstractPanel
 
+import cl.uchile.dcc.citric.model.controlador.GameController
 import cl.uchile.dcc.citric.model.units.players.PlayerCharacter
 
 import scala.math._
@@ -23,6 +24,7 @@ import scala.math._
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  * */
 class BonusPanel () extends AbstractPanel {
+  val name = "Bonus Panel"
   /** This method changes the current stars of the characters that landed on this panel. It sums the minimum
    * result between the multiplication of the rollDice and the character's current norm, and the multiplication
    * between the rollDice and 3.
@@ -34,7 +36,7 @@ class BonusPanel () extends AbstractPanel {
    *   panel2.apply(CharacterAnna)
    * }}}
    * */
-  override def apply(player:PlayerCharacter):Unit={
+  override def apply(player:PlayerCharacter, context: GameController):Unit={
     if(characters.contains(player)) {
         val roll: Int = player.rollDice()
         player.addStars(min(roll * player.CurrentNorm.NumberNorm, roll * 3))

@@ -13,15 +13,12 @@ trait Player extends Unity{
   protected val _name: String
   /**Indicates if the player is or not in a KO state*/
   protected var _KO: Boolean
-  /**Indicates if the player chose to defend when they receive an attack*/
-  protected var _Defend: Boolean
-  /**Indicates if the player chose to evade when they receive an attack*/
-  protected var _Evade: Boolean
+  ///**Indicates if the player chose to defend when they receive an attack*/
+  //protected var _Defend: Boolean
+  ///**Indicates if the player chose to evade when they receive an attack*/
+  //protected var _Evade: Boolean
   /**The norm in which the Player is*/
   protected var _CurrentNorm: Norm
   /**The number of Victories that the player has*/
   protected var _Victories: Int
-  /** This function asks for the input of the user, so that the decision of defend or evade an attack
-   * can be implemented. This function is called during the Attack process. */
-  protected def DecideDefendOrEvade(): Unit
 }

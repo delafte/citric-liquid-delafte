@@ -1,9 +1,10 @@
 package cl.uchile.dcc.citric
 package model.panelstests
-import model.panels.paneltypes.{BonusPanel, NeutralPanel,EncounterPanel,DropPanel, HomePanel}
+import model.panels.paneltypes.{BonusPanel, DropPanel, EncounterPanel, HomePanel, NeutralPanel}
 import model.panels.`trait`.Panel
 import model.units.players.PlayerCharacter
 
+import cl.uchile.dcc.citric.model.controlador.GameController
 import munit.FunSuite
 
 import scala.collection.mutable.ArrayBuffer
@@ -19,6 +20,7 @@ class BonusPanelTest extends FunSuite {
   private val characters: ArrayBuffer[PlayerCharacter]=ArrayBuffer(Nini,Emma)
   private val Empty: List[PlayerCharacter] = List()
   private val Empty2: List[Panel] = List()
+  private val context: GameController= new GameController()
 
   private var bonusPanel: BonusPanel = _
   override def beforeEach(context: BeforeEach): Unit = {
@@ -74,8 +76,8 @@ class BonusPanelTest extends FunSuite {
     bonusPanel.addCharacter(Nini)
     val StarsBefore = Nini.CurrentStars
     val StarsBefore2 = Emma.CurrentStars
-    bonusPanel.apply(Nini)
-    bonusPanel.apply(Emma)
+    bonusPanel.apply(Nini,context)
+    bonusPanel.apply(Emma,context)
     assert(Nini.CurrentStars > StarsBefore)
     assert(Emma.CurrentStars == StarsBefore2)/*Emma isn't in the panel*/
   }

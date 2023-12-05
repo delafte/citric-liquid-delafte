@@ -13,6 +13,12 @@ import scala.util.Random
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
 abstract class AbstractUnity() extends Unity {
+  /** Represents the response of the Unity after an attack. if false, it is defend, if true, evade*/
+  var defendOrEvade: Boolean = false
+  /** this setter is to make sure that we cannot create a unity with negative HP */
+  protected def maxHP_=(HP: Int): Unit = {
+    _maxHP = max(0, HP)
+  }
   /** The current stars of the unity, it starts as 0 */
   protected var _CurrentStars: Int = 0
   /** Returns the Attack Quantity that the unity is going to use */
@@ -76,7 +82,7 @@ abstract class AbstractUnity() extends Unity {
    *
    * @param hp the hit points that are going to be added (it has to be positive)*/
   def addHP(hp: Int): Unit = {
-    if(hp>0) CurrentHP += hp
+    if(hp>0) CurrentHP = CurrentHP + hp
   }
 
   /** removes hit points of the CurrentHP attribute of the unity
@@ -84,7 +90,7 @@ abstract class AbstractUnity() extends Unity {
    * @param hp the stars that are going to be removed (it has to be positive)*/
   def removeHP(hp: Int): Unit = {
     if(hp>0)
-      if(CurrentHP-hp>=0) CurrentHP -= hp
+      if(CurrentHP-hp>=0) CurrentHP = CurrentHP-hp
       else CurrentHP = 0
   }
 

@@ -1,11 +1,12 @@
 package cl.uchile.dcc.citric
 package model.panelstests
 
-import model.panels.paneltypes.{HomePanel, NeutralPanel, BonusPanel,DropPanel,EncounterPanel}
+import model.panels.paneltypes.{BonusPanel, DropPanel, EncounterPanel, HomePanel, NeutralPanel}
 import model.panels.`trait`.Panel
 import model.units.players.PlayerCharacter
-import model.norm.{Norm1,Norm2,Norm3,Norm4,Norm5,Norm6}
+import model.norm.{Norm1, Norm2, Norm3, Norm4, Norm5, Norm6}
 
+import cl.uchile.dcc.citric.model.controlador.GameController
 import munit.FunSuite
 
 import scala.collection.mutable.ArrayBuffer
@@ -20,6 +21,8 @@ class HomePanelTest extends FunSuite {
   private val characters: ArrayBuffer[PlayerCharacter]=ArrayBuffer(Nini,Emma)
   private val Empty: ArrayBuffer[PlayerCharacter]=ArrayBuffer()
   private val Empty2: List[Panel] = List()
+  private val context: GameController= new GameController()
+
 
   private var homePanel: HomePanel = _
   override def beforeEach(context: BeforeEach): Unit = {
@@ -89,5 +92,15 @@ class HomePanelTest extends FunSuite {
     assert(Nini.CurrentNorm.isInstanceOf[Norm1])
     homePanel.NormaCheck(Nini)
     assert(Nini.CurrentNorm.isInstanceOf[Norm1])/*stays the same*/
+  }
+  test("The home panel has the apply effect that heals 1 point the player and makes normCheck"){
+    homePanel.addCharacter(Nini)
+    Nini.Obj_stars = true
+    Nini.removeHP(1)
+    Nini.addStars(11)
+    assert(Nini.CurrentNorm.isInstanceOf[Norm1])
+    homePanel.apply(Nini,context)
+    assert(Nini.CurrentNorm.isInstanceOf[Norm2])
+    assert(Nini.CurrentHP == Nini.maxHP)
   }
 }

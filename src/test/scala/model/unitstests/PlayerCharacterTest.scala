@@ -54,8 +54,7 @@ class PlayerCharacterTest extends munit.FunSuite {
     assertEquals(character.Victories, 0)
     assertEquals(character.CurrentNorm.NumberNorm, 1)
     assertEquals(character.CurrentHP, maxHp)
-    assertEquals(character.Evade,false)
-    assertEquals(character.Defend,false)
+    assertEquals(character.defendOrEvade,false)
   }
 
   // Two ways to test randomness (you can use any of them):
@@ -122,12 +121,6 @@ class PlayerCharacterTest extends munit.FunSuite {
     assertEquals(character.CurrentHP,6)
   }
   test("The setters must be well implemented"){
-    /*Evade setter*/
-    character.Evade = true
-    assertEquals(character.Evade,true)
-    /*Defend setter*/
-    character.Defend = true
-    assertEquals(character.Defend,true)
     /*KO setter*/
     character.KO = true
     assertEquals(character.KO,true)
@@ -167,7 +160,7 @@ class PlayerCharacterTest extends munit.FunSuite {
     character.Attack(enemy3)
     assert(character.Attack_Quantity > 0 && character.Attack_Quantity > character.ATK)
     character.Attack_Quantity = 0
-    enemy4.Evade = true
+    enemy4.defendOrEvade = true
     character.Attack(enemy4)
     assert(character.Attack_Quantity > 0 && character.Attack_Quantity > character.ATK)
     /*If the enemy is a player and is KO, the it shouldn't attack*/
@@ -187,13 +180,13 @@ class PlayerCharacterTest extends munit.FunSuite {
     enemy4.removeHP(9)
     enemy4.addStars( 10)
     /*let's pretend that the enemy chose to defend itself after the attack, this then will be controlled with the input*/
-    enemy4.Defend = true
+    enemy4.defendOrEvade = false
     character.Attack(enemy4)
     assertEquals(character.CurrentStars, 18)
     assertEquals(enemy4.CurrentStars,5)
   }
   test("A character is in State KO after being defeated"){
-    enemy4.Evade = true
+    enemy4.defendOrEvade = true
     character.Attack_Quantity = 90
     enemy4.AttackPlayer(character)
     assert(enemy4.KO)
@@ -203,7 +196,7 @@ class PlayerCharacterTest extends munit.FunSuite {
     character.Attack(enemy)
     assertEquals(character.Victories, 1)
 
-    enemy4.Defend=true
+    enemy4.defendOrEvade=false
     enemy4.removeHP(9)
     character.Attack(enemy4)
     assertEquals(character.Victories,3)

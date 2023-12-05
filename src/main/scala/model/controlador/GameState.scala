@@ -20,6 +20,7 @@ class GameState protected(var context : GameController) extends State{
   def setGameController(gameController: GameController): Unit = {
     context = gameController
   }
+  def doAction(choose:Int):Unit={}
   private def error(targetState: String): Unit ={
     throw new InvalidActionException(s"Cannot transition from ${getClass.getSimpleName} to $targetState")
   }
@@ -37,7 +38,7 @@ class GameState protected(var context : GameController) extends State{
   def StartTurnPlayer(): Unit = this.error("PlayerTurn")
 
   /** this method is for the transition from the PlayerTurn State to the Moving state */
-  def RollDice_ChoosePath(): Unit = this.error("Moving")
+  def rollD(): Unit = this.error("Moving")
 
   /** this method is for the transition from the PlayerTurn state to the RecoveryState */
   def PlayerKO(): Unit = this.error("Recovery")
@@ -46,19 +47,16 @@ class GameState protected(var context : GameController) extends State{
   def insufficientRoll(): Unit = this.error("Chapter")
 
   /** This method is for the transition from the Recovery state to the PlayerTurn state */
-  def sufficientRoll(): Unit = this.error("Chapter")
+  def sufficientRoll(): Unit = this.error("PlayerTurn")
 
-  /** this method is for the transition from the Moving state to the OnPanel state */
-  def stopsMoving(): Unit = this.error("OnPanel")
+  /** this method is for the transition from the Moving state to the Combat state */
+  def stopsMoving(): Unit = this.error("Combat")
 
-  /** this method is for the transition from the Moving state to the OnPanel state */
-  def OutOfMoves(): Unit = this.error("OnPanel")
+  /** this method is for the transition from the Moving state to the Combat state */
+  def OutOfMoves(): Unit = this.error("Combat")
 
-  /** this method is for the transition from the OnPanel state to the Combat state */
-  def DecideFightCharacter(): Unit = this.error("Combat")
-
-  /** this method is for the transition from thr OnPanel state to the Combat state */
-  def OnEncounterPanel(): Unit = this.error("Combat")
+  /** this method is for the transition from the Combat state to the OnPanel state */
+  def DecideNotFightCharacter(): Unit = this.error("Combat")
 
   /** this method is for the transition from the Combat state to the OnPanel state */
   def EndCombat(): Unit = this.error("OnPanel")
@@ -67,14 +65,14 @@ class GameState protected(var context : GameController) extends State{
   def Attacks(): Unit = this.error("Wait")
 
   /** this method is for the transition from the Wait state to the Combat state */
-  def Evades(): Unit = this.error("Combat")
+  def response(): Unit = this.error("Combat")
 
-  /** this method is for the transition from the Wait state to the Combat state */
-  def defends(): Unit = this.error("Combat")
+  def fightWildUnit(): Unit = this.error("Combat")
 
   /** this method is for the transition from the OnPanel state to the Chapter state */
   def applyEffect(): Unit = this.error("Chapter")
 
-  /** this method id for the transition from the OnPanel state to the Chapter state */
-  def FinishEncounterPanel(): Unit = this.error("Chapter")
+  def choosePath(): Unit = this.error("Moving")
+
+  def isKO(): Unit = this.error("Recovery")
 }

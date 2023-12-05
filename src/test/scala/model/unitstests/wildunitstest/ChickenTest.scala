@@ -102,7 +102,7 @@ class ChickenTest extends FunSuite {
     /*if it isn't 0 hp:*/
     /*The Attack Quantity is set as 0, so after invoking the method, it has to be >= zero*/
     chicken.addHP(3)
-    enemy.Defend=true
+    enemy.defendOrEvade=false
     chicken.Attack(enemy)
     assert(chicken.Attack_Quantity >= 0 && chicken.Attack_Quantity > chicken.ATK)
     /*if the enemy is KO, it shouldn't attack*/
@@ -111,7 +111,7 @@ class ChickenTest extends FunSuite {
     assertEquals(chicken.Attack_Quantity, 0)
   }
   test("A chicken wins stars when it defeats a character, the character loses them"){
-    enemy.Defend = true
+    enemy.defendOrEvade = false
     enemy.addStars(3)
     chicken.Attack_Quantity = 50
     enemy.AttackWildUnit(chicken)

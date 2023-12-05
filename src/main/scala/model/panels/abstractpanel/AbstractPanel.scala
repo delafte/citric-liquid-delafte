@@ -4,6 +4,8 @@ package model.panels.abstractpanel
 import model.panels.`trait`.Panel
 import model.units.players.PlayerCharacter
 
+import cl.uchile.dcc.citric.model.controlador.GameController
+
 import scala.collection.mutable.ArrayBuffer
 /**
  * The 'AbstractPanel' abstract class consists on three methods that all types of Panels must have: addCharacter,
@@ -48,5 +50,5 @@ abstract class AbstractPanel extends Panel{
       _nextPanels -= panel
     }
   }
-  def apply(player: PlayerCharacter): Unit ={}
+  def apply(player: PlayerCharacter, context: GameController): Unit ={}
 }

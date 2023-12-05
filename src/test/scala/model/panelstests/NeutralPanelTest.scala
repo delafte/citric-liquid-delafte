@@ -1,12 +1,14 @@
 package cl.uchile.dcc.citric
 package model.panelstests
 
-import model.panels.paneltypes.{HomePanel, NeutralPanel, BonusPanel,DropPanel,EncounterPanel}
+import model.panels.paneltypes.{BonusPanel, DropPanel, EncounterPanel, HomePanel, NeutralPanel}
 import model.panels.`trait`.Panel
 import model.units.players.PlayerCharacter
 import model.norm.Norm1
-import scala.util.Random
 
+import cl.uchile.dcc.citric.model.controlador.GameController
+
+import scala.util.Random
 import munit.FunSuite
 
 import scala.collection.mutable.ArrayBuffer
@@ -20,7 +22,7 @@ class NeutralPanelTest extends FunSuite {
   private val NextPanels: ArrayBuffer[Panel] = ArrayBuffer(new NeutralPanel(),new HomePanel(Emma),new BonusPanel(), new DropPanel, new EncounterPanel)
   private val Empty: ArrayBuffer[PlayerCharacter]=ArrayBuffer()
   private val Empty2: List[Panel] = List()
-
+  private val context: GameController = new GameController
   private var characters: ArrayBuffer[PlayerCharacter]=_
   private var neutralPanel: NeutralPanel = _
   override def beforeEach(context: BeforeEach): Unit = {
@@ -81,14 +83,13 @@ class NeutralPanelTest extends FunSuite {
     neutralPanel.addPanel(NextPanels(2))
     neutralPanel.addPanel(NextPanels(3))
     neutralPanel.addPanel(NextPanels(4))
-    neutralPanel.apply(Emma)
+    neutralPanel.apply(Emma,context)
     /*Now we verify that everything stays the same*/
     assertEquals(neutralPanel.characters,characters.toList)
     assertEquals(Emma.name, "Emma")
     assertEquals(Emma.CurrentStars, 0)
     assert(Emma.CurrentNorm.isInstanceOf[Norm1])
-    assertEquals(Emma.Defend, false)
-    assertEquals(Emma.Evade, false)
+    assertEquals(Emma.defendOrEvade, false)
     assertEquals(Emma.CurrentHP, Emma.maxHP)
     assertEquals(Emma.maxHP, 15)
     assertEquals(Emma.ATK, 2)

@@ -24,7 +24,7 @@ trait Unity {
   protected val _EVA: Int
 
   /**The maximum health points a Unity can have. It represents the Unity's endurance.*/
-  protected val _maxHP: Int
+  protected var _maxHP: Int
 
   /**The Current Stars that the Unity has during the game, it varies during the development of it*/
   protected var _CurrentStars: Int
@@ -84,5 +84,14 @@ trait Unity {
    *
    * @param stars the stars that are going to be removed */
   def removeStars(stars: Int): Unit
+  /**getter for the maxHP*/
+  def maxHP:Int
+  protected def maxHP_=(x: Int): Unit
+  /**getter for the current HP*/
+  def CurrentHP:Int
+  /**setter for the currentHP*/
+  protected def CurrentHP_=(newHP: Int): Unit
+  /**the response of the unity when it is going to receive an attack*/
+  var defendOrEvade: Boolean
 
 }

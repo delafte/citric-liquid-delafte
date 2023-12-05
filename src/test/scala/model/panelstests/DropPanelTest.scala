@@ -1,10 +1,11 @@
 package cl.uchile.dcc.citric
 package model.panelstests
 
-import model.panels.paneltypes.{DropPanel, NeutralPanel, EncounterPanel, BonusPanel,HomePanel}
+import model.panels.paneltypes.{BonusPanel, DropPanel, EncounterPanel, HomePanel, NeutralPanel}
 import model.panels.`trait`.Panel
 import model.units.players.PlayerCharacter
 
+import cl.uchile.dcc.citric.model.controlador.GameController
 import munit.FunSuite
 
 import scala.collection.mutable.ArrayBuffer
@@ -20,6 +21,8 @@ class DropPanelTest extends FunSuite {
   private val characters: ArrayBuffer[PlayerCharacter] = ArrayBuffer(Minie, Anna)
   private val Empty: ArrayBuffer[PlayerCharacter] = ArrayBuffer()
   private val Empty2: List[Panel] = List()
+  private val context: GameController= new GameController()
+
 
   private var dropPanel: DropPanel = _
   override def beforeEach(context: BeforeEach): Unit = {
@@ -77,12 +80,12 @@ class DropPanelTest extends FunSuite {
     /*First, we test that the panel removes stars of the character in a normal situation*/
     Minie.addStars(10)
     Anna.addStars(6)
-    dropPanel.apply(Minie)
+    dropPanel.apply(Minie,context)
     assert(Minie.CurrentStars < 10)
     assert(Anna.CurrentStars == 6)
     /*Then, we test an edge case, in which the player has less stars than the quantity that the panel wants to take*/
     Minie.removeStars(10)
-    dropPanel.apply(Minie)
+    dropPanel.apply(Minie,context)
     assert(Minie.CurrentStars == 0)
   }
 

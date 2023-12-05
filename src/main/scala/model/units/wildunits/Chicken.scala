@@ -29,4 +29,4 @@ import scala.util.Random
  *
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
-class Chicken(protected val _EncounterPanel: EncounterPanel, override protected val _randomNumberGenerator: Random) extends AbstractWildUnit(3,-1,-1,1,3)
+class Chicken(protected val _EncounterPanel: EncounterPanel, protected val _randomNumberGenerator: Random = new Random()) extends AbstractWildUnit(3,-1,-1,1,3)
