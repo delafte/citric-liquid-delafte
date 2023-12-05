@@ -26,23 +26,23 @@ class GameStatesTest extends FunSuite {
       game.rollD()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from PreGame to PlayerTurn") {
-      game.StartTurnPlayer()
+      game.startTurnPlayer()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from PreGame to Recovery") {
-      game.isKO()
+      game.playerKO()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from PreGame to Combat") {
       game.stopsMoving()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from PreGame to Wait") {
-      game.Attacks()
+      game.attacks()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from PreGame to OnPanel") {
-      game.EndCombat()
+      game.endCombat()
     }
   }
   test("test GameStarts"){
-    game.GameStarts()
+    game.gameStarts()
     assert(!game.inPreGame())
     assert(game.inChapter())
     assert(!game.inPlayerTurn())
@@ -55,7 +55,7 @@ class GameStatesTest extends FunSuite {
 
 
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Chapter to OnPanel") {
-      game.EndCombat()
+      game.endCombat()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Chapter to Moving") {
       game.rollD()
@@ -64,15 +64,18 @@ class GameStatesTest extends FunSuite {
       game.stopsMoving()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Chapter to Wait") {
-      game.Attacks()
+      game.attacks()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Chapter to OnPanel") {
-      game.EndCombat()
+      game.endCombat()
+    }
+    interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Chapter to EndOfGame") {
+      game.reachNorm6()
     }
   }
   test("test new Chapter"){
-    game.GameStarts()
-    game.NewChapter()
+    game.gameStarts()
+    game.newChapter()
     assert(!game.inPreGame())
     assert(!game.inEndOfGame())
     assert(!game.inPlayerTurn())
@@ -84,7 +87,7 @@ class GameStatesTest extends FunSuite {
     assert(!game.inCombat())
 
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Chapter to OnPanel") {
-      game.EndCombat()
+      game.endCombat()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Chapter to Moving") {
       game.rollD()
@@ -93,15 +96,15 @@ class GameStatesTest extends FunSuite {
       game.stopsMoving()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Chapter to Wait") {
-      game.Attacks()
+      game.attacks()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Chapter to OnPanel") {
-      game.EndCombat()
+      game.endCombat()
     }
   }
   test("test start turn of player"){
-    game.GameStarts()
-    game.StartTurnPlayer()
+    game.gameStarts()
+    game.startTurnPlayer()
     assert(!game.inEndOfGame())
     assert(!game.inPreGame())
     assert(!game.inChapter())
@@ -113,7 +116,7 @@ class GameStatesTest extends FunSuite {
     assert(!game.inCombat())
 
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from PlayerTurn to OnPanel") {
-      game.EndCombat()
+      game.endCombat()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from PlayerTurn to Chapter") {
       game.insufficientRoll()
@@ -122,15 +125,15 @@ class GameStatesTest extends FunSuite {
       game.stopsMoving()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from PlayerTurn to Wait") {
-      game.Attacks()
+      game.attacks()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from PlayerTurn to Recovery") {
-      game.isKO()
+      game.playerKO()
     }
   }
   test("test PlayerKO"){
-    game.GameStarts()
-    game.isKO()
+    game.gameStarts()
+    game.playerKO()
     assert(!game.inChapter())
     assert(!game.inCombat())
     assert(!game.inEndOfGame())
@@ -142,24 +145,24 @@ class GameStatesTest extends FunSuite {
     assert(!game.inWait())
 
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Recovery to OnPanel") {
-      game.EndCombat()
+      game.endCombat()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Recovery to EndOfGame") {
-      game.ReachNorm6()
+      game.reachNorm6()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Recovery to Combat") {
       game.stopsMoving()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Recovery to Wait") {
-      game.Attacks()
+      game.attacks()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Recovery to Moving") {
       game.rollD()
     }
   }
   test("test insufficient roll"){
-    game.GameStarts()
-    game.isKO()
+    game.gameStarts()
+    game.playerKO()
     game.insufficientRoll()
     assert(game.inChapter())
     assert(!game.inCombat())
@@ -172,7 +175,7 @@ class GameStatesTest extends FunSuite {
     assert(!game.inWait())
 
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Chapter to OnPanel") {
-      game.EndCombat()
+      game.endCombat()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Chapter to Moving") {
       game.rollD()
@@ -181,15 +184,15 @@ class GameStatesTest extends FunSuite {
       game.stopsMoving()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Chapter to Wait") {
-      game.Attacks()
+      game.attacks()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Chapter to OnPanel") {
-      game.EndCombat()
+      game.endCombat()
     }
   }
   test("test sufficient roll"){
-    game.GameStarts()
-    game.isKO()
+    game.gameStarts()
+    game.playerKO()
     game.sufficientRoll()
     assert(!game.inChapter())
     assert(!game.inCombat())
@@ -202,8 +205,8 @@ class GameStatesTest extends FunSuite {
     assert(!game.inWait())
   }
   test("test rollD"){
-    game.GameStarts()
-    game.StartTurnPlayer()
+    game.gameStarts()
+    game.startTurnPlayer()
     game.rollD()
     assert(!game.inChapter())
     assert(!game.inCombat())
@@ -219,24 +222,24 @@ class GameStatesTest extends FunSuite {
       game.sufficientRoll()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Moving to Chapter") {
-      game.applyEffect()
+      game.effectApplied()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Moving to OnPanel") {
-      game.EndCombat()
+      game.endCombat()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Moving to Wait") {
-      game.Attacks()
+      game.attacks()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Moving to Recovery") {
-      game.isKO()
+      game.playerKO()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Moving to EndOfGame") {
-      game.ReachNorm6()
+      game.reachNorm6()
     }
   }
   test("test stop moving"){
-    game.GameStarts()
-    game.StartTurnPlayer()
+    game.gameStarts()
+    game.startTurnPlayer()
     game.rollD()
     game.stopsMoving()
     assert(!game.inChapter())
@@ -253,24 +256,24 @@ class GameStatesTest extends FunSuite {
       game.sufficientRoll()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Combat to Chapter") {
-      game.applyEffect()
+      game.effectApplied()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Combat to Recovery") {
-      game.isKO()
+      game.playerKO()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Combat to EndOfGame") {
-      game.ReachNorm6()
+      game.reachNorm6()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Combat to Chapter") {
-      game.NewChapter()
+      game.newChapter()
     }
 
   }
   test("test Out of moves") {
-    game.GameStarts()
-    game.StartTurnPlayer()
+    game.gameStarts()
+    game.startTurnPlayer()
     game.rollD()
-    game.OutOfMoves()
+    game.outOfMoves()
     assert(!game.inChapter())
     assert(game.inCombat())
     assert(!game.inEndOfGame())
@@ -282,11 +285,11 @@ class GameStatesTest extends FunSuite {
     assert(!game.inWait())
   }
   test("test Attacks"){
-    game.GameStarts()
-    game.StartTurnPlayer()
+    game.gameStarts()
+    game.startTurnPlayer()
     game.rollD()
-    game.OutOfMoves()
-    game.Attacks()
+    game.outOfMoves()
+    game.attacks()
     assert(!game.inChapter())
     assert(!game.inCombat())
     assert(!game.inEndOfGame())
@@ -297,22 +300,22 @@ class GameStatesTest extends FunSuite {
     assert(!game.inRecovery())
     assert(game.inWait())
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Wait to OnPanel") {
-      game.DecideNotFightCharacter()
+      game.decideNotFightCharacter()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Wait to PlayerTurn") {
       game.sufficientRoll()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Wait to Chapter") {
-      game.applyEffect()
+      game.effectApplied()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Wait to Recovery") {
-      game.isKO()
+      game.playerKO()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Wait to EndOfGame") {
-      game.ReachNorm6()
+      game.reachNorm6()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Wait to OnPanel") {
-      game.EndCombat()
+      game.endCombat()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from Wait to Moving") {
       game.rollD()
@@ -323,11 +326,11 @@ class GameStatesTest extends FunSuite {
   }
 
   test("test response"){
-    game.GameStarts()
-    game.StartTurnPlayer()
+    game.gameStarts()
+    game.startTurnPlayer()
     game.rollD()
-    game.OutOfMoves()
-    game.Attacks()
+    game.outOfMoves()
+    game.attacks()
     game.response()
     assert(!game.inChapter())
     assert(game.inCombat())
@@ -347,13 +350,13 @@ class GameStatesTest extends FunSuite {
   }
 
   test("test End of combat"){
-    game.GameStarts()
-    game.StartTurnPlayer()
+    game.gameStarts()
+    game.startTurnPlayer()
     game.rollD()
-    game.OutOfMoves()
-    game.Attacks()
+    game.outOfMoves()
+    game.attacks()
     game.response()
-    game.EndCombat()
+    game.endCombat()
     assert(!game.inChapter())
     assert(!game.inCombat())
     assert(!game.inEndOfGame())
@@ -365,19 +368,17 @@ class GameStatesTest extends FunSuite {
     assert(!game.inWait())
 
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from OnPanel to Combat") {
-      game.OutOfMoves()
+      game.outOfMoves()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from OnPanel to PlayerTurn") {
-      game.StartTurnPlayer()
+      game.startTurnPlayer()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from OnPanel to Recovery") {
-      game.isKO()
+      game.playerKO()
     }
-    interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from OnPanel to EndOfGame") {
-      game.ReachNorm6()
-    }
+
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from OnPanel to Wait") {
-      game.Attacks()
+      game.attacks()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from OnPanel to Moving") {
       game.rollD()
@@ -385,11 +386,11 @@ class GameStatesTest extends FunSuite {
   }
   test("test apply effect"){
     game.startGame(Seq(("player1", 1,1,1,1)))
-    game.StartTurnPlayer()
+    game.startTurnPlayer()
     game.rollD()
-    game.OutOfMoves()
-    game.DecideNotFightCharacter()
-    game.applyEffect()
+    game.outOfMoves()
+    game.decideNotFightCharacter()
+    game.effectApplied()
     assert(game.inChapter())
     assert(!game.inCombat())
     assert(!game.inEndOfGame())
@@ -402,14 +403,13 @@ class GameStatesTest extends FunSuite {
   }
   test("test EndGame") {
     game.startGame(Seq(("player1", 1,1,1,1)))
-    game.StartTurnPlayer()
+    game.startTurnPlayer()
     game.rollD()
-    game.OutOfMoves()
-    game.Attacks()
+    game.outOfMoves()
+    game.attacks()
     game.response()
-    game.EndCombat()
-    game.applyEffect()
-    game.ReachNorm6()
+    game.endCombat()
+    game.reachNorm6()
     assert(!game.inChapter())
     assert(!game.inCombat())
     assert(game.inEndOfGame())
@@ -421,33 +421,36 @@ class GameStatesTest extends FunSuite {
     assert(!game.inWait())
 
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from EndOfGame to Combat") {
-      game.OutOfMoves()
+      game.outOfMoves()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from EndOfGame to PlayerTurn") {
-      game.StartTurnPlayer()
+      game.startTurnPlayer()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from EndOfGame to Recovery") {
-      game.isKO()
+      game.playerKO()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from EndOfGame to EndOfGame") {
-      game.ReachNorm6()
+      game.reachNorm6()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from EndOfGame to Wait") {
-      game.Attacks()
+      game.attacks()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from EndOfGame to Moving") {
       game.rollD()
     }
     interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from EndOfGame to Chapter") {
-      game.GameStarts()
+      game.gameStarts()
+    }
+    interceptMessage[InvalidActionException]("An invalid Action was found -- Cannot transition from EndOfGame to Combat") {
+      game.response()
     }
   }
   test("test DecideNotFightCharacter"){
-    game.GameStarts()
-    game.StartTurnPlayer()
+    game.gameStarts()
+    game.startTurnPlayer()
     game.rollD()
-    game.OutOfMoves()
-    game.DecideNotFightCharacter()
+    game.outOfMoves()
+    game.decideNotFightCharacter()
     assert(!game.inChapter())
     assert(!game.inCombat())
     assert(!game.inEndOfGame())
@@ -459,11 +462,11 @@ class GameStatesTest extends FunSuite {
     assert(!game.inWait())
   }
   test("test fightWildUnit"){
-    game.GameStarts()
-    game.StartTurnPlayer()
+    game.gameStarts()
+    game.startTurnPlayer()
     game.rollD()
-    game.OutOfMoves()
-    game.DecideNotFightCharacter()
+    game.outOfMoves()
+    game.decideNotFightCharacter()
     game.fightWildUnit()
     assert(!game.inChapter())
     assert(game.inCombat())
@@ -479,14 +482,13 @@ class GameStatesTest extends FunSuite {
     game.doAction(1)
     assert(game.inPreGame())
     game.startGame(Seq(("player1", 1, 1, 1, 1)))
-    game.StartTurnPlayer()
+    game.startTurnPlayer()
     game.rollD()
-    game.OutOfMoves()
-    game.Attacks()
+    game.outOfMoves()
+    game.attacks()
     game.response()
-    game.EndCombat()
-    game.applyEffect()
-    game.ReachNorm6()
+    game.endCombat()
+    game.reachNorm6()
     game.doAction(1)
     assert(game.inEndOfGame())
 

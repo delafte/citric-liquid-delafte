@@ -10,7 +10,7 @@ import model.controlador.{GameController, GameState}
  */
 class PreGame(context: GameController) extends GameState(context) {
   override def inPreGame() = true
-  override def GameStarts(): Unit = {
+  override def gameStarts(): Unit = {
     this.setState(new Chapter(context))
   }
 }

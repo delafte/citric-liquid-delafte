@@ -58,6 +58,6 @@ Finally, I added an exception to make sure that a combat between two 'WildUnits'
 type of combat were not specified, and therefore, it does not exist in this game.
 
 ## States diagram
-![Diagrama de estados](docs/diagrama-estados.png)
+![Diagrama de estados](docs/diagrama-estados.jpeg)
 
 This project is licensed under the [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).

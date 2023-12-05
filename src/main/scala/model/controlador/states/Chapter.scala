@@ -11,7 +11,7 @@ import model.controlador.{GameController, GameState}
 class Chapter(context:GameController) extends GameState(context){
   override def inChapter() = true
 
-  override def NewChapter(): Unit ={
+  override def newChapter(): Unit ={
     context.numChapterUpdate()
     this.setState(new Chapter(context))
   }
@@ -21,22 +21,21 @@ class Chapter(context:GameController) extends GameState(context){
     val name = context.name
     if(result){
       println(s"O no! $name is KO, directly to Recovery phase")
-      context.isKO()
+      context.playerKO()
     }
     else{
       println(s"$name's turn")
-      context.StartTurnPlayer()
+      context.startTurnPlayer()
     }
 
   }
 
-  override def StartTurnPlayer(): Unit = {
+  override def startTurnPlayer(): Unit = {
       context.givePlayerStars()
       this.setState(new PlayerTurn(context))
   }
 
-  override def isKO(): Unit = {
+  override def playerKO(): Unit = {
     this.setState(new Recovery(context))
   }
-  override def ReachNorm6(): Unit = this.setState(new EndOfGame(context))
 }

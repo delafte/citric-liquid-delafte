@@ -35,13 +35,13 @@ trait State {
    * @param a the state we want*/
   def setState(a:State): Unit
   /**This method is for the transition from pre-game state to Chapter state*/
-  def GameStarts(): Unit
+  def gameStarts(): Unit
   /**This method is for staying in Chapter State*/
-  def NewChapter(): Unit
+  def newChapter(): Unit
   /**This method is for the transition from the chapter state to the End of Game state*/
-  def ReachNorm6(): Unit
+  def reachNorm6(): Unit
   /**This method is for the transition from the Chapter state to de Player Turn state*/
-  def StartTurnPlayer():Unit
+  def startTurnPlayer():Unit
   /**this method is for the transition from the PlayerTurn State to the Moving state*/
   def rollD():Unit
   /**This method is for the transition form the Recovery state to the Chapter State*/
@@ -51,24 +51,24 @@ trait State {
   /**this method is for the transition from the Moving state to the OnPanel state*/
   def stopsMoving():Unit
   /**this method is for the transition from the Moving state to the OnPanel state*/
-  def OutOfMoves():Unit
+  def outOfMoves():Unit
   /**this method is for the transition from the OnPanel state to the Combat state*/
-  def DecideNotFightCharacter():Unit
+  def decideNotFightCharacter():Unit
   /**this method is for the transition from the Combat state to the OnPanel state*/
-  def EndCombat():Unit
+  def endCombat():Unit
   /**this method is for the transition from the Combat state to the wait state*/
-  def Attacks():Unit
+  def attacks():Unit
   /**this method is for the transition from the Wait state to the Combat state*/
   def response():Unit
 
   /**this method is for the transition from the OnPanel state to the Chapter state*/
-  def applyEffect():Unit
+  def effectApplied():Unit
   /**this method is for the transition from the Moving state to the Moving state*/
   def choosePath():Unit
   /**this method simulates the action that a state does*/
   def doAction(choose:Int):Unit
   /**This method is for the transition from the Chapter state to the Recovery State*/
-  def isKO():Unit
+  def playerKO():Unit
   /**This method is for the transition from the OnPanel state to the Combat state*/
   def fightWildUnit():Unit
 

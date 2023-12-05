@@ -10,4 +10,6 @@ trait WildUnit extends Unity{
   protected val _EncounterPanel: EncounterPanel
   /**Bonus stars that the WildUnit gives when it loses*/
   protected val _BonusStars: Int
+  /**Makes appear a new wild Unit in the encounter panel*/
+  def respawn():Unit
 }

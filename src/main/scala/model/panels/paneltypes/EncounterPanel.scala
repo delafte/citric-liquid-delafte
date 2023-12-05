@@ -31,14 +31,12 @@ import scala.util.Random
 class EncounterPanel() extends AbstractPanel {
   val name = "Encounter Panel"
   /**The wild units of the panel*/
-  var wildUnit: ArrayBuffer[WildUnit] = ArrayBuffer(new Chicken(this), new Seagull(this), new RoboBall(this))
+  val wildUnit: ArrayBuffer[WildUnit] = ArrayBuffer(new Chicken(this), new Seagull(this), new RoboBall(this))
   /**This method selects a random wild unit to the encounter panel and returns it.*/
   def randomWildUnit(): WildUnit = {
     val ran = new Random()
-    val result: Int =  ran.nextInt(3) + 1
-    if(result == 1) wildUnit(0)
-    else if(result==2) wildUnit(1)
-    else wildUnit(2)
+    val result: Int =  ran.nextInt(3)
+    wildUnit(result)
   }
   override def apply(player: PlayerCharacter, context: GameController): Unit = {
     if(characters.contains(player)){
@@ -47,5 +45,9 @@ class EncounterPanel() extends AbstractPanel {
       context.encounterPanel = true
       context.fightWildUnit()
     }
+  }
+  /**This method removes a wildUnit from the list*/
+  def remove(wild: WildUnit): Unit = {
+    wildUnit -= wild
   }
 }

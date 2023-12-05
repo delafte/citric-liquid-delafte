@@ -126,4 +126,5 @@ abstract class AbstractUnity() extends Unity {
     if (atk < 0) Attack_Quantity = 0 /*There are cases in which an unity can have negative _ATK*/
     else Attack_Quantity = atk
   }
+
 }

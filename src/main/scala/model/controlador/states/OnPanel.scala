@@ -12,16 +12,18 @@ class OnPanel(context:GameController) extends GameState(context){
   override def inOnPanel(): Boolean = true
 
   override def doAction(choose: Int): Unit = {
-    if(context.encounterPanel) context.applyEffect()
+    if(context.encounterPanel) context.effectApplied()
     context.effectPanel()
   }
 
   override def fightWildUnit(): Unit = {
     this.setState(new Combat(context))
   }
-  override def applyEffect(): Unit = {
+  override def effectApplied(): Unit = {
     this.setState(new Chapter(context))
     context.encounterPanel = false
     context.nextTurn()
   }
+  override def reachNorm6(): Unit = this.setState(new EndOfGame(context))
+
 }

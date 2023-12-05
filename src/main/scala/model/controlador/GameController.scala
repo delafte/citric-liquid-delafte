@@ -10,7 +10,6 @@ import model.board.Board
 import scala.math._
 import scala.collection.mutable.ArrayBuffer
 import scala.math.floor
-import scala.util.Random
 
 /**The GameController class represents de Game Controller of the game. Here all the logic of the game is implemented so that it can
  * be functional.
@@ -19,7 +18,7 @@ import scala.util.Random
  */
 class GameController extends Observer[CharacterWinEvent] {
   /**the current state of the game*/
-  private var state: State = new PreGame(this)
+  private var _state: State = new PreGame(this)
   /**The characters that are playing the game*/
   private val _playerCharacters: ArrayBuffer[PlayerCharacter] = ArrayBuffer()
   /**The board of the game*/
@@ -41,26 +40,32 @@ class GameController extends Observer[CharacterWinEvent] {
   private var _encounterPanel: Boolean = false
   /**Indicates the number of combat rounds, so that we can limit it to two*/
   private var _numCombat: Int = 0
+  private val _defaultUnity: Unity = new PlayerCharacter("Boot",0,0,0,0)
+  private val _defaultPlayer: PlayerCharacter = new PlayerCharacter("Boot",0,0,0,0)
+  /**Setter de current Player
+   * @param p the new current player character*/
+  def currentPlayer_=(p:PlayerCharacter):Unit={
+    _currentPlayer=Some(p)
+  }
+  /**Setter for the current state of the game
+   * @param s the new state*/
+  def state_=(s:State):Unit ={
+    _state = s
+  }
+  /**Getter of the current state of the game*/
+  def state: State = _state
   /**A method to add value to the numChapter*/
   def addNumChapter(n:Int):Unit = {
     _numChapter+=max(0,n)
   }
-
-  /** A method to subtract value to the numChapter */
-  def removeNumChapter(n: Int): Unit = {
-    if(numChapter-n>=0) _numChapter -= n
-  }
+  
   /**A method to add value to the rollResult*/
   def addRollResult(n:Int):Unit = {
     if(n<7 && n>0){
       _rollResult += n
     }
   }
-  /**This method is to subtract a value to the RollResult*/
-  def removeRollResult(n:Int):Unit ={
-      _rollResult = max(0,_rollResult-n)
 
-  }
   /**getter for the numCombat parameter*/
   def numCombat: Int = _numCombat
   /**setter for the numCombat parameter
@@ -79,16 +84,17 @@ class GameController extends Observer[CharacterWinEvent] {
   }
   /**getter for the encounter panel parameter*/
   def encounterPanel: Boolean = _encounterPanel
-  /**setter for the current enemy*/
+  /**setter for the current enemy
+   * @param enemy the new enemy*/
   def currentEnemy_=(enemy: Unity):Unit={
     _currentEnemy = Some(enemy)
   }
   /**getter for the current Enemy*/
-  def currentEnemy: Unity = _currentEnemy.get
+  def currentEnemy: Unity = _currentEnemy.getOrElse(_defaultUnity)
   /**getter for the current panel of the turn*/
   def currentPanel: Panel = _currentPanels(currentPlayerNum)
   /**getter for the currentPlayer*/
-  def currentPlayer: PlayerCharacter = _currentPlayer.get
+  def currentPlayer: PlayerCharacter = _currentPlayer.getOrElse(_defaultPlayer)
   /**getter for the players of the game*/
   def playerCharacters: List[PlayerCharacter]=_playerCharacters.toList
   /**the getter for the numChapter variable*/
@@ -97,9 +103,9 @@ class GameController extends Observer[CharacterWinEvent] {
   def rollResult: Int = _rollResult
   /**this method updates the observers of the condition to end a game*/
   override def update(observable: Subject, value: CharacterWinEvent): Unit = {
-    var name = value.name_character
+    val name = value.name_character
     println(s"Game Over! $name has won the Game!")
-    state.ReachNorm6()
+    _state.reachNorm6()
   }
   /**This method indicates if a character is KO
    * @return the KO state of the current Character*/
@@ -142,7 +148,7 @@ class GameController extends Observer[CharacterWinEvent] {
       i+=1
     }
     println("Game starts!")
-    state.GameStarts()
+    _state.gameStarts()
   }
   /**this method calls the method of a player character to get their rollDice result*/
   def playerRollDice():Unit = {
@@ -173,11 +179,11 @@ class GameController extends Observer[CharacterWinEvent] {
     if(_rollResult>0){
       if(_currentPanels(currentPlayerNum) == _currentPlayer.get.homePanel && numChapter>1){
         val result=askStopDecision(choose)
-        if(result==1) state.stopsMoving()
-        else state.doAction(choose)
+        if(result==1) _state.stopsMoving()
+        else _state.doAction(choose)
       }
       else if(_currentPanels(currentPlayerNum).nextPanels.length!=1){
-        state.choosePath()
+        _state.choosePath()
         this.askPathDecision(choose)
       }
       else {
@@ -187,7 +193,7 @@ class GameController extends Observer[CharacterWinEvent] {
       }
     }
     else{
-      state.OutOfMoves()
+      _state.outOfMoves()
       _currentPanels(currentPlayerNum).addCharacter(currentPlayer)
       val name= _currentPanels(currentPlayerNum).name
       println(s"You land on a(n) $name")
@@ -220,14 +226,14 @@ class GameController extends Observer[CharacterWinEvent] {
       println(s"$name's decision is path $choose")
       _currentPanels(currentPlayerNum) = _currentPanels(currentPlayerNum).nextPanels(choose)
       _rollResult-=1
-      state.doAction(choose)
+      _state.doAction(choose)
     }
     else throw new InvalidInputException(s"$choose is not an option")
   }
 
   /** This method simulates the process of asking the decision of a player, so that the decision of attack a character or not
    * can be implemented. This function is called before the landing on panel state.*/
-  def AttackDecision(choose: Int): Int = {
+  def attackDecision(choose: Int): Int = {
     var name = this.name
     println(s"$name, do you want to start a combat? '0' if not, '1' if yes")
     if(choose==0) 0
@@ -239,7 +245,7 @@ class GameController extends Observer[CharacterWinEvent] {
       val name=currentPlayer.name
       println(s"$name is going to Attack")
       println("The enemy has to choose their response:")
-      DecideDefendOrEvade(choose, _currentEnemy.get)
+      decideDefendOrEvade(choose, _currentEnemy.get)
     }
     if(choose == 0 && encounterPanel) {
       println("you are going to attack a wild unit!")
@@ -247,7 +253,7 @@ class GameController extends Observer[CharacterWinEvent] {
     }
     else {
       println("The Enemy is going to attack back!")
-      DecideDefendOrEvade(choose, _currentPlayer.get)
+      decideDefendOrEvade(choose, _currentPlayer.get)
       _currentEnemy.foreach(target => _currentPlayer.foreach(character=>target.Attack(character)))
       println("End of Combat")
       val hp=currentPlayer.CurrentHP
@@ -263,7 +269,7 @@ class GameController extends Observer[CharacterWinEvent] {
     if(!encounterPanel){
       println(s"$name, now you are going to receive the panel's effect")
       _currentPanels(currentPlayerNum).apply(_currentPlayer.getOrElse(throw new AssertionError("There's no currentPlayer")), this)
-      if(!encounterPanel)state.applyEffect()
+      if(!encounterPanel)_state.effectApplied()
     }
   }
 
@@ -271,7 +277,7 @@ class GameController extends Observer[CharacterWinEvent] {
 /** This method asks for the input of the user, so that the decision of defend or evade an attack
    * can be implemented. This function is called during the Attack process. It changes the values of the attributes
    * Defend or Evade. */
-  def DecideDefendOrEvade(choose: Int,chooser: Unity): Unit = {
+  def decideDefendOrEvade(choose: Int, chooser: Unity): Unit = {
     println("Put 1 if you want to defend, 0 if you want to evade")
     if(choose == 1) {
       chooser.defendOrEvade=false
@@ -311,72 +317,70 @@ class GameController extends Observer[CharacterWinEvent] {
       else {
         _currentEnemy = Some(playerCharacters(choose - 1))
       }
-      state.Attacks()
+      _state.attacks()
   }
   /**Calls the doAction of the current state*/
-  def doAction(choose:Int): Unit = state.doAction(choose)
-  def inPreGame(): Boolean = state.inPreGame()
-  def inChapter(): Boolean = state.inChapter()
-  def inCombat(): Boolean = state.inCombat()
-  def inEndOfGame(): Boolean = state.inEndOfGame()
-  def inMoving(): Boolean = state.inMoving()
-  def inOnPanel(): Boolean = state.inOnPanel()
-  def inPlayerTurn(): Boolean = state.inPlayerTurn()
-  def inRecovery(): Boolean = state.inRecovery()
-  def inWait(): Boolean = state.inWait()
+  def doAction(choose:Int): Unit = _state.doAction(choose)
+  def inPreGame(): Boolean = _state.inPreGame()
+  def inChapter(): Boolean = _state.inChapter()
+  def inCombat(): Boolean = _state.inCombat()
+  def inEndOfGame(): Boolean = _state.inEndOfGame()
+  def inMoving(): Boolean = _state.inMoving()
+  def inOnPanel(): Boolean = _state.inOnPanel()
+  def inPlayerTurn(): Boolean = _state.inPlayerTurn()
+  def inRecovery(): Boolean = _state.inRecovery()
+  def inWait(): Boolean = _state.inWait()
   def setState(s:State): Unit = {
-    state=s
+    _state=s
     s.setGameController(this)
   }
 
   /** This method is for the transition from pre-game state to Chapter state */
-  def GameStarts(): Unit = state.GameStarts()
+  def gameStarts(): Unit = _state.gameStarts()
   /**This method is for the transition from the OnPanel state to the Combat state*/
-  def fightWildUnit():Unit = state.fightWildUnit()
+  def fightWildUnit():Unit = _state.fightWildUnit()
   /** This method is for staying in Chapter State */
-  def NewChapter(): Unit = state.NewChapter()
+  def newChapter(): Unit = _state.newChapter()
 
   /** This method is for the transition from the chapter state to the End of Game state */
-  def ReachNorm6(): Unit = state.ReachNorm6()
+  def reachNorm6(): Unit = _state.reachNorm6()
 
   /** This method is for the transition from the Chapter state to de Player Turn state */
-  def StartTurnPlayer(): Unit = state.StartTurnPlayer()
+  def startTurnPlayer(): Unit = _state.startTurnPlayer()
   /** This method is for the transition from the Chapter state to de Recovery state */
 
-  def isKO():Unit = state.isKO()
+  def playerKO():Unit = _state.playerKO()
 
   /** this method is for the transition from the PlayerTurn State to the Moving state */
-  def rollD(): Unit = state.rollD()
+  def rollD(): Unit = _state.rollD()
 
   /** This method is for the transition form the Recovery state to the Chapter State */
-  def insufficientRoll(): Unit = state.insufficientRoll()
+  def insufficientRoll(): Unit = _state.insufficientRoll()
 
   /** This method is for the transition from the Recovery state to the PlayerTurn state */
-  def sufficientRoll(): Unit = state.sufficientRoll()
+  def sufficientRoll(): Unit = _state.sufficientRoll()
 
   /** this method is for the transition from the Moving state to the OnPanel state */
-  def stopsMoving(): Unit = state.stopsMoving()
+  def stopsMoving(): Unit = _state.stopsMoving()
 
   /** this method is for the transition from the Moving state to the OnPanel state */
-  def OutOfMoves(): Unit = state.OutOfMoves()
+  def outOfMoves(): Unit = _state.outOfMoves()
 
   /** this method is for the transition from the OnPanel state to the Combat state */
-  def DecideNotFightCharacter(): Unit = state.DecideNotFightCharacter()
+  def decideNotFightCharacter(): Unit = _state.decideNotFightCharacter()
 
   /** this method is for the transition from the Combat state to the OnPanel state */
-  def EndCombat(): Unit = state.EndCombat()
+  def endCombat(): Unit = _state.endCombat()
 
   /** this method is for the transition from the Combat state to the wait state */
-  def Attacks(): Unit = state.Attacks()
+  def attacks(): Unit = _state.attacks()
 
   /** this method is for the transition from the Wait state to the Combat state */
-  def response(): Unit = state.response()
+  def response(): Unit = _state.response()
 
 
   /** this method is for the transition from the OnPanel state to the Chapter state */
-  def applyEffect(): Unit = state.applyEffect()
+  def effectApplied(): Unit = _state.effectApplied()
   /**this method is for the transition from the Moving state to the Moving state*/
-  def choosePath(): Unit = state.choosePath()
-
-
+  def choosePath(): Unit = _state.choosePath()
 }

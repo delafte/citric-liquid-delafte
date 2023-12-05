@@ -13,31 +13,31 @@ class Combat(context:GameController) extends GameState(context){
 
   override def doAction(choose:Int): Unit = {
     if(context.encounterPanel && context.numCombat<2){
-      context.Attacks()
+      context.attacks()
     }
     else if(!context.encounterPanel && context.numCombat<2){
       val more=context.checkMorePlayersInPanel()
       if(more){
-        if(context.AttackDecision(choose)==1){
+        if(context.attackDecision(choose)==1){
           context.selectEnemy(choose)
         }
-        else context.DecideNotFightCharacter()
+        else context.decideNotFightCharacter()
       }
-      else context.EndCombat()
+      else context.endCombat()
     }
     else {
       context.numCombat = 0
-      context.EndCombat()
+      context.endCombat()
     }
   }
-  override def Attacks(): Unit = {
+  override def attacks(): Unit = {
     this.setState(new Wait(context))
   }
 
-  override def DecideNotFightCharacter(): Unit = {
+  override def decideNotFightCharacter(): Unit = {
     this.setState(new OnPanel(context))
   }
 
-  override def EndCombat(): Unit = this.setState(new OnPanel(context))
+  override def endCombat(): Unit = this.setState(new OnPanel(context))
 
 }

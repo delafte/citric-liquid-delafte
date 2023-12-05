@@ -68,9 +68,7 @@ class PlayerCharacter(_name: String,_maxHP:Int,  _ATK: Int,  _DEF: Int, _EVA: In
    *
    * @param res The quantity of stars that the player loses*/
   private def Defeated(res: Int): Unit = {
-    /*
-    Defend = false
-    Evade = false*/
+
     defendOrEvade = false
     CurrentStars -= res
     KO = true

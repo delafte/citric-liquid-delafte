@@ -75,27 +75,6 @@ abstract class AbstractPlayerCharacter(protected val _name: String,protected var
   def Obj_victories_=(newState: Boolean): Unit = {
     _Obj_victories = newState
   }
-   /*
-  /** Return the state of the variable Defend */
-  def Defend: Boolean = _Defend
-
-  /** Return the state of the variable Evade */
-  def Evade: Boolean = _Evade
-
-  /** This function sets a new state to the Defend attribute
-   *
-   * @param newState the new Boolean of the attribute */
-  def Defend_=(newState: Boolean): Unit = {
-    _Defend = newState
-  }
-
-  /** This function sets a new state to the Evade attribute
-   *
-   * @param newState the new Boolean of the attribute */
-
-  def Evade_=(newState: Boolean): Unit = {
-    _Evade = newState
-  }*/
 
   /** Returns the KO state of the character */
   def KO: Boolean = _KO

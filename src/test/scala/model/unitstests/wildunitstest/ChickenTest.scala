@@ -5,6 +5,7 @@ import model.panels.paneltypes.EncounterPanel
 import model.units.wildunits.Chicken
 
 import cl.uchile.dcc.citric.model.units.players.PlayerCharacter
+import cl.uchile.dcc.citric.model.units.traitunits.WildUnit
 import munit.FunSuite
 
 import scala.util.Random
@@ -140,5 +141,15 @@ class ChickenTest extends FunSuite {
     chicken.removeHP(hp)
     chicken.Evasion(12)
     assert(chicken.CurrentHP == 0)
+  }
+  test("when a chicken dies, a new one is generated in the same panel"){
+    val encounterPanel2: EncounterPanel = new EncounterPanel()
+    assert(encounterPanel2.wildUnit(0).isInstanceOf[Chicken])
+    val chi: WildUnit = encounterPanel2.wildUnit(0)
+    enemy.Attack_Quantity=100
+    encounterPanel2.wildUnit(0).AttackPlayer(enemy)
+    assert(chi.CurrentHP==0)
+    assert(encounterPanel2.wildUnit(2).isInstanceOf[Chicken])
+    assert(encounterPanel2.wildUnit(2)!=chi)
   }
 }

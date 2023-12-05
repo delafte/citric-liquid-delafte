@@ -33,11 +33,11 @@ class EncounterPanelTest extends FunSuite {
     assert(selected.isInstanceOf[WildUnit])
   }
   test("When a character lands on a panel, a combat is initialized with the wild unit"){
-    context.GameStarts()
-    context.StartTurnPlayer()
+    context.gameStarts()
+    context.startTurnPlayer()
     context.rollD()
-    context.OutOfMoves()
-    context.DecideNotFightCharacter()
+    context.outOfMoves()
+    context.decideNotFightCharacter()
     encounterPanel.addCharacter(Ammy)
     encounterPanel.apply(Ammy,context)
     assert(context.inCombat())
@@ -87,6 +87,11 @@ class EncounterPanelTest extends FunSuite {
     /*Testing the case in which we try to delete a character that isn't in the array*/
     encounterPanel.removeCharacter(Hannah)
     assertEquals(encounterPanel.characters, characters.toList)
+  }
+  test("we can remove wildUnits from the encounter panel"){
+    assert(encounterPanel.wildUnit.length==3)
+    encounterPanel.remove(encounterPanel.wildUnit(0))
+    assert(encounterPanel.wildUnit.length == 2)
   }
 
 }

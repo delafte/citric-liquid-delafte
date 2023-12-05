@@ -15,7 +15,7 @@ class Moving(context:GameController) extends GameState(context){
     this.setState(new Combat(context))
   }
 
-  override def OutOfMoves(): Unit = {
+  override def outOfMoves(): Unit = {
     this.setState(new Combat(context))
   }
 

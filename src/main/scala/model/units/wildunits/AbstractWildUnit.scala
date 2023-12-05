@@ -14,10 +14,7 @@ import model.panels.paneltypes.EncounterPanel
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
 abstract class AbstractWildUnit(protected var _maxHP: Int,protected val _ATK: Int, protected val _DEF: Int, protected val _EVA: Int, protected val _BonusStars: Int) extends AbstractUnity with WildUnit{
-  /**Recovers the current Hp of the wildUnit when it reaches 0*/
-  def recover():Unit={
-    if(CurrentHP ==0)CurrentHP = maxHP
-   }
+
   /** This method simulates the attack of the WildUnit to other unity
    *
    * @param enemy the Unity that is going to be attacked
@@ -46,6 +43,7 @@ abstract class AbstractWildUnit(protected var _maxHP: Int,protected val _ATK: In
         enemy.addStars(CurrentStars + BonusStars)
         CurrentStars = 0
         enemy.addVictories( 1)
+        respawn()
       }
     }
     else enemy.Attack_Quantity = 0
