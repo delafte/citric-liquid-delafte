@@ -13,6 +13,7 @@ import scala.math.floor
 
 /**The GameController class represents de Game Controller of the game. Here all the logic of the game is implemented so that it can
  * be functional.
+ * @constructor creates a GameController.
  *
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
@@ -58,7 +59,7 @@ class GameController extends Observer[CharacterWinEvent] {
   def addNumChapter(n:Int):Unit = {
     _numChapter+=max(0,n)
   }
-  
+
   /**A method to add value to the rollResult*/
   def addRollResult(n:Int):Unit = {
     if(n<7 && n>0){

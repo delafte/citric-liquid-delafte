@@ -4,8 +4,8 @@ package model.controlador.states
 import model.controlador.{GameController, GameState}
 /**The Chapter class represents the state chapter of the game. In this state the turns are assigned and it represents
  * a round of the game. Every character ends it's turn in this state.
- * @param context the Game Controller
- *
+ * @param context the Game Controller.
+ * @constructor creates a Chapter State with a specified GameController.
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
 class Chapter(context:GameController) extends GameState(context){

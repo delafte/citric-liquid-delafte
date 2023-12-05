@@ -31,6 +31,7 @@ import scala.util.Random
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
 class RoboBall(protected val _EncounterPanel: EncounterPanel, override protected val _randomNumberGenerator: Random = new Random) extends AbstractWildUnit(3,-1,1,-1,2){
+  /**Makes appear a new RoboBall in the encounter panel, removing the current one*/
   def respawn(): Unit = {
     _EncounterPanel.remove(this)
     _EncounterPanel.wildUnit+=new RoboBall(_EncounterPanel)

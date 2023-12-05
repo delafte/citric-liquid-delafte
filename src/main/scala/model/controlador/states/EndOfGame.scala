@@ -4,8 +4,8 @@ package model.controlador.states
 import model.controlador.{GameController, GameState}
 /**The EndOfGame class represents the state EndOfGame of the game. To achieve this state, a character has to reach
  * Norm6.
- *
- * @param context the Game Controller
+ * @constructor creates a EndOfGame State with a specified GameController.
+ * @param context the Game Controller.
  *
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */

@@ -4,7 +4,7 @@ package model.controlador.states
 import model.controlador.{GameController, GameState}
 /**The Wait class represents the state Wait of the game. In this state the Unities choose their reaction against an attack.
  * Also, the Attack process is triggered here.
- *
+ * @constructor creates an Wait State with a specified GameController.
  * @param context the Game Controller
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */

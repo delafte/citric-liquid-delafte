@@ -60,4 +60,17 @@ type of combat were not specified, and therefore, it does not exist in this game
 ## States diagram
 ![Diagrama de estados](docs/diagrama-estados.jpeg)
 
+## T3 - 5/12/23
+
+For this task, what I did was analyze the game flow and interactions between units. With that information, I was able to design the state diagram, which I later used as a base to begin programming.
+
+Next, I proceeded to create the GameController class, which is responsible for ensuring the proper management of what was created in the previous tasks of this course, and establishing a smooth flow. I also created the necessary 
+classes and traits to implement the State Pattern, thus modeling the previously designed flowchart. All transitions are properly tested, ensuring correct functionality.
+
+With this groundwork, the connection between these state classes and the controller was established, delegating tasks and making necessary calls to ensure a seamless game. Methods were created to make choices, 
+simulating input with the parameters they receive. All of this is also thoroughly tested.
+
+Finally, I implemented the Observer Pattern to ensure the detection of victory conditions. For this, I created a class representing that condition, which receives the name of the winning player, and 
+likewise implemented the required traits and classes for the model.
+
 This project is licensed under the [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).

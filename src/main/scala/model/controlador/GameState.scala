@@ -3,6 +3,12 @@ package model.controlador
 import model.controlador.GameController
 
 import cl.uchile.dcc.citric.exceptions.InvalidActionException
+/**The GameState class is part of the implementation of the State Pattern. With this we can pre-establish the
+ * behaviour of the methods. We ensure a good implementation of the transitions and general behaviour of the game
+ * with the created exceptions.
+ *
+ * @param context the GameController of the game
+ * @author [[https://github.com/delafte/ Delaney Tello E.]]*/
 class GameState protected(var context : GameController) extends State{
   def inPreGame() = false
   def inChapter() = false

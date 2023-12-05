@@ -4,7 +4,7 @@ package model.controlador.states
 import model.controlador.{GameController, GameState}
 /**The Moving class represents the state Moving of the game. In this state the player is moving on the Board of the game
  * and they can choose between paths or to stop if they land on their home panel.
- *
+ * @constructor creates a Moving State with a specified GameController.
  * @param context the Game Controller
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
