@@ -41,7 +41,7 @@ trait State {
   def gameStarts(): Unit
   /**This method is for staying in Chapter State*/
   def newChapter(): Unit
-  /**This method is for the transition from the chapter state to the End of Game state*/
+  /**This method is for the transition from the OnPanel state to the End of Game state*/
   def reachNorm6(): Unit
   /**This method is for the transition from the Chapter state to de Player Turn state*/
   def startTurnPlayer():Unit
@@ -51,15 +51,15 @@ trait State {
   def insufficientRoll():Unit
   /**This method is for the transition from the Recovery state to the PlayerTurn state*/
   def sufficientRoll():Unit
-  /**this method is for the transition from the Moving state to the OnPanel state*/
+  /**this method is for the transition from the Moving state to the Combat state*/
   def stopsMoving():Unit
-  /**this method is for the transition from the Moving state to the OnPanel state*/
+  /**this method is for the transition from the Moving state to the Combat state*/
   def outOfMoves():Unit
-  /**this method is for the transition from the OnPanel state to the Combat state*/
+  /**this method is for the transition from the Combat state to the OnPanel state*/
   def decideNotFightCharacter():Unit
   /**this method is for the transition from the Combat state to the OnPanel state*/
   def endCombat():Unit
-  /**this method is for the transition from the Combat state to the wait state*/
+  /**this method is for the transition from the Combat state to the Wait state*/
   def attacks():Unit
   /**this method is for the transition from the Wait state to the Combat state*/
   def response():Unit

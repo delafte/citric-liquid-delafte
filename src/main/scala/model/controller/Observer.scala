@@ -5,6 +5,9 @@ package model.controller
  *
  * @author [[https://github.com/delafte/ Delaney Tello E.]]*/
 trait Observer[T]{
+  /**this method updates the observer with the value of interest
+   * @param observable the subject they are observing
+   * @param value the value of interest*/
   def update(observable: Subject, value: T): Unit
 
 }

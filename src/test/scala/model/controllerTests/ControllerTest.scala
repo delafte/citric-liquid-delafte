@@ -49,6 +49,7 @@ class ControllerTest extends FunSuite {
   test("A player can choose their objective when they make normCheck"){
     game.startGame(playerCharacters, 0)
     assert(game.currentPlayer.Obj_victories)
+    val subject:PlayerCharacter=game.currentPlayer
     game.addNumChapter(2)
     game.doAction(1)
     assert(game.inPlayerTurn())
@@ -60,6 +61,7 @@ class ControllerTest extends FunSuite {
     game.currentPlayer.addVictories(100)
     assert(game.inOnPanel())
     game.doAction(1)
+    assertEquals(game.playerCharacters.head,subject)
     assert(!game.playerCharacters.head.Obj_victories)
     assert(game.playerCharacters.head.Obj_stars)
   }

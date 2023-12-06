@@ -13,10 +13,10 @@ class Wait(context:GameController) extends GameState(context){
 
   override def doAction(choose:Int): Unit = {
     if(context.numCombat == 0){
-      context.doAttack(0)
+      context.doAttack(choose,0)
     }
     else if(context.numCombat ==1){
-      context.doAttack(1)
+      context.doAttack(choose,1)
     }
     context.response()
   }

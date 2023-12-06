@@ -38,6 +38,9 @@ class Combat(context:GameController) extends GameState(context){
     this.setState(new OnPanel(context))
   }
 
-  override def endCombat(): Unit = this.setState(new OnPanel(context))
+  override def endCombat(): Unit = {
+    context.numCombat = 0
+    this.setState(new OnPanel(context))
+  }
 
 }

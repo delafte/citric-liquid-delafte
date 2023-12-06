@@ -8,10 +8,10 @@ import cl.uchile.dcc.citric.model.units.players.CharacterWinEvent
  *
  * @author [[https://github.com/delafte/ Delaney Tello E.]]*/
 trait Subject{
-  /**Method to add observers to the subject*/
+  /**Method to add observers to the subject
+   * @param observer it will be new observer of the subject*/
   def addObserverWinEvent(observer: Observer[CharacterWinEvent]): Unit
-  //def addObserverDeathEvent(observer: Observer[UnityDeathEvent]): Unit
-  /**Method to notify the observers about a value of the subject*/
+  /**Method to notify the observers about a value of the subject
+   * @param value the value of interest for the observers*/
   def notifyObserversWinEvent(value: CharacterWinEvent): Unit
-  //def notifyObserversDeathEvent(value: UnityDeathEvent): Unit
 }
