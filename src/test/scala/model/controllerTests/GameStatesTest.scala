@@ -1,7 +1,7 @@
 package cl.uchile.dcc.citric
 package model.controllerTests
 import munit.FunSuite
-import model.controlador.GameController
+import model.controller.GameController
 
 import cl.uchile.dcc.citric.exceptions.InvalidActionException
 class GameStatesTest extends FunSuite {
@@ -385,7 +385,7 @@ class GameStatesTest extends FunSuite {
     }
   }
   test("test apply effect"){
-    game.startGame(Seq(("player1", 1,1,1,1)))
+    game.startGame(Seq(("player1", 1,1,1,1)),1)
     game.startTurnPlayer()
     game.rollD()
     game.outOfMoves()
@@ -402,7 +402,7 @@ class GameStatesTest extends FunSuite {
     assert(!game.inWait())
   }
   test("test EndGame") {
-    game.startGame(Seq(("player1", 1,1,1,1)))
+    game.startGame(Seq(("player1", 1,1,1,1)),0)
     game.startTurnPlayer()
     game.rollD()
     game.outOfMoves()
@@ -481,7 +481,7 @@ class GameStatesTest extends FunSuite {
   test("doAction does nothing in EndOfGame and Pregame"){
     game.doAction(1)
     assert(game.inPreGame())
-    game.startGame(Seq(("player1", 1, 1, 1, 1)))
+    game.startGame(Seq(("player1", 1, 1, 1, 1)),1)
     game.startTurnPlayer()
     game.rollD()
     game.outOfMoves()

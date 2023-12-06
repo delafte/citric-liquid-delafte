@@ -4,7 +4,7 @@ package model.panels.paneltypes
 import model.panels.abstractpanel.AbstractPanel
 import model.units.players.PlayerCharacter
 
-import cl.uchile.dcc.citric.model.controlador.GameController
+import cl.uchile.dcc.citric.model.controller.GameController
 
 /**The 'DropPanel' class represents one type of the Panels that are on the board of the game.
  * This Panel extends from the abstract class AbstractPanel.

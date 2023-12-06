@@ -1,7 +1,7 @@
 package cl.uchile.dcc.citric
-package model.controlador.states
+package model.controller.states
 
-import model.controlador.{GameController, GameState}
+import model.controller.{GameController, GameState}
 /**The Recovery class represents the state Recovery of the game. In this state the player has to roll the Dice
  * to leave the state KO and play their turn, if the roll isn't sufficient, the game skips their turn.
  * @constructor creates an Recovery State with a specified GameController.

@@ -1,5 +1,5 @@
 package cl.uchile.dcc.citric
-package model.controlador
+package model.controller
 /**This trait Observer is the base for the Observer in the implementation of the Observer Pattern. It only declares the update method which
  * will ensure the reception of the necessary information.
  *

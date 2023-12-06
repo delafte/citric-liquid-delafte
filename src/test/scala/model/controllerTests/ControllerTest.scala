@@ -1,11 +1,11 @@
 package cl.uchile.dcc.citric
 package model.controllerTests
 import munit.FunSuite
-import model.controlador.GameController
+import model.controller.GameController
 
 import cl.uchile.dcc.citric.exceptions.InvalidInputException
-import cl.uchile.dcc.citric.model.controlador.states.{OnPanel, PreGame}
-import cl.uchile.dcc.citric.model.norm.Norm6
+import cl.uchile.dcc.citric.model.controller.states.{OnPanel, PreGame}
+import cl.uchile.dcc.citric.model.norm.{Norm2, Norm6}
 import cl.uchile.dcc.citric.model.panels.`trait`.Panel
 import cl.uchile.dcc.citric.model.panels.paneltypes.{BonusPanel, DropPanel, EncounterPanel, HomePanel, NeutralPanel}
 import cl.uchile.dcc.citric.model.units.players.PlayerCharacter
@@ -24,23 +24,54 @@ class ControllerTest extends FunSuite {
     assert(game.state.isInstanceOf[PreGame])
   }
   test("Test change turns"){
-    game.startGame(playerCharacters)
-    assert(game.currentPlayer.name=="player1")
+    game.startGame(playerCharacters,1)
+    val name1:String=game.currentPlayer.name
     assert(game.inChapter())
     game.state = new OnPanel(game)
     game.doAction(1)
-    assert(game.currentPlayer.name=="player2")
+    assert(game.currentPlayer.name!=name1)
 
   }
+  test("the players can choose their objective"){
+    game.startGame(playerCharacters,1)
+    assert(game.currentPlayer.Obj_stars)
+    assert(game.playerCharacters(1).Obj_stars)
+    assert(!game.currentPlayer.Obj_victories)
+    assert(!game.playerCharacters(1).Obj_victories)
+  }
+  test("the players can choose their objective pt2") {
+    game.startGame(playerCharacters, 0)
+    assert(game.currentPlayer.Obj_victories)
+    assert(game.playerCharacters(1).Obj_victories)
+    assert(!game.currentPlayer.Obj_stars)
+    assert(!game.playerCharacters(1).Obj_stars)
+  }
+  test("A player can choose their objective when they make normCheck"){
+    game.startGame(playerCharacters, 0)
+    assert(game.currentPlayer.Obj_victories)
+    game.addNumChapter(2)
+    game.doAction(1)
+    assert(game.inPlayerTurn())
+    game.doAction(1)
+    assert(game.inMoving())
+    game.doAction(1)
+    assert(game.inCombat())
+    game.doAction(1)
+    game.currentPlayer.addVictories(100)
+    assert(game.inOnPanel())
+    game.doAction(1)
+    assert(!game.playerCharacters.head.Obj_victories)
+    assert(game.playerCharacters.head.Obj_stars)
+  }
   test("Start of a turn"){
-    game.startGame(playerCharacters)
+    game.startGame(playerCharacters,1)
     game.doAction(1)
     assert(game.inPlayerTurn())
     game.doAction(1)
     assert(game.rollResult>=1)
   }
   test("Stop decision test when character arrives to their home panel"){
-    game.startGame(playerCharacters)
+    game.startGame(playerCharacters,1)
     game.addNumChapter(2)
     game.doAction(1)
     assert(game.inPlayerTurn())
@@ -53,7 +84,7 @@ class ControllerTest extends FunSuite {
     assert(game.currentPanel.isInstanceOf[HomePanel])
   }
   test("Stop decision test when character arrives to their home panel pt2") {
-    game.startGame(playerCharacters)
+    game.startGame(playerCharacters,1)
     game.addNumChapter(2)
     game.doAction(1)
     assert(game.inPlayerTurn())
@@ -64,14 +95,28 @@ class ControllerTest extends FunSuite {
     assert(game.currentPanel!=game.currentPlayer.homePanel)
   }
   test("if a character reaches norm6, the game ends(the observer pattern is well implemented)"){
-    game.startGame(playerCharacters)
+    game.startGame(playerCharacters,1)
     assert(game.inChapter())
     game.state = new OnPanel(game)
     game.currentPlayer.CurrentNorm = new Norm6()
     assert(game.inEndOfGame())
   }
+  test("If a character upgrades norm, they have to choose between stars objective and victories"){
+    game.startGame(playerCharacters,1)
+    game.addNumChapter(2)
+    game.doAction(1)
+    assert(game.inPlayerTurn())
+    game.doAction(1)
+    assert(game.inMoving())
+    game.doAction(1)
+    assert(game.inCombat())
+    game.doAction(1)
+    assert(game.inOnPanel())
+    game.currentPlayer.addStars(100)
+    game.doAction(1)
+  }
   test("the recovery process - insufficient roll"){
-    game.startGame(playerCharacters)
+    game.startGame(playerCharacters,0)
     game.currentPlayer = new PlayerCharacter("player1",10,2,2,2, new Random(11))
     assert(game.inChapter())
     game.currentPlayer.KO=true
@@ -81,7 +126,7 @@ class ControllerTest extends FunSuite {
     assert(game.inChapter())
   }
   test("the recovery process - sufficient roll") {
-    game.startGame(playerCharacters)
+    game.startGame(playerCharacters,0)
     assert(game.inChapter())
     game.currentPlayer.KO = true
     game.doAction(1)
@@ -92,7 +137,7 @@ class ControllerTest extends FunSuite {
   }
 
   test("Combat with wildUnit is well implemented"){
-    game.startGame(playerCharacters)
+    game.startGame(playerCharacters,0)
     game.startTurnPlayer()
     game.addRollResult(1)
     game.rollD()
@@ -119,7 +164,7 @@ class ControllerTest extends FunSuite {
 
   }
   test("the Combat with other player is well implemented"){
-    game.startGame(playerCharacters)
+    game.startGame(playerCharacters,1)
     game.startTurnPlayer()
     game.addRollResult(2)
     game.rollD()
@@ -129,7 +174,7 @@ class ControllerTest extends FunSuite {
     assert(game.currentEnemy.CurrentHP<10)
   }
   test("The player can choose if to fight another player"){
-    game.startGame(playerCharacters)
+    game.startGame(playerCharacters,1)
     game.startTurnPlayer()
     game.addRollResult(2)
     game.rollD()
@@ -140,7 +185,7 @@ class ControllerTest extends FunSuite {
     assert(game.inChapter())
   }
   test("A bad input throws exception"){
-    game.startGame(playerCharacters)
+    game.startGame(playerCharacters,1)
     interceptMessage[InvalidInputException]("An invalid Input was found -- 9 is not an option") {
       game.decideDefendOrEvade(9,game.currentPlayer)
     }
@@ -150,10 +195,13 @@ class ControllerTest extends FunSuite {
     interceptMessage[InvalidInputException]("An invalid Input was found -- 9 is not an option") {
       game.askPathDecision(9)
     }
+    interceptMessage[InvalidInputException]("An invalid Input was found -- 9 is not an option") {
+      game.askObjectiveNorm(9,game.currentPlayer)
+    }
   }
 
   test("the player can choose if they want to evade or attack"){
-    game.startGame(playerCharacters)
+    game.startGame(playerCharacters,1)
     game.startTurnPlayer()
     game.addRollResult(2)
     game.rollD()
@@ -165,7 +213,7 @@ class ControllerTest extends FunSuite {
     assert(game.inCombat())
   }
   test("if they choose an unexisting option it throws an error"){
-    game.startGame(playerCharacters)
+    game.startGame(playerCharacters,0)
     game.startTurnPlayer()
     game.addRollResult(2)
     game.rollD()
@@ -177,7 +225,7 @@ class ControllerTest extends FunSuite {
 
   test("the move-choose first path"){
     assert(game.inPreGame())
-    game.startGame(playerCharacters)
+    game.startGame(playerCharacters,1)
     assert(game.currentPanel.isInstanceOf[HomePanel])
     game.startTurnPlayer()
     game.addRollResult(3)
@@ -187,7 +235,7 @@ class ControllerTest extends FunSuite {
   }
   test("the move-choose second path") {
     assert(game.inPreGame())
-    game.startGame(playerCharacters)
+    game.startGame(playerCharacters,0)
     assert(game.currentPanel.isInstanceOf[HomePanel])
     game.startTurnPlayer()
     game.addRollResult(3)
@@ -197,12 +245,12 @@ class ControllerTest extends FunSuite {
 
   }
   test("method ask stop decision"){
-    game.startGame(playerCharacters)
+    game.startGame(playerCharacters,1)
     game.playerRollDice()
     /*if we choose 1, the player stops moving*/
     val roll = game.rollResult
     val result=game.askStopDecision(1)
-    assert(game.rollResult==roll)
+    assertEquals(game.rollResult,roll)
     assert(result==1)
     /*if we choose 0 the player continues*/
     val result2 = game.askStopDecision(0)

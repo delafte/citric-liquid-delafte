@@ -8,7 +8,7 @@ import model.units.wildunits.{Chicken, RoboBall, Seagull}
 import model.norm.{Norm, Norm1, Norm2, Norm3, Norm4, Norm5, Norm6}
 
 import scala.math._
-import model.controlador.Observer
+import model.controller.Observer
 import model.norm.Norm
 
 import cl.uchile.dcc.citric.model.panels.paneltypes.HomePanel

@@ -6,7 +6,7 @@ import model.panels.`trait`.Panel
 import model.units.players.PlayerCharacter
 import model.norm.Norm1
 
-import cl.uchile.dcc.citric.model.controlador.GameController
+import cl.uchile.dcc.citric.model.controller.GameController
 
 import scala.util.Random
 import munit.FunSuite

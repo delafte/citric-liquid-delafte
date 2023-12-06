@@ -1,5 +1,5 @@
 package cl.uchile.dcc.citric
-package model.controlador
+package model.controller
 /**The State trait declares all the necessary methods for the implementation of the State Pattern. It includes
  * the methods to deliver information of the current State and some other for the transitions between those.
  *

@@ -1,5 +1,5 @@
 package cl.uchile.dcc.citric
-package model.controlador
+package model.controller
 import model.norm.Norm
 
 import cl.uchile.dcc.citric.model.units.players.CharacterWinEvent

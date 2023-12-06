@@ -1,6 +1,6 @@
 package cl.uchile.dcc.citric
-package model.controlador
-import model.controlador.GameController
+package model.controller
+import model.controller.GameController
 
 import cl.uchile.dcc.citric.exceptions.InvalidActionException
 /**The GameState class is part of the implementation of the State Pattern. With this we can pre-establish the

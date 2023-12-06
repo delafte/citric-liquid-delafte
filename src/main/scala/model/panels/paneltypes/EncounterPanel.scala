@@ -5,7 +5,7 @@ import model.panels.abstractpanel.AbstractPanel
 import model.panels.`trait`.Panel
 import model.units.players.PlayerCharacter
 
-import cl.uchile.dcc.citric.model.controlador.GameController
+import cl.uchile.dcc.citric.model.controller.GameController
 import cl.uchile.dcc.citric.model.units.traitunits.WildUnit
 import cl.uchile.dcc.citric.model.units.wildunits.{Chicken, RoboBall, Seagull}
 

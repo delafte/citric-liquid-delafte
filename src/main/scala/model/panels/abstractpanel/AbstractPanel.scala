@@ -4,7 +4,7 @@ package model.panels.abstractpanel
 import model.panels.`trait`.Panel
 import model.units.players.PlayerCharacter
 
-import cl.uchile.dcc.citric.model.controlador.GameController
+import cl.uchile.dcc.citric.model.controller.GameController
 
 import scala.collection.mutable.ArrayBuffer
 /**

@@ -4,7 +4,7 @@ import model.units.AbstractUnity
 
 import cl.uchile.dcc.citric.model.norm.{Norm, Norm1}
 import model.units.traitunits.Player
-import model.controlador.{Observer, Subject}
+import model.controller.{Observer, Subject}
 
 import cl.uchile.dcc.citric.model.panels.paneltypes.HomePanel
 

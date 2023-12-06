@@ -1,7 +1,7 @@
 package cl.uchile.dcc.citric
-package model.controlador.states
+package model.controller.states
 
-import model.controlador.{GameController, GameState}
+import model.controller.{GameController, GameState}
 /**The Chapter class represents the state chapter of the game. In this state the turns are assigned and it represents
  * a round of the game. Every character ends it's turn in this state.
  * @param context the Game Controller.

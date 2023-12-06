@@ -1,7 +1,7 @@
 package cl.uchile.dcc.citric
 package model.panels.`trait`
 
-import cl.uchile.dcc.citric.model.controlador.GameController
+import cl.uchile.dcc.citric.model.controller.GameController
 import cl.uchile.dcc.citric.model.units.players.PlayerCharacter
 
 import scala.collection.mutable.ArrayBuffer

@@ -5,7 +5,7 @@ import model.panels.abstractpanel.AbstractPanel
 import model.panels.`trait`.Panel
 import model.units.players.PlayerCharacter
 
-import cl.uchile.dcc.citric.model.controlador.GameController
+import cl.uchile.dcc.citric.model.controller.GameController
 
 import scala.collection.mutable.ArrayBuffer
 /** The 'HomePanel' class represents one type of the Panels that are on the board of the game.
@@ -47,7 +47,9 @@ class HomePanel(val Owner:PlayerCharacter) extends AbstractPanel{
   override def apply(player: PlayerCharacter, context: GameController): Unit = {
     if(characters.contains(player)){
       player.heal()
+      val norm=player.CurrentNorm
       NormaCheck(player)
+      if(player.CurrentNorm!=norm)context.askObjectiveNorm(1,player)/*It is set as 1 the selection but with a real input it would work well for choosing*/
     }
   }
 }

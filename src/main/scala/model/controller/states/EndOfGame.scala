@@ -1,7 +1,7 @@
 package cl.uchile.dcc.citric
-package model.controlador.states
+package model.controller.states
 
-import model.controlador.{GameController, GameState}
+import model.controller.{GameController, GameState}
 /**The EndOfGame class represents the state EndOfGame of the game. To achieve this state, a character has to reach
  * Norm6.
  * @constructor creates a EndOfGame State with a specified GameController.

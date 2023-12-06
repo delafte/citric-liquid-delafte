@@ -1,7 +1,7 @@
 package cl.uchile.dcc.citric
-package model.controlador.states
+package model.controller.states
 
-import model.controlador.{GameController, GameState}
+import model.controller.{GameController, GameState}
 /**The OnPanel class represents the state OnPanel of the game. In this state the player is on a panel of the Board of the game
  * and they receive the panel's effect.
  * @constructor creates an OnPanel State with a specified GameController.

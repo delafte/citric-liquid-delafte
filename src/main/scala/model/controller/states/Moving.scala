@@ -1,7 +1,7 @@
 package cl.uchile.dcc.citric
-package model.controlador.states
+package model.controller.states
 
-import model.controlador.{GameController, GameState}
+import model.controller.{GameController, GameState}
 /**The Moving class represents the state Moving of the game. In this state the player is moving on the Board of the game
  * and they can choose between paths or to stop if they land on their home panel.
  * @constructor creates a Moving State with a specified GameController.

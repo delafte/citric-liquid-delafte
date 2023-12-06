@@ -65,12 +65,16 @@ type of combat were not specified, and therefore, it does not exist in this game
 For this task, what I did was analyze the game flow and interactions between units. With that information, I was able to design the state diagram, which I later used as a base to begin programming.
 
 Next, I proceeded to create the GameController class, which is responsible for ensuring the proper management of what was created in the previous tasks of this course, and establishing a smooth flow. I also created the necessary 
-classes and traits to implement the State Pattern, thus modeling the previously designed flowchart. All transitions are properly tested, ensuring correct functionality.
+classes and traits to implement the State Pattern, thus modeling the previously designed state diagram. All transitions are properly tested, ensuring correct functionality.
 
 With this groundwork, the connection between these state classes and the controller was established, delegating tasks and making necessary calls to ensure a seamless game. Methods were created to make choices, 
 simulating input with the parameters they receive. All of this is also thoroughly tested.
 
 Finally, I implemented the Observer Pattern to ensure the detection of victory conditions. For this, I created a class representing that condition, which receives the name of the winning player, and 
-likewise implemented the required traits and classes for the model.
+I also implemented the required traits and classes for the model.
+
+As a comment, I didn't implement a view, but I did put some prints with messages so that during the testing of the GameController you can see I little bit
+of the flow. Also, for choosing an objective after the NormCheck, I had to set it with a choice, but it is well tested so that you now that
+in an input context, it would work just fine.
 
 This project is licensed under the [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).

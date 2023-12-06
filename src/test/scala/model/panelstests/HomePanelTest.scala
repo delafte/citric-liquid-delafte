@@ -6,7 +6,7 @@ import model.panels.`trait`.Panel
 import model.units.players.PlayerCharacter
 import model.norm.{Norm1, Norm2, Norm3, Norm4, Norm5, Norm6}
 
-import cl.uchile.dcc.citric.model.controlador.GameController
+import cl.uchile.dcc.citric.model.controller.GameController
 import munit.FunSuite
 
 import scala.collection.mutable.ArrayBuffer

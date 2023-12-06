@@ -1,6 +1,6 @@
 package cl.uchile.dcc.citric
-package model.controlador
-import model.controlador.states.PreGame
+package model.controller
+import model.controller.states.PreGame
 import model.units.players.PlayerCharacter
 import model.units.traitunits.{Unity, WildUnit}
 import model.panels.`trait`.Panel
@@ -10,6 +10,7 @@ import model.board.Board
 import scala.math._
 import scala.collection.mutable.ArrayBuffer
 import scala.math.floor
+import scala.util.Random
 
 /**The GameController class represents de Game Controller of the game. Here all the logic of the game is implemented so that it can
  * be functional.
@@ -21,7 +22,7 @@ class GameController extends Observer[CharacterWinEvent] {
   /**the current state of the game*/
   private var _state: State = new PreGame(this)
   /**The characters that are playing the game*/
-  private val _playerCharacters: ArrayBuffer[PlayerCharacter] = ArrayBuffer()
+  private var _playerCharacters: ArrayBuffer[PlayerCharacter] = ArrayBuffer()
   /**The board of the game*/
   private var board: Board = _
   /**this array keeps track of the current panels of every character*/
@@ -137,10 +138,12 @@ class GameController extends Observer[CharacterWinEvent] {
    * @param playersCharacters the parameters to create a PlayerCharacter
    */
 
-  def startGame(playersCharacters: Seq[(String,Int,Int, Int,Int)]): Unit = {
+  def startGame(playersCharacters: Seq[(String,Int,Int, Int,Int)],choose:Int): Unit = {
     for((name, maxHP,attack,defense,evasion)<- playersCharacters){
       addPlayerCharacter(name, maxHP,attack, defense, evasion)
     }
+    val random = new Random()
+    _playerCharacters = random.shuffle(_playerCharacters)
     board = new Board(_playerCharacters)
     _currentPlayer=Some(_playerCharacters(0))
     var i=0
@@ -150,6 +153,12 @@ class GameController extends Observer[CharacterWinEvent] {
       i+=1
     }
     println("Game starts!")
+    i=0
+    while(i<playerCharacters.length){
+      askObjectiveNorm(choose,playerCharacters(i))
+      i+=1
+    }
+
     _state.gameStarts()
   }
   /**this method calls the method of a player character to get their rollDice result*/
@@ -160,6 +169,13 @@ class GameController extends Observer[CharacterWinEvent] {
       val name = this.name
       println(s"$name's roll was $result")
     }
+  }
+  /**This method asks the new objective of the current player after upgrading norm*/
+  def askObjectiveNorm(choose:Int,player:PlayerCharacter): Unit={
+    println("choose your next objective: 1 for stars, 0 for victories")
+    if(choose==1)player.Obj_stars=true
+    else if(choose==0)player.Obj_victories = true
+    else throw new InvalidInputException(s"$choose is not an option")
   }
 
   /**Returns the name of the Current Player*/

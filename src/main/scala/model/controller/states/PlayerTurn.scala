@@ -1,7 +1,7 @@
 package cl.uchile.dcc.citric
-package model.controlador.states
+package model.controller.states
 
-import model.controlador.{GameController, GameState}
+import model.controller.{GameController, GameState}
 /**The PlayerTurn class represents the state Player of the game. In this state the player has to roll the Dice to
  * begin later their movement.
  * @constructor creates an PlayerTurn State with a specified GameController.

@@ -1,7 +1,7 @@
 package cl.uchile.dcc.citric
-package model.controlador.states
+package model.controller.states
 
-import model.controlador.{GameController, GameState}
+import model.controller.{GameController, GameState}
 /**The PreGame class represents the state PreGame of the game. The GameController is initialized with this state
  * and when it starts, it transitions to the next one.
  * @constructor creates an PreGame State with a specified GameController.

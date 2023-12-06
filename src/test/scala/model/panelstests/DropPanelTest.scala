@@ -5,7 +5,7 @@ import model.panels.paneltypes.{BonusPanel, DropPanel, EncounterPanel, HomePanel
 import model.panels.`trait`.Panel
 import model.units.players.PlayerCharacter
 
-import cl.uchile.dcc.citric.model.controlador.GameController
+import cl.uchile.dcc.citric.model.controller.GameController
 import munit.FunSuite
 
 import scala.collection.mutable.ArrayBuffer
