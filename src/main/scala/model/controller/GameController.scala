@@ -106,7 +106,7 @@ class GameController extends Observer[CharacterWinEvent] {
   /**getter of rollResult*/
   def rollResult: Int = _rollResult
   /**this method updates the observers of the condition to end a game*/
-  override def update(observable: Subject, value: CharacterWinEvent): Unit = {
+  def update(observable: Subject[CharacterWinEvent], value: CharacterWinEvent): Unit = {
     val name = value.name_character
     println(s"Game Over! $name has won the Game!")
     _state.reachNorm6()

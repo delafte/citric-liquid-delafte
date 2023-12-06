@@ -17,7 +17,7 @@ import scala.math._
  * @author [[https://github.com/delafte/ Delaney Tello E.]]
  */
 
-abstract class AbstractPlayerCharacter(protected val _name: String,protected var _maxHP:Int, protected val _ATK: Int, protected val _DEF: Int, protected val _EVA: Int, protected val _randomNumberGenerator: Random) extends AbstractUnity with Player with Subject{
+abstract class AbstractPlayerCharacter(protected val _name: String,protected var _maxHP:Int, protected val _ATK: Int, protected val _DEF: Int, protected val _EVA: Int, protected val _randomNumberGenerator: Random) extends AbstractUnity with Player with Subject[CharacterWinEvent]{
   maxHP = _maxHP
   /** Observers of the Subject */
   private var observers: List[Observer[CharacterWinEvent]] = List.empty[Observer[CharacterWinEvent]]
