@@ -15,7 +15,7 @@ class Wait(context:GameController) extends GameState(context){
     if(context.numCombat == 0){
       context.doAttack(choose,0)
     }
-    else if(context.numCombat ==1){
+    else if(context.numCombat == 1){
       context.doAttack(choose,1)
     }
     context.response()

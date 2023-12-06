@@ -1,9 +1,10 @@
 package cl.uchile.dcc.citric
-package model.controllerTests
-import munit.FunSuite
+package model.statesTransitionsTest
+
+import exceptions.InvalidActionException
 import model.controller.GameController
 
-import cl.uchile.dcc.citric.exceptions.InvalidActionException
+import munit.FunSuite
 class GameStatesTest extends FunSuite {
   private var game: GameController = null
 

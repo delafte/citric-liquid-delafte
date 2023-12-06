@@ -15,7 +15,7 @@ class Combat(context:GameController) extends GameState(context){
     if(context.encounterPanel && context.numCombat<2){
       context.attacks()
     }
-    else if(!context.encounterPanel && context.numCombat<2){
+    else if(!context.encounterPanel && context.numCombat==0){
       val more=context.checkMorePlayersInPanel()
       if(more){
         if(context.attackDecision(choose)==1){
@@ -24,6 +24,9 @@ class Combat(context:GameController) extends GameState(context){
         else context.decideNotFightCharacter()
       }
       else context.endCombat()
+    }
+    else if(!context.encounterPanel && context.numCombat>0 && context.numCombat <2){
+      context.attacks()
     }
     else {
       context.numCombat = 0
@@ -39,7 +42,6 @@ class Combat(context:GameController) extends GameState(context){
   }
 
   override def endCombat(): Unit = {
-    context.numCombat = 0
     this.setState(new OnPanel(context))
   }
 

@@ -49,6 +49,7 @@ class ControllerTest extends FunSuite {
   test("A player can choose their objective when they make normCheck"){
     game.startGame(playerCharacters, 0)
     assert(game.currentPlayer.Obj_victories)
+    /*going to be used in the asserts*/
     val subject:PlayerCharacter=game.currentPlayer
     game.addNumChapter(2)
     game.doAction(1)
@@ -58,8 +59,10 @@ class ControllerTest extends FunSuite {
     game.doAction(1)
     assert(game.inCombat())
     game.doAction(1)
+    /*to make sure it makes normCheck*/
     game.currentPlayer.addVictories(100)
     assert(game.inOnPanel())
+    /*choose the stars objective*/
     game.doAction(1)
     assertEquals(game.playerCharacters.head,subject)
     assert(!game.playerCharacters.head.Obj_victories)
@@ -74,11 +77,13 @@ class ControllerTest extends FunSuite {
   }
   test("Stop decision test when character arrives to their home panel"){
     game.startGame(playerCharacters,1)
+    /*this to set the condition of walking by an homePanel*/
     game.addNumChapter(2)
     game.doAction(1)
     assert(game.inPlayerTurn())
     game.doAction(1)
     assert(game.inMoving())
+    /*we choose to stay*/
     game.doAction(1)
     assert(game.inCombat())
     game.doAction(1)
@@ -92,6 +97,7 @@ class ControllerTest extends FunSuite {
     assert(game.inPlayerTurn())
     game.doAction(1)
     assert(game.inMoving())
+    /*we choose to continue*/
     game.doAction(0)
     assert(game.inCombat())
     assert(game.currentPanel!=game.currentPlayer.homePanel)
@@ -103,22 +109,10 @@ class ControllerTest extends FunSuite {
     game.currentPlayer.CurrentNorm = new Norm6()
     assert(game.inEndOfGame())
   }
-  test("If a character upgrades norm, they have to choose between stars objective and victories"){
-    game.startGame(playerCharacters,1)
-    game.addNumChapter(2)
-    game.doAction(1)
-    assert(game.inPlayerTurn())
-    game.doAction(1)
-    assert(game.inMoving())
-    game.doAction(1)
-    assert(game.inCombat())
-    game.doAction(1)
-    assert(game.inOnPanel())
-    game.currentPlayer.addStars(100)
-    game.doAction(1)
-  }
+
   test("the recovery process - insufficient roll"){
     game.startGame(playerCharacters,0)
+    /*we change it to have a fixed seed so that the result is always the needed to test this case*/
     game.currentPlayer = new PlayerCharacter("player1",10,2,2,2, new Random(11))
     assert(game.inChapter())
     game.currentPlayer.KO=true
@@ -132,6 +126,7 @@ class ControllerTest extends FunSuite {
     assert(game.inChapter())
     game.currentPlayer.KO = true
     game.doAction(1)
+    /*o make sure the condition occurs*/
     game.addNumChapter(5)
     assert(game.inRecovery())
     game.doAction(1)
@@ -148,20 +143,21 @@ class ControllerTest extends FunSuite {
     assert(game.inOnPanel())
     game.doAction(1)
     assert(game.inCombat())
+    /*to make the tests then*/
     val hpPlayer = game.currentPlayer.CurrentHP
     val hpWild = game.currentEnemy.CurrentHP
     game.doAction(1)
+    /*we make sure we are fighting a wildUnit*/
     assert(game.currentEnemy.isInstanceOf[WildUnit])
     assert(game.inWait())
     game.doAction(1)
     assert(game.inCombat())
-    game.doAction(1)
+    game.doAction(0)
     assert(game.inWait())
-    game.doAction(1)
+    game.doAction(0)
     assert(game.inCombat())
     game.doAction(1)
     assert(game.inOnPanel())
-    println(s"hp before: player $hpPlayer wild $hpWild")
     assert(game.currentPlayer.CurrentHP<=hpPlayer && game.currentEnemy.CurrentHP < hpWild)
 
   }
@@ -172,7 +168,15 @@ class ControllerTest extends FunSuite {
     game.rollD()
     game.followingMoves(1)
     game.doAction(1)
+    assert(game.inWait())
     game.doAction(1)
+    assert(game.inCombat())
+    game.doAction(0)
+    assert(game.inWait())
+    game.doAction(0)
+    assert(game.inCombat())
+    game.doAction(1)
+    assert(game.inOnPanel())
     assert(game.currentEnemy.CurrentHP<10)
   }
   test("The player can choose if to fight another player"){
@@ -181,6 +185,7 @@ class ControllerTest extends FunSuite {
     game.addRollResult(2)
     game.rollD()
     game.followingMoves(1)
+    /*we choose to not fight*/
     game.doAction(0)
     assert(game.inOnPanel())
     game.doAction(0)

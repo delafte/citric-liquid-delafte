@@ -280,9 +280,10 @@ class GameController extends Observer[CharacterWinEvent] {
       val name=currentPlayer.name
       println(s"$name is going to Attack")
       println("The enemy has to choose their response:")
-      decideDefendOrEvade(choose, _currentEnemy.get)
+      decideDefendOrEvade(choose, currentEnemy)
+      _currentPlayer.foreach(character => _currentEnemy.foreach(target => character.Attack(target)))
     }
-    if(numAtk == 0 && encounterPanel) {
+    else if(numAtk == 0 && encounterPanel) {
       println("you are going to attack a wild unit!")
        _currentPlayer.foreach(character => _currentEnemy.foreach(target => character.Attack(target)))
     }
