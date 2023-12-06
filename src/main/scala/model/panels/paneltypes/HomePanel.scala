@@ -46,7 +46,7 @@ class HomePanel(val Owner:PlayerCharacter) extends AbstractPanel{
   /**This simulates the effect of the homePanel*/
   override def apply(player: PlayerCharacter, context: GameController): Unit = {
     if(characters.contains(player)){
-      player.heal()
+      player.addHP(1)
       val norm=player.CurrentNorm
       NormaCheck(player)
       if(player.CurrentNorm!=norm)context.askObjectiveNorm(1,player)/*It is set as 1 the selection but with a real input it would work well for choosing*/

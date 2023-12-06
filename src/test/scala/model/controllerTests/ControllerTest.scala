@@ -124,6 +124,7 @@ class ControllerTest extends FunSuite {
   test("the recovery process - sufficient roll") {
     game.startGame(playerCharacters,0)
     assert(game.inChapter())
+    game.currentPlayer.removeHP(10)
     game.currentPlayer.KO = true
     game.doAction(1)
     /*o make sure the condition occurs*/
@@ -131,6 +132,8 @@ class ControllerTest extends FunSuite {
     assert(game.inRecovery())
     game.doAction(1)
     assert(game.inPlayerTurn())
+    assert(!game.currentPlayer.KO)
+    assertEquals(game.currentPlayer.CurrentHP,game.currentPlayer.maxHP)
   }
 
   test("Combat with wildUnit is well implemented"){

@@ -2,9 +2,10 @@ package cl.uchile.dcc.citric
 package model.unitstests.wildunitstest
 
 import model.panels.paneltypes.EncounterPanel
-import model.units.wildunits.{RoboBall, Seagull, Chicken}
+import model.units.wildunits.{Chicken, RoboBall, Seagull}
 
 import cl.uchile.dcc.citric.model.units.players.PlayerCharacter
+import cl.uchile.dcc.citric.model.units.traitunits.WildUnit
 import munit.FunSuite
 
 import scala.util.Random
@@ -136,5 +137,15 @@ class RoboBallTest extends FunSuite {
     roboball.removeHP(hp)
     roboball.Evasion(12)
     assert(roboball.CurrentHP == 0)
+  }
+  test("when a RoboBall dies, a new one is generated in the same panel") {
+    val encounterPanel2: EncounterPanel = new EncounterPanel()
+    assert(encounterPanel2.wildUnit(2).isInstanceOf[RoboBall])
+    val rob: WildUnit = encounterPanel2.wildUnit(2)
+    enemy.Attack_Quantity = 100
+    encounterPanel2.wildUnit(2).AttackPlayer(enemy)
+    assert(rob.CurrentHP == 0)
+    assert(encounterPanel2.wildUnit(2).isInstanceOf[RoboBall])
+    assert(encounterPanel2.wildUnit(2) != rob)
   }
 }

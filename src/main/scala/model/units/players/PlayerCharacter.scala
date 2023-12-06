@@ -58,10 +58,10 @@ class PlayerCharacter(_name: String,_maxHP:Int,  _ATK: Int,  _DEF: Int, _EVA: In
   private val _homePanel: HomePanel = new HomePanel(this)
   /**the getter of the character's homePanel*/
   def homePanel: HomePanel = _homePanel
-  /** This function gives the character 1 point of HP. It may be invoked when a character lands on a HomePanel */
+  /** This function gives the character their full HP back. It is used when a player leaves the recovery state */
   def heal(): Unit = {
     if (maxHP != _CurrentHP) {
-      _CurrentHP += 1
+      _CurrentHP += maxHP
     }
   }
   /**This method updates the stats of a PlayerCharacter that was Defecated.

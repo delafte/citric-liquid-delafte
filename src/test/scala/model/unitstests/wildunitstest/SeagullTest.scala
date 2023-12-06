@@ -5,6 +5,7 @@ import model.panels.paneltypes.EncounterPanel
 import model.units.wildunits.{Chicken, RoboBall, Seagull}
 
 import cl.uchile.dcc.citric.model.units.players.PlayerCharacter
+import cl.uchile.dcc.citric.model.units.traitunits.WildUnit
 import munit.FunSuite
 
 import scala.util.Random
@@ -140,5 +141,15 @@ class SeagullTest extends FunSuite {
     seagull.removeHP(hp)
     seagull.Evasion(12)
     assert(seagull.CurrentHP == 0)
+  }
+  test("when a RoboBall dies, a new one is generated in the same panel") {
+    val encounterPanel2: EncounterPanel = new EncounterPanel()
+    assert(encounterPanel2.wildUnit(1).isInstanceOf[Seagull])
+    val sea: WildUnit = encounterPanel2.wildUnit(1)
+    enemy.Attack_Quantity = 100
+    encounterPanel2.wildUnit(1).AttackPlayer(enemy)
+    assert(sea.CurrentHP == 0)
+    assert(encounterPanel2.wildUnit(2).isInstanceOf[Seagull])
+    assert(encounterPanel2.wildUnit(1) != sea)
   }
 }

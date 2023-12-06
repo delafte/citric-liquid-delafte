@@ -111,14 +111,14 @@ class PlayerCharacterTest extends munit.FunSuite {
     character.addStars(-2)
     assertEquals(character.CurrentStars, 2)
   }
-  test("A character can be healed with +1 points of HP"){
+  test("A character can be healed with full HP"){
     /*First, we test the case in which the character is already full Hp*/
     character.heal()
     assertEquals(character.CurrentHP,character.maxHP)
     /*Now the case in which the character isn't full hp*/
-    character.removeHP(5)
+    character.removeHP(10)
     character.heal()
-    assertEquals(character.CurrentHP,6)
+    assertEquals(character.CurrentHP,maxHp)
   }
   test("The setters must be well implemented"){
     /*KO setter*/

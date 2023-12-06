@@ -15,6 +15,7 @@ class Recovery(context:GameController) extends GameState(context){
     if (context.rollRecovery() >= 6 - context.numChapter) {
       println("Good! the roll was sufficient, now it's your turn")
       context.currentPlayer.KO = false
+      context.currentPlayer.heal()
       context.givePlayerStars()
       context.sufficientRoll()
     }
@@ -29,6 +30,8 @@ class Recovery(context:GameController) extends GameState(context){
     this.setState(new Chapter(context))
   }
 
-  override def sufficientRoll(): Unit = this.setState(new PlayerTurn(context))//Revisar
+  override def sufficientRoll(): Unit = {
+    this.setState(new PlayerTurn(context))
+  }
 
 }
