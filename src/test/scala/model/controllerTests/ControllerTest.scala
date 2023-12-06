@@ -39,6 +39,30 @@ class ControllerTest extends FunSuite {
     game.doAction(1)
     assert(game.rollResult>=1)
   }
+  test("Stop decision test when character arrives to their home panel"){
+    game.startGame(playerCharacters)
+    game.addNumChapter(2)
+    game.doAction(1)
+    assert(game.inPlayerTurn())
+    game.doAction(1)
+    assert(game.inMoving())
+    game.doAction(1)
+    assert(game.inCombat())
+    game.doAction(1)
+    assert(game.inOnPanel())
+    assert(game.currentPanel.isInstanceOf[HomePanel])
+  }
+  test("Stop decision test when character arrives to their home panel pt2") {
+    game.startGame(playerCharacters)
+    game.addNumChapter(2)
+    game.doAction(1)
+    assert(game.inPlayerTurn())
+    game.doAction(1)
+    assert(game.inMoving())
+    game.doAction(0)
+    assert(game.inCombat())
+    assert(game.currentPanel!=game.currentPlayer.homePanel)
+  }
   test("if a character reaches norm6, the game ends(the observer pattern is well implemented)"){
     game.startGame(playerCharacters)
     assert(game.inChapter())

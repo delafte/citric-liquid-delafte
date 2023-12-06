@@ -113,6 +113,7 @@ class GameController extends Observer[CharacterWinEvent] {
   def checkKO():Boolean={
     _currentPlayer.fold(false)(_.KO)
   }
+
   /**This method adds Players to the game, it creates them with the parameters received
    * @param name the name of the character
    * @param maxHP the maxHp of the character
@@ -178,7 +179,7 @@ class GameController extends Observer[CharacterWinEvent] {
   /**this method follows and updates the movement of the player in the board*/
   def followingMoves(choose:Int): Unit ={
     if(_rollResult>0){
-      if(_currentPanels(currentPlayerNum) == _currentPlayer.get.homePanel && numChapter>1){
+      if(_currentPanels(currentPlayerNum) == currentPlayer.homePanel && numChapter>1){
         val result=askStopDecision(choose)
         if(result==1) _state.stopsMoving()
         else _state.doAction(choose)
@@ -202,10 +203,14 @@ class GameController extends Observer[CharacterWinEvent] {
   }
   /**this method 'asks' for the decision of the player if they want to stop in their homePanel or continue*/
   def askStopDecision(choose:Int):Int={
+    val name=this.name
+    println(s"$name arrived to your homePanel: choose 1 to stop or 0 to continue")
     if (choose == 1) {
+      println(s"$name chose 1")
       1
     }
     else if(choose==0){
+      println(s"$name chose 0")
       _currentPanels(currentPlayerNum) = _currentPanels(currentPlayerNum).nextPanels(choose)
       _rollResult -= 1
       0
